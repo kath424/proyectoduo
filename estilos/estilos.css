@@ -1,0 +1,233 @@
+*{
+	border:0;
+	margin: 0;
+	padding: 0;
+
+}
+
+body
+{
+	background:url(../img/image1.jpg);
+}
+
+#contenedor{
+	
+	height: 1050px;
+	width: 780px;
+	margin-right: auto;
+	margin-left: auto;
+}
+header, #banner, #noticias, #tienda, #marcas {
+	background: #fff;
+	width: 780px;
+	height: 100px;
+}
+
+#banner{
+	background: #666;
+	height: 300px;
+
+}
+
+#noticias{
+	background: #fff;
+	height: 215px;
+	width: 760px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	text-align: center;
+ 
+}
+#tienda{
+	width: 760px;
+	background: #666;
+	height: 190px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 5px;
+	text-align: center;
+ 
+}
+#marcas{
+	background: #fff;
+	height: 100px;
+}
+
+footer{
+	background: #f21;
+	width: 780px;
+	height: 15px;
+	padding-top: 25px
+
+}
+footer p{
+	font-family: arial;
+	font-size: 10px;
+	text-align: center;
+} 
+
+#noticias #noticia1{
+	background: #999;
+	width: 250px;
+	height: 215px;
+	display:inline-block;
+	vertical-align: top;
+}
+
+#noticias #noticia2{
+	background: #124EB0;
+	width: 250px;
+	height: 215px;
+	display:inline-block;
+vertical-align: top;
+}
+
+
+#noticias #noticia3{
+	background: #F98E13;
+	width: 250px;
+	height: 215px;
+	display:inline-block;
+	 vertical-align: top;
+}
+.espacio{
+	width: 760px;
+	height: 10px; 
+	
+}
+
+#tienda #producto1{
+	background: #fff;
+	width: 180px;
+	height: 180px;
+	display:inline-block;
+	vertical-align: top;
+    margin: 0px 2px;
+}
+
+#tienda #producto2{
+	background: #fff;
+	width: 180px;
+	height: 180px;
+	display:inline-block;
+	vertical-align: top;
+	margin: 0px 2px;
+
+}
+ #tienda #producto3{
+	background: #f1f1f1;
+	width: 180px;
+	height: 180px;
+	display:inline-block;
+	vertical-align: top;
+	margin: 0px 2px;
+
+}
+#tienda #producto4{
+	background: #ccc;
+	width: 180px;
+	height: 180px;
+	display:inline-block;
+	vertical-align: top;
+	margin: 0px 2px;
+
+}
+
+nav{
+	
+	width:150px;
+	height:50px;
+	background-color: red;
+
+}
+
+ul{
+
+	list-style: none;
+	width:850px;
+	height:40px;
+	text-decoration: none;
+}
+ul a {
+	text-decoration: none;
+	color: #fff;
+}
+
+li{
+	float:left;
+	width:156px;
+	height:40px;
+	background-color: green;
+	overflow: hidden;
+	margin-top:0px;
+}
+
+div.contenedor_general:hover{
+	margin-top:-40px;
+}
+
+div.contenedor_general{
+	width:50px;
+	height:80px;
+	background-color: yellow;
+	-webkit-transition:margin-top .2s;
+}
+
+div.contenedor_uno{
+	width:200px;
+	height:36px;
+	background-color: black;
+	overflow: hidden;
+	border-bottom:4px solid blue;
+}
+
+div.contenedor_dos{
+	width:200px;
+	height:36px;
+	background-color: blue;
+	overflow: hidden;
+	border-bottom:4px solid black;
+}
+
+p.texto_uno, p.texto_dos{
+	text-align: center;
+	margin-top:10px;
+	color:white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
