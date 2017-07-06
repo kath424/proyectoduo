@@ -21,6 +21,14 @@
 
 	
 <?php 
+	// antes de cargar el contenido
+	// si ya esta logeado,  redirijir usuario a la pagina incial
+	session_start();
+	if(isset($_SESSION['user_id'])){
+		header("Location: index.php"); 
+    	exit;
+	}
+
 	// si el usuario mando la forma de registracion
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		// connectarse a la base de datos
