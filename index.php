@@ -8,7 +8,10 @@
 	<link rel="stylesheet" href="estilos/estilos.css">
 </head>
 	<body>
-
+	<?php
+		// permite accessar $_SESSION para saver si el usuario esta logeado
+		session_start();
+	?>
 
 
 	<section id="contenedor">
@@ -24,7 +27,7 @@
 				<div class="contenedor_general">
 
 					<div class="contenedor_uno">
-						<p class="texto_uno"><a href="#">Inicio</p>
+						<p class="texto_uno"><a href="/">Inicio</p>
 					</div>
 
 					<div class="contenedor_dos">
@@ -70,13 +73,37 @@
 			<li>
 				<div class="contenedor_general">
 
-					<div class="contenedor_uno">
-						<p class="texto_uno"><a href="registro.html">Registro</p>
-					</div>
+					<?php
+					if (isset($_SESSION['user_id'])) {
 
-					<div class="contenedor_dos">
-						<p class="texto_dos">Registro</p>
-					</div>
+					?>
+						<div class="contenedor_uno">
+							<p class="texto_uno"><a href="#">
+								<?php echo $_SESSION['usuario']; ?>
+							</p>
+						</div>
+
+						<div class="contenedor_dos">
+							<p class="texto_dos">
+								<?php echo $_SESSION['usuario']; ?>
+							</p>
+						</div>
+
+					<?php
+					 } else {
+					?>
+					 	 <div class="contenedor_uno">
+							<p class="texto_uno"><a href="registro.php">Registro</p>
+						</div>
+
+						<div class="contenedor_dos">
+							<p class="texto_dos">Registro</p>
+						</div>
+					<?php
+					 }
+					?>
+
+					
 
 				</div>
 			</li>
@@ -85,13 +112,37 @@
 			<li>
 				<div class="contenedor_general">
 
-					<div class="contenedor_uno">
-						<p class="texto_uno"><a href="login.html">Inicio Sesion</p>
-					</div>
+					<?php
+					if (isset($_SESSION['user_id'])) {
 
-					<div class="contenedor_dos">
-						<p class="texto_dos">Inicio Sesion</p>
-					</div>
+					?>
+						<div class="contenedor_uno">
+							<p class="texto_uno"><a href="logout.php">
+								Cerrar Session
+							</p>
+						</div>
+
+						<div class="contenedor_dos">
+							<p class="texto_dos">
+								Cerrar Session
+							</p>
+						</div>
+
+					<?php
+					 } else {
+					?>
+					 	 <div class="contenedor_uno">
+						<p class="texto_uno"><a href="login.php">Inicio Sesion</p>
+						</div>
+
+						<div class="contenedor_dos">
+							<p class="texto_dos">Inicio Sesion</p>
+						</div>
+					<?php
+					 }
+					?>
+
+					
 
 				</div>
 			</li>
