@@ -12,7 +12,7 @@ body
 
 #contenedor{
 	
-	height: 1050px;
+	min-height: 1050px;
 	width: 780px;
 	margin-right: auto;
 	margin-left: auto;
@@ -20,7 +20,7 @@ body
 header, #banner, #noticias, #tienda, #marcas {
 	background: #fff;
 	width: 780px;
-	height: 100px;
+	min-height: 256px;
 }
 
 #banner{
@@ -134,27 +134,27 @@ vertical-align: top;
 
 }
 
-nav{
+nav.navegacion{
 	
-	width:150px;
+	width:100%;
 	height:50px;
 	background-color: red;
 
 }
 
-ul{
+nav.navegacion ul{
 
 	list-style: none;
 	width:850px;
 	height:40px;
 	text-decoration: none;
 }
-ul a {
+nav.navegacion ul a {
 	text-decoration: none;
 	color: #fff;
 }
 
-li{
+nav.navegacion li{
 	float:left;
 	width:156px;
 	height:40px;

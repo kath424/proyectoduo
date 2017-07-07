@@ -69,4 +69,5 @@
     <div><input name="login" type="submit" value="Inicio de Sesion"></div>  
     <div><input type="button" id="abc" value="Registrarse!" onclick="location='registro.php'"></div> 
    
-  </form> 
+</form> 
+
