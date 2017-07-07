@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-	<meta charset="=utf-8">
+	<meta http-equiv="Content-Type" content="text/html;charset=ANSI">
 	<meta name="keywords" content="pagina, html5, css3, maquetacion">
 	<meta name="description" content="esta es una pagina web con estilos css3">
 	<tittle> </tittle>
@@ -42,8 +42,7 @@
 
 
 
-
-					<li>
+					<!-- <li>
 						<div class="contenedor_general">
 
 							<div class="contenedor_uno">
@@ -52,6 +51,25 @@
 
 							<div class="contenedor_dos">
 								<p class="texto_dos"><a href="informacion.php">Informacion</a></p>
+							</div>
+
+						</div>
+					</li> -->
+
+					<li>
+						<div class="contenedor_general">
+
+							<div class="contenedor_uno">
+								<p class="texto_uno">
+									<a href="cursos.php">Cursos
+								 	</a>
+								 </p>
+							</div>
+
+							<div class="contenedor_dos">
+								<p class="texto_dos">
+									<a href="cursos.php">Cursos</a>
+								</p>
 							</div>
 
 						</div>

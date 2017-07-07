@@ -20,13 +20,13 @@ body
 header, #banner, #noticias, #tienda, #marcas {
 	background: #fff;
 	width: 780px;
-	min-height: 256px;
+	max-height: 256px;
 }
 
 #banner{
 	background: #666;
-	height: 300px;
-
+	min-height: 300px;
+	overflow: hidden;
 }
 
 #noticias{
@@ -199,9 +199,62 @@ p.texto_uno, p.texto_dos{
 
 
 
+.btn {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.btn-grande {font-size: 24px;}
+
+.btn:hover {background-color: #3e8e41}
+
+.btn:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+
+.btn.btn-verde{
+	background-color: #4CAF50; /* verde */
+}
+
+.btn.btn-blanco{
+	background-color: #FFFFFF; /* blanco */
+	color: #000000; /* blanco */
+}
 
 
 
+.izquireda{
+	float:left;
+}
+
+.derecha{
+	float:right;
+}
+
+label{
+	font-weight: bolder;
+}
+
+table, td, th {    
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    padding: 15px;
+}
 
 
 
