@@ -24,7 +24,7 @@
 		// connectarse a la base de datos
 		require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
-		$query = "SELECT id, clave, nombre, apellido, usuario FROM   usuarios  WHERE usuario =  '{$_POST['usuario']}'";
+		$query = "SELECT * FROM   usuarios  WHERE usuario =  '{$_POST['usuario']}'";
 		$resultado = $mysqli->query($query);
 
 		if($resultado){// fue exitoso
@@ -36,6 +36,7 @@
 				$_SESSION['nombre'] = $usuario->nombre;
 				$_SESSION['apellido'] = $usuario->apellido;
 				$_SESSION['usuario'] = $usuario->usuario;
+				$_SESSION['tipo_de_usuario'] = $usuario->tipo_de_usuario;
 
 				header("Location: index.php"); 
     			exit;
