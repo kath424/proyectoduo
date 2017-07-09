@@ -17,7 +17,7 @@ body
 	margin-right: auto;
 	margin-left: auto;
 }
-header, #banner, #noticias, #tienda, #marcas {
+header, #noticias, #tienda, #marcas {
 	background: #fff;
 	width: 780px;
 	max-height: 256px;
