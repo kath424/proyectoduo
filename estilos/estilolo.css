@@ -5,7 +5,6 @@
 
 }
 
-body
 
 #contenedor{
 	
@@ -23,11 +22,14 @@ body
 }
  
 *{ 
-    font-size: 14px; 
-} 
-body{ 
-background:#aaa; 
-} 
+    font-size: 14px;
+    font-family: sans-serif;
+}
+
+body{
+    background:#aaa;
+}
+
 form.login { 
     background: none repeat scroll 0 0 #F1F1F1; 
     border: 1px solid #DDDDDD; 
@@ -55,25 +57,35 @@ form.login div input[type="text"], form.login div input[type="password"] {
 form.login div input[type="submit"] { 
     background: none repeat scroll 0 0 #DEDEDE; 
     border: 1px solid #C6C6C6; 
-    float: center; 
+    float: right;
     font-weight: bold; 
     padding: 4px 20px; 
 } 
 form.login div input[type="button"] { 
     background: none repeat scroll 0 0 #DEDEDE; 
     border: 1px solid #C6C6C6; 
-    float: center; 
+    float: right;
     font-weight: bold; 
     padding: 4px 20px; 
 
 } 
 
-
-
-
 .error{ 
     color: red; 
     font-weight: bold; 
     margin: 10px; 
+    text-align: center;
+}
+
+footer{
+    background: #f21;
+    width: 780px;
+    height: 15px;
+    padding-top: 25px
+
+}
+footer p{
+    font-family: arial;
+    font-size: 10px;
     text-align: center;
 }

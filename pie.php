@@ -1,6 +1,6 @@
-<footer>
-        <p> Todos los derecho reservados <br>
-        </p>
+        <footer>
+            <p> Todos los derecho reservados <br>
+            </p>
         	
         </footer>
 
