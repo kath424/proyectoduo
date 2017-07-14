@@ -5,9 +5,11 @@
     <meta name="keywords" content="pagina, html5, css3, maquetacion">
     <meta name="description" content="esta es una pagina web con estilos css3">
     <title><?php echo isset($titulo) ? $titulo : '' ?></title>
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
     <?php foreach ($css as $styleSheet) { ?>
         <link rel="stylesheet" href="<?php echo $styleSheet; ?>"/>
     <?php } ?>
+
 </head>
 <body>
 <?php

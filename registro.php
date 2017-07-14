@@ -14,6 +14,7 @@ require('encabezado.php');
 ?>
 
 <?php
+require('conneccion.php');
 
 // si el usuario mando la forma de registracion
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -37,6 +38,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['apellido'] = $usuario->apellido;
         $_SESSION['usuario'] = $usuario->usuario;
         $_SESSION['tipo_de_usuario'] = $usuario->tipo_de_usuario;
+
+        // agregar todos los cursos de la tabla de cursos
+        // preparar valores a insertar (id de curso, id de estudiante)
+        $query = "SELECT id from cursos";
+        $cursos = $mysqli->query($query);
+        $cursos_stu = [];
+        while ($curso = $cursos->fetch_array())
+            $cursos_stu[] = "( {$curso['id']} , $usuario->id )";
+
+        $cursos_stu = implode(',', $cursos_stu);
+        // agregar cursos
+        $query = "INSERT INTO cursos_usuarios (cursos_id, usuarios_id) VALUES ".$cursos_stu;
+        $resultado = $mysqli->query($query);
 
         // mostrar preguntas de seguridad para recuperacion de cuenta
         header('Location: registro2.php');
