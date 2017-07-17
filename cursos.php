@@ -9,7 +9,7 @@ require('barra_de_navegacion.php');
 // connectarse a la base de datos
 require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
-// obtener cursos disponibles para este estudiante
+// obtener cursos disponibles para este usuario
 
 $query = "select c.* from usuarios  u"
     . " right join cursos_usuarios  cu"
@@ -127,15 +127,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 <section id="banner">
-    <div> <?php echo isset($mensaje) ? $mensaje : ''; ?> </div>
+    <div> <?= isset($mensaje) ? $mensaje : '' ?> </div>
     <div>
         <h2> Cursos </h2>
         <ul>
             <?php while ($curso = $cursos->fetch_array(MYSQLI_ASSOC)) { ?>
 
                 <li style="margin-left:20px;">
-                    <a href="cursos.php?id=<?php echo $curso['id']; ?>">
-                        <?php echo $curso["nombre"]; ?>
+                    <a href="cursos.php?id=<?= $curso['id'] ?>&nombre=<?= $curso['nombre'] ?>">
+                        <?= $curso["nombre"] ?>
                     </a>
                 </li>
 
@@ -160,15 +160,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <ul>
                 <?php while ($cap = $capitulos->fetch_array(MYSQLI_ASSOC)) { ?>
                     <li style="margin-left:20px;">
-                        <a href="capitulo_contenido.php?id=<?php echo $cap['id']; ?>&paso=1">
-                            <?php echo $cap['nombre'] ?>
+                        <a href="capitulo_contenido.php?id=<?= $cap['id'] ?>&curso=<?= $_GET['nombre'] ?>&capitulo=<?= $cap['nombre'] ?>&paso=1">
+                            <?= $cap['nombre'] ?>
                         </a>
                     </li>
                 <?php } ?>
             </ul>
         </div>
     <?php } else if (isset($_GET['id']) and $_SESSION['tipo_de_usuario'] == 'admin') { ?>
-        <form action="cursos.php?id=<?php echo $_GET['id']; ?>" method="POST">
+        <form action="cursos.php?id=<?= $_GET['id'] ?>" method="POST">
             <div>
                 <label>Ingrese numero de cedula</label>
                 <input type="text" name="cedula" placeholder="123123">
@@ -180,7 +180,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </form>
         <?php if (isset($estudiante)) { ?>
-            <h2><?php echo $estudiante[0]['nombre'] . ' , ' . $estudiante[0]['apellido']; ?></h2>
+            <h2><?= $estudiante[0]['nombre'] . ' , ' . $estudiante[0]['apellido'] ?></h2>
             <h3>Cursos</h3>
             <table>
                 <thead>
@@ -191,19 +191,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <tbody>
                 <?php foreach ($estudiante as $curso) { ?>
                     <tr>
-                        <td><?php echo $curso['nombre_curso']; ?></td>
+                        <td><?= $curso['nombre_curso'] ?></td>
                     </tr>
                 <?php } ?>
                 </tbody>
             </table>
-            <form action="cursos.php?id=<?php echo $_GET['id']; ?>" method="POST">
+            <form action="cursos.php?id=<?= $_GET['id'] ?>" method="POST">
                 <p> Agregar curso </p>
                 <div>
                     <label>Ingrese nombre del curso</label>
                     <input type="text" name="curso" placeholder="logica">
                     <!-- accion para saber que hacer en la parte de POST -->
                     <input type="text" name="accion" value="agregarCurso" style="display: none">
-                    <input type="text" name="estudiante_id" value="<?php echo $estudiante[0]['id'] ?>"
+                    <input type="text" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>"
                            style="display: none">
                 </div>
                 <div>
@@ -227,19 +227,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <tbody>
                 <?php foreach ($agrupados as $modulo => $info) { ?>
                     <tr>
-                        <td><?php echo $info['curso']; ?> </td>
-                        <td><?php echo $modulo; ?> </td>
-                        <td><?php echo $info['correctas']; ?></td>
-                        <td><?php echo $info['incorrectas']; ?></td>
-                        <td><?php echo $info['correctas'] + $info['incorrectas']; ?></td>
-                        <td><?php echo ($info['correctas'] / ($info['correctas'] + $info['incorrectas'])) * 100; ?>%
+                        <td><?= $info['curso'] ?> </td>
+                        <td><?= $modulo ?> </td>
+                        <td><?= $info['correctas'] ?></td>
+                        <td><?= $info['incorrectas'] ?></td>
+                        <td><?= $info['correctas'] + $info['incorrectas'] ?></td>
+                        <td><?= ($info['correctas'] / ($info['correctas'] + $info['incorrectas'])) * 100 ?>%
                         </td>
                         <td>
-                            <form action="cursos.php?id=<?php echo $_GET['id']; ?>" method="POST">
+                            <form action="cursos.php?id=<?= $_GET['id'] ?>" method="POST">
                                 <input type="submit" value="Reiniciar">
-                                <input type="text" name="estudiante_id" value="<?php echo $estudiante[0]['id']; ?>"
+                                <input type="text" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>"
                                        style="display: none">
-                                <input type="text" name="capitulo" value="<?php echo $modulo; ?>" style="display: none">
+                                <input type="text" name="capitulo" value="<?= $modulo ?>" style="display: none">
                                 <input type="text" name="accion" value="reiniciarEvaluacion" style="display: none">
                             </form>
 

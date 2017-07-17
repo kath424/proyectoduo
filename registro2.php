@@ -137,41 +137,41 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h4>Pregunta 1</h4>
         <div style="width: 100%">
             <label for="pregunta1"> Pregunta</label>
-            <input id="pregunta1"  name="pregunta1" value="<?php echo isset($_POST['pregunta1'])?$_POST['pregunta1']:'' ?>" >
+            <input id="pregunta1"  name="pregunta1" value="<?= isset($_POST['pregunta1'])?$_POST['pregunta1']:'' ?>" >
             <br />
             <label for="respuesta1"> Respuesta</label>
-            <input id="respuesta1" name="respuesta1" value="<?php echo isset($_POST['respuesta1'])?$_POST['respuesta1']:'' ?>" >
+            <input id="respuesta1" name="respuesta1" value="<?= isset($_POST['respuesta1'])?$_POST['respuesta1']:'' ?>" >
             <br />
             <br />
             <br />
 
-            <label style="color:red;"><?php echo isset($pregunta1_error)?$pregunta1_error:'' ?></label>
+            <label style="color:red;"><?= isset($pregunta1_error)?$pregunta1_error:'' ?></label>
         </div>
         <hr />
         <h4>Pregunta 2</h4>
         <div style="width: 100%">
             <label for="pregunta2"> Pregunta</label>
-            <input id="pregunta2" name="pregunta2" value="<?php echo isset($_POST['pregunta2'])?$_POST['pregunta2']:'' ?>" >
+            <input id="pregunta2" name="pregunta2" value="<?= isset($_POST['pregunta2'])?$_POST['pregunta2']:'' ?>" >
             <br />
             <label for="respuesta2"> Respuesta</label>
-            <input id="respuesta2" name="respuesta2" value="<?php echo isset($_POST['respuesta2'])?$_POST['respuesta2']:'' ?>" >
+            <input id="respuesta2" name="respuesta2" value="<?= isset($_POST['respuesta2'])?$_POST['respuesta2']:'' ?>" >
             <br />
             <br />
             <br />
-            <div style="color:red;"><?php echo isset($pregunta2_error)?$pregunta2_error:'' ?></div>
+            <div style="color:red;"><?= isset($pregunta2_error)?$pregunta2_error:'' ?></div>
         </div>
         <hr />
         <h4>Pregunta 2</h4>
         <div style="width: 100%">
             <label for="pregunta3"> Pregunta</label>
-            <input id="pregunta3" name="pregunta3" value="<?php echo isset($_POST['pregunta3'])?$_POST['pregunta3']:'' ?>" >
+            <input id="pregunta3" name="pregunta3" value="<?= isset($_POST['pregunta3'])?$_POST['pregunta3']:'' ?>" >
             <br />
             <label for="respuesta3"> Respuesta</label>
-            <input id="respuesta3" name="respuesta3" value="<?php echo isset($_POST['respuesta3'])?$_POST['respuesta3']:'' ?>" >
+            <input id="respuesta3" name="respuesta3" value="<?= isset($_POST['respuesta3'])?$_POST['respuesta3']:'' ?>" >
             <br />
             <br />
             <br />
-            <div style="color:red;"><?php echo isset($pregunta3_error)?$pregunta3_error:'' ?></div>
+            <div style="color:red;"><?= isset($pregunta3_error)?$pregunta3_error:'' ?></div>
         </div>
     </div>
     <div style="width: 100%;position:relative;">

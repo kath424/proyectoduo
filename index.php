@@ -66,19 +66,19 @@ if ($resultado) {
             <tbody>
             <?php foreach ($agrupados as $modulo => $info) { ?>
                 <tr>
-                    <td><?php echo $info['curso']; ?> </td>
-                    <td><?php echo $modulo; ?> </td>
-                    <td><?php echo $info['correctas']; ?></td>
-                    <td><?php echo $info['incorrectas']; ?></td>
-                    <td><?php echo $info['correctas'] + $info['incorrectas']; ?></td>
-                    <td><?php echo ($info['correctas'] / ($info['correctas'] + $info['incorrectas'])) * 100; ?>%</td>
+                    <td><?= $info['curso'] ?> </td>
+                    <td><?= $modulo ?> </td>
+                    <td><?= $info['correctas'] ?></td>
+                    <td><?= $info['incorrectas'] ?></td>
+                    <td><?= $info['correctas'] + $info['incorrectas'] ?></td>
+                    <td><?= ($info['correctas'] / ($info['correctas'] + $info['incorrectas'])) * 100 ?>%</td>
                 </tr>
             <?php } ?>
 
             </tbody>
         </table>
     </section>
-    <section id="banner" style="display:<?php echo intval($resultado->num_rows) == 0 ? 'block' : 'none'; ?>">
+    <section id="banner" style="display:<?= intval($resultado->num_rows) == 0 ? 'block' : 'none' ?>">
         <h1>No has tomado ninguna evaluacion</h1>
     </section>
     <!--     <section id="noticias">

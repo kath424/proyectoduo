@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // connectarse a la base de datos
     require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
-    echo $query_insertar;
+
     $resultado = $mysqli->query($query_insertar);
 
     if (!$resultado) {
@@ -62,16 +62,16 @@ if ($resultado) {
         <div id="banner">
             <?php while ($pregunta = $preguntas->fetch_array(MYSQLI_ASSOC)) { ?>
                 <div style="width: 100%; padding-top: 5px;">
-                    <label><?php echo $pregunta['pregunta']; ?></label><br>
+                    <label><?= $pregunta['pregunta'] ?></label><br>
                     <?php
                     $opciones = explode(',', $pregunta['opciones']);
                     for ($i = 0; $i < count($opciones); $i++) { ?>
                         <label>
                             <input type="radio"
-                                   name="<?php echo $pregunta['id']; ?>"
-                                   value="<?php echo $opciones[$i]; ?>"
+                                   name="<?= $pregunta['id'] ?>"
+                                   value="<?= $opciones[$i] ?>"
                             />
-                            <?php echo $opciones[$i]; ?>
+                            <?= $opciones[$i] ?>
                         </label>
                         <br>
                     <?php } ?>

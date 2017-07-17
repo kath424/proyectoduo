@@ -7,7 +7,7 @@
     <title><?php echo isset($titulo) ? $titulo : '' ?></title>
 <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />-->
     <?php foreach ($css as $styleSheet) { ?>
-        <link rel="stylesheet" href="<?php echo $styleSheet; ?>"/>
+        <link rel="stylesheet" href="<?= $styleSheet ?>"/>
     <?php } ?>
 
 </head>

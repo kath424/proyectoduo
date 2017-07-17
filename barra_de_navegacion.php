@@ -65,11 +65,11 @@
                 <?php if (isset($_SESSION['user_id'])) { ?>
                     <a href="#">
                         <div class="contenedor_uno">
-                            <p class="texto_uno"> <?php echo $_SESSION['usuario']; ?> </p>
+                            <p class="texto_uno"> <?= $_SESSION['usuario'] ?> </p>
                         </div>
 
                         <div class="contenedor_dos">
-                            <p class="texto_dos"> <?php echo $_SESSION['usuario']; ?> </p>
+                            <p class="texto_dos"> <?= $_SESSION['usuario'] ?> </p>
                         </div>
                     </a>
                 <?php } else { ?>
