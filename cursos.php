@@ -1,6 +1,6 @@
 <?php
 $titulo = "Cursos";
-$css = ['estilos/estilos.css'];
+$css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
 ?>
@@ -126,25 +126,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 
-<section id="banner">
+<div class="row">
     <div> <?= isset($mensaje) ? $mensaje : '' ?> </div>
-    <div>
-        <h2> Cursos </h2>
-        <ul>
+    <div class="col-sm-12">
+        <h2> Cursos
+            <small class="<?= $_SESSION['tipo_de_usuario'] == 'estudiante' ? '' : 'hidden' ?>">Seleccione uno para ver
+                los capitulos
+            </small>
+        </h2>
+        <div class="list-group">
             <?php while ($curso = $cursos->fetch_array(MYSQLI_ASSOC)) { ?>
 
-                <li style="margin-left:20px;">
-                    <a href="cursos.php?id=<?= $curso['id'] ?>&nombre=<?= $curso['nombre'] ?>">
-                        <?= $curso["nombre"] ?>
-                    </a>
-                </li>
+                <a class="list-group-item <?= (isset($_GET['id']) && $curso['id'] === $_GET['id']) ? 'active' : '' ?>"
+                   href="cursos.php?id=<?= $curso['id'] ?>&nombre=<?= $curso['nombre'] ?>">
+                    <?= $curso["nombre"] ?>
+                </a>
 
             <?php } ?>
-        </ul>
-    </div>
+        </div>
 
-    <?php if (isset($_GET['id']) and $_SESSION['tipo_de_usuario'] == 'estudiante') { ?>
-        <div>
+    </div>
+</div>
+<?php if (isset($_GET['id']) and $_SESSION['tipo_de_usuario'] == 'estudiante') { ?>
+    <div class="row">
+        <div class="col-sm-12">
             <?php
             $query_capitulos = "SELECT * FROM capitulos "
                 . " WHERE cursos_id = " . $_GET['id'];
@@ -156,113 +161,109 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $mensaje = "No Capitulos encontrados";
             }
             ?>
-            <h1> Capitulos </h1>
-            <ul>
+            <h2> Capitulos
+                <small>Seleccione uno para ver el contenido</small>
+            </h2>
+            <div class="list-group">
                 <?php while ($cap = $capitulos->fetch_array(MYSQLI_ASSOC)) { ?>
-                    <li style="margin-left:20px;">
-                        <a href="capitulo_contenido.php?id=<?= $cap['id'] ?>&curso=<?= $_GET['nombre'] ?>&capitulo=<?= $cap['nombre'] ?>&paso=1">
-                            <?= $cap['nombre'] ?>
-                        </a>
-                    </li>
+                    <a class="list-group-item"
+                       href="capitulo_contenido.php?id=<?= $cap['id'] ?>&curso=<?= $_GET['nombre'] ?>&capitulo=<?= $cap['nombre'] ?>&paso=1">
+                        <?= $cap['nombre'] ?>
+                    </a>
                 <?php } ?>
-            </ul>
+            </div>
         </div>
-    <?php } else if (isset($_GET['id']) and $_SESSION['tipo_de_usuario'] == 'admin') { ?>
-        <form action="cursos.php?id=<?= $_GET['id'] ?>" method="POST">
-            <div>
-                <label>Ingrese numero de cedula</label>
-                <input type="text" name="cedula" placeholder="123123">
-                <!-- accion para saber que hacer en la parte de POST -->
-                <input type="text" name="accion" value="obtenerEstudiante" style="display: none">
+    </div>
+<?php } else if ($_SESSION['tipo_de_usuario'] == 'admin') { ?>
+    <div class="row">
+        <form class="col-sm-12 form-inline " action="cursos.php" method="POST">
+            <!-- accion para saber que hacer en la parte de POST -->
+            <input type="text" class="hidden" name="accion" value="obtenerEstudiante">
+
+            <h3> Ingrese numero de cedula para obtener detalles de un estudiante</h3>
+            <div class="form-group">
+                <label for="cedula" class="control-label">Cedula:</label>
+                <input type="text" class="form-control" id="cedula" name="cedula" placeholder="123123"/>
             </div>
-            <div>
-                <input name="login" type="submit" value="Obtener Informacion"/>
-            </div>
+            <button class="btn btn-primary " type="submit"> Obtener Informacion <i
+                        class="glyphicon glyphicon-search"></i></button>
+
         </form>
-        <?php if (isset($estudiante)) { ?>
-            <h2><?= $estudiante[0]['nombre'] . ' , ' . $estudiante[0]['apellido'] ?></h2>
+    </div>
+<?php if (isset($estudiante)) { ?>
+    <div class="row">
+        <h2 class="text-capitalize text-center"><?= $estudiante[0]['nombre'] . ', ' . $estudiante[0]['apellido'] ?></h2>
+        <div class="col-sm-12 col-md-6">
             <h3>Cursos</h3>
-            <table>
-                <thead>
-                <tr>
-                    <th>nombre</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="list-group">
                 <?php foreach ($estudiante as $curso) { ?>
-                    <tr>
-                        <td><?= $curso['nombre_curso'] ?></td>
-                    </tr>
+                    <div class="list-group-item"><?= $curso['nombre_curso'] ?></div>
                 <?php } ?>
-                </tbody>
-            </table>
-            <form action="cursos.php?id=<?= $_GET['id'] ?>" method="POST">
-                <p> Agregar curso </p>
-                <div>
-                    <label>Ingrese nombre del curso</label>
-                    <input type="text" name="curso" placeholder="logica">
-                    <!-- accion para saber que hacer en la parte de POST -->
-                    <input type="text" name="accion" value="agregarCurso" style="display: none">
-                    <input type="text" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>"
-                           style="display: none">
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <h3> Agregar curso </h3>
+            <form action="cursos.php" method="POST">
+                <!-- accion para saber que hacer en la parte de POST -->
+                <input type="text" class="hidden" name="accion" value="agregarCurso">
+                <input type="text" class="hidden" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>">
+                <div class="form-group">
+                    <label for="curso" class="control-label">Ingrese nombre del curso:</label>
+                    <input id="curso" class="form-control" type="text" name="curso" placeholder="logica">
+                    <button class=" pull-right btn btn-primary" type="submit">Agregar <i
+                                class="glyphicon glyphicon-plus"></i></button>
                 </div>
-                <div>
-                    <input name="login" type="submit" value="Agregar"/>
-                </div>
+
             </form>
-            <hr/>
-            <h3>Evaluaciones</h3>
-            <table class="calificaciones">
-                <thead>
+        </div>
+    </div>
+<div class="row">
+    <div class="col-sm-12">
+        <h3>Evaluaciones</h3>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Curso</th>
+                <th>Modulo</th>
+                <th>Correctas</th>
+                <th>Incorrectas</th>
+                <th>#Preguntas</th>
+                <th>Calificacion</th>
+                <th class="text-center"><i class="glyphicon glyphicon-cog"></i></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($agrupados as $modulo => $info) { ?>
                 <tr>
-                    <th>Curso</th>
-                    <th>Modulo</th>
-                    <th>Correctas</th>
-                    <th>Incorrectas</th>
-                    <th>#Preguntas</th>
-                    <th>Calificacion</th>
-                    <th>Acciones</th>
+                    <td><?= $info['curso'] ?> </td>
+                    <td><?= $modulo ?> </td>
+                    <td><?= $info['correctas'] ?></td>
+                    <td><?= $info['incorrectas'] ?></td>
+                    <td><?= $info['correctas'] + $info['incorrectas'] ?></td>
+                    <td><?= ($info['correctas'] / ($info['correctas'] + $info['incorrectas'])) * 100 ?>%
+                    </td>
+                    <td class="text-center">
+                        <form action="cursos.php" method="POST">
+                            <!-- campos ocultos para saber  la accion y para quien es la accion -->
+                            <input type="text" class="hidden" name="capitulo" value="<?= $modulo ?>">
+                            <input type="text" class="hidden" name="accion" value="reiniciarEvaluacion">
+                            <input type="text" class="hidden" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>">
+                            <button class="btn btn-danger" type="submit">Reiniciar <i
+                                        class="glyphicon glyphicon-refresh"></i></button>
+                        </form>
+
+                    </td>
                 </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($agrupados as $modulo => $info) { ?>
-                    <tr>
-                        <td><?= $info['curso'] ?> </td>
-                        <td><?= $modulo ?> </td>
-                        <td><?= $info['correctas'] ?></td>
-                        <td><?= $info['incorrectas'] ?></td>
-                        <td><?= $info['correctas'] + $info['incorrectas'] ?></td>
-                        <td><?= ($info['correctas'] / ($info['correctas'] + $info['incorrectas'])) * 100 ?>%
-                        </td>
-                        <td>
-                            <form action="cursos.php?id=<?= $_GET['id'] ?>" method="POST">
-                                <input type="submit" value="Reiniciar">
-                                <input type="text" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>"
-                                       style="display: none">
-                                <input type="text" name="capitulo" value="<?= $modulo ?>" style="display: none">
-                                <input type="text" name="accion" value="reiniciarEvaluacion" style="display: none">
-                            </form>
+            <?php } ?>
 
-                        </td>
-                    </tr>
-                <?php } ?>
-
-                </tbody>
-            </table>
+            </tbody>
+        </table>
         <?php } ?>
-    <?php } ?>
+        <?php } ?>
+    </div>
+</div>
+</div>
 
-</section>
 
-
-<footer>
-    <p> Todos los derecho reservados <br>
-    </p>
-
-</footer>
-
-</section><!--contenedor-->
-
-</body>
-</html>
+<?php require('pie.php') ?>
 

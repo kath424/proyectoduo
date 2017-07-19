@@ -1,6 +1,6 @@
 <?php
 $titulo = "Pagina Inicial";
-$css = ['estilos/estilos.css'];
+$css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
 ?>
@@ -50,9 +50,9 @@ if ($resultado) {
 ?>
 
 
-    <section id="banner" style="display:<?php echo intval($resultado->num_rows) > 0 ? 'block' : 'none'; ?>">
+    <div class="col-sm-12  <?= intval($resultado->num_rows) > 0 ? '' : 'hidden' ?> ">
         <h2>Evaluaciones </h2>
-        <table class="calificaciones">
+        <table class="table table-bordered">
             <thead>
             <tr>
                 <th>Curso</th>
@@ -77,10 +77,10 @@ if ($resultado) {
 
             </tbody>
         </table>
-    </section>
-    <section id="banner" style="display:<?= intval($resultado->num_rows) == 0 ? 'block' : 'none' ?>">
+    </div>
+    <div class="col-sm-12 <?= intval($resultado->num_rows) == 0 ? '' : 'hidden' ?>">
         <h1>No has tomado ninguna evaluacion</h1>
-    </section>
+    </div>
     <!--     <section id="noticias">
             <article id="noticia1"></article>
             <article id="noticia2"></article>

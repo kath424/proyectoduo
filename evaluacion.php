@@ -1,6 +1,6 @@
 <?php
 $titulo = "Evaluacion";
-$css = ['estilos/estilos.css'];
+$css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
 ?>
@@ -56,34 +56,38 @@ if ($resultado) {
 
 
 ?>
-
-    <form action="evaluacion.php" method="POST">
-
-        <div id="banner">
-            <?php while ($pregunta = $preguntas->fetch_array(MYSQLI_ASSOC)) { ?>
-                <div style="width: 100%; padding-top: 5px;">
-                    <label><?= $pregunta['pregunta'] ?></label><br>
+    <div class="row">
+        <form class="col-sm-12" action="evaluacion.php" method="POST">
+            <!-- mostrar todas las preguntas como botones radio-->
+            <?php
+            $preguntaNum = 1;
+            while ($pregunta = $preguntas->fetch_array(MYSQLI_ASSOC)) { ?>
+                <div class="form-group">
+                    <h4><?= "$preguntaNum.-" . $pregunta['pregunta'] ?></h4>
                     <?php
                     $opciones = explode(',', $pregunta['opciones']);
                     for ($i = 0; $i < count($opciones); $i++) { ?>
-                        <label>
+                        <label for="pregunta<?= $pregunta['id'] . 'opcion' . $i ?>">
                             <input type="radio"
                                    name="<?= $pregunta['id'] ?>"
                                    value="<?= $opciones[$i] ?>"
+                                   id="pregunta<?= $pregunta['id'] . 'opcion' . $i ?>"
                             />
                             <?= $opciones[$i] ?>
                         </label>
                         <br>
                     <?php } ?>
                 </div>
-            <?php } ?>
+                <?php $preguntaNum++;
+            } ?>
 
-        </div>
-        <div style="width:100%; position:relative;">
-            <button type="submit" class="btn btn-verde btn-grande derecha ">
-                Entregar
-            </button>
-        </div>
-    </form>
+
+            <div>
+                <button type="submit" class="btn btn-primary btn-lg pull-right ">
+                    Entregar <i class="glyphicon glyphicon-check"></i>
+                </button>
+            </div>
+        </form>
+    </div>
 
 <?php require('pie.php'); ?>
