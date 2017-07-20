@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-07-2017 a las 14:26:02
+-- Tiempo de generación: 20-07-2017 a las 08:33:32
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -31,18 +31,19 @@ CREATE TABLE `capitulos` (
   `nombre` varchar(45) DEFAULT NULL,
   `numero` int(11) DEFAULT NULL,
   `cursos_id` int(11) NOT NULL,
-  `pasos` int(11) DEFAULT NULL
+  `pasos` int(11) DEFAULT NULL,
+  `puede_repetir` bit(1) DEFAULT b'0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `capitulos`
 --
 
-INSERT INTO `capitulos` (`id`, `nombre`, `numero`, `cursos_id`, `pasos`) VALUES
-(1, 'Logica Basica', 1, 2, 7),
-(2, 'Logica intermedia', 2, 2, NULL),
-(3, 'Logica Avanzada', 3, 2, NULL),
-(4, 'Logica Super Avanzada', 4, 2, NULL);
+INSERT INTO `capitulos` (`id`, `nombre`, `numero`, `cursos_id`, `pasos`, `puede_repetir`) VALUES
+(1, 'Logica Basica', 1, 2, 7, NULL),
+(2, 'Logica intermedia', 2, 2, NULL, NULL),
+(3, 'Logica Avanzada', 3, 2, NULL, NULL),
+(4, 'Logica Super Avanzada', 4, 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -61,7 +62,7 @@ CREATE TABLE `cursos` (
 
 INSERT INTO `cursos` (`id`, `nombre`) VALUES
 (1, 'Matematicas'),
-(2, 'Logica');
+(2, 'Logica I');
 
 -- --------------------------------------------------------
 
@@ -87,7 +88,12 @@ INSERT INTO `cursos_usuarios` (`cursos_id`, `usuarios_id`) VALUES
 (2, 3),
 (2, 4),
 (1, 19),
-(2, 19);
+(2, 19),
+(1, 20),
+(2, 20),
+(1, 21),
+(2, 21),
+(1, 4);
 
 -- --------------------------------------------------------
 
@@ -107,11 +113,11 @@ CREATE TABLE `estudiante_respuestas` (
 --
 
 INSERT INTO `estudiante_respuestas` (`id`, `respuesta`, `usuarios_id`, `preguntas_id`) VALUES
-(42, 'molecular', 3, 1),
-(43, 'molecular', 3, 2),
-(44, 'atomica', 3, 3),
-(45, 'atomica', 3, 4),
-(46, 'molecular', 3, 5);
+(52, 'atomica', 4, 1),
+(53, 'molecular', 4, 2),
+(54, 'atomica', 4, 3),
+(55, 'atomica', 4, 4),
+(56, 'molecular', 4, 5);
 
 -- --------------------------------------------------------
 
@@ -170,7 +176,9 @@ INSERT INTO `preguntas_de_seguridad` (`id`, `pregunta`, `respuesta`, `usuarios_i
 (3, 'asdasd', 'asdasd', 4),
 (4, 'como me llamo?', 'safenet', 19),
 (5, 'como me llamo?', 'safenet', 19),
-(6, 'como me llamo?', 'safenet', 19);
+(6, 'como me llamo?', 'safenet', 19),
+(10, 'como me llamo?', 'katherine', 21),
+(11, 'como se llama mi mama?', 'senora katherine', 21);
 
 -- --------------------------------------------------------
 
@@ -187,7 +195,7 @@ CREATE TABLE `usuarios` (
   `clave` varchar(45) DEFAULT NULL,
   `cedula` varchar(45) DEFAULT NULL,
   `creado` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `actualizado` timestamp NULL DEFAULT CURRENT_TIMESTAMP
+  `actualizado` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -198,9 +206,11 @@ INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `tipo_de_usuario`, `usuario`
 (1, 'admin', 'admin', 'admin', 'administrador', 'clave', NULL, '2017-07-06 07:15:43', '2017-07-06 07:15:43'),
 (2, 'maestro', 'maestro', 'maestro', 'maestro', 'clave', NULL, '2017-07-06 07:15:43', '2017-07-06 07:15:43'),
 (3, 'kath', 'acosta', 'estudiante', 'katherinelabeibi', 'vision', '12343', '2017-07-06 07:16:10', '2017-07-06 07:16:10'),
-(4, 'adrian', 'galicia', 'estudiante', 'adrianplusplus', 'clave', '123234345', '2017-07-06 07:16:35', '2017-07-06 07:16:35'),
+(4, 'adrian', 'galicia', 'estudiante', 'adrianplusplus', 'vision', '123234345', '2017-07-06 07:16:35', '2017-07-06 07:16:35'),
 (18, 'adrian', 'galicia', 'estudiante', 'adrian++', 'vision', '101010', '2017-07-09 18:49:00', '2017-07-09 18:49:00'),
-(19, 'safe', 'net', 'estudiante', 'safenet', 'clave', '999', '2017-07-14 12:19:34', '2017-07-14 12:19:34');
+(19, 'safe', 'net', 'estudiante', 'safenet', 'clave', '999', '2017-07-14 12:19:34', '2017-07-14 12:19:34'),
+(20, '', '', 'estudiante', '', '', '', '2017-07-17 09:01:48', NULL),
+(21, 'katherine', 'acosta', 'estudiante', 'acosta123', 'clave', '12345', '2017-07-17 09:15:59', NULL);
 
 --
 -- Índices para tablas volcadas
@@ -274,7 +284,7 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de la tabla `estudiante_respuestas`
 --
 ALTER TABLE `estudiante_respuestas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
@@ -284,12 +294,12 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `preguntas_de_seguridad`
 --
 ALTER TABLE `preguntas_de_seguridad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 --
 -- Restricciones para tablas volcadas
 --
