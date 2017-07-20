@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=ANSI">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="keywords" content="pagina, html5, css3, maquetacion">
     <meta name="description" content="esta es una pagina web con estilos css3">
     <title><?= isset($titulo) ? $titulo : '' ?></title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <?php foreach ($css as $estilo) { ?>
         <link rel="stylesheet" href="<?= $estilo ?>"/>
     <?php } ?>
@@ -18,15 +18,14 @@ if (!isset($_SESSION))
     session_start();
 ?>
 
-<style >
-    /* bootstrap 3 helpers */
+<style>
     .navbar-form input, .form-inline input {
-        width:auto;
+        width: auto;
     }
 
     header {
-        height:250px;
-        background-image: url("img/logo1.jpg");
+        height: 250px;
+        /*background-image: url("img/logo1.jpg");*/
         margin-bottom: 0;
         min-height: 50%;
         background-repeat: no-repeat;
@@ -39,20 +38,7 @@ if (!isset($_SESSION))
         position: fixed;
         top: 0;
         width: 100%;
-        z-index:10;
-    }
-    .jumbotron {
-
-        background-color: transparent;
-        margin-bottom: 0;
-        min-height: 50%;
-        background-repeat: no-repeat;
-        background-position: center;
-        -webkit-background-size: cover;
-        background-size: cover;
-    }
-    .jumbotron > h1{
-        color:transparent;
+        z-index: 10;
     }
 
 </style>
@@ -68,7 +54,7 @@ if (!isset($_SESSION))
 <section class="container">
 
     <header class="masthead">
-
+        <img  src="img/logo1.jpg" alt="banner" style="height: 100%;width: 100%">
     </header>
 
 
