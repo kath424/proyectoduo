@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-07-2017 a las 08:33:32
+-- Tiempo de generación: 21-07-2017 a las 11:06:21
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -108,17 +108,6 @@ CREATE TABLE `estudiante_respuestas` (
   `preguntas_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `estudiante_respuestas`
---
-
-INSERT INTO `estudiante_respuestas` (`id`, `respuesta`, `usuarios_id`, `preguntas_id`) VALUES
-(52, 'atomica', 4, 1),
-(53, 'molecular', 4, 2),
-(54, 'atomica', 4, 3),
-(55, 'atomica', 4, 4),
-(56, 'molecular', 4, 5);
-
 -- --------------------------------------------------------
 
 --
@@ -195,22 +184,24 @@ CREATE TABLE `usuarios` (
   `clave` varchar(45) DEFAULT NULL,
   `cedula` varchar(45) DEFAULT NULL,
   `creado` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `actualizado` timestamp NULL DEFAULT NULL
+  `ultimo_logeo` timestamp NULL DEFAULT NULL,
+  `ultima_actividad` timestamp NULL DEFAULT NULL,
+  `ultima_actividad_descripcion` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `tipo_de_usuario`, `usuario`, `clave`, `cedula`, `creado`, `actualizado`) VALUES
-(1, 'admin', 'admin', 'admin', 'administrador', 'clave', NULL, '2017-07-06 07:15:43', '2017-07-06 07:15:43'),
-(2, 'maestro', 'maestro', 'maestro', 'maestro', 'clave', NULL, '2017-07-06 07:15:43', '2017-07-06 07:15:43'),
-(3, 'kath', 'acosta', 'estudiante', 'katherinelabeibi', 'vision', '12343', '2017-07-06 07:16:10', '2017-07-06 07:16:10'),
-(4, 'adrian', 'galicia', 'estudiante', 'adrianplusplus', 'vision', '123234345', '2017-07-06 07:16:35', '2017-07-06 07:16:35'),
-(18, 'adrian', 'galicia', 'estudiante', 'adrian++', 'vision', '101010', '2017-07-09 18:49:00', '2017-07-09 18:49:00'),
-(19, 'safe', 'net', 'estudiante', 'safenet', 'clave', '999', '2017-07-14 12:19:34', '2017-07-14 12:19:34'),
-(20, '', '', 'estudiante', '', '', '', '2017-07-17 09:01:48', NULL),
-(21, 'katherine', 'acosta', 'estudiante', 'acosta123', 'clave', '12345', '2017-07-17 09:15:59', NULL);
+INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `tipo_de_usuario`, `usuario`, `clave`, `cedula`, `creado`, `ultimo_logeo`, `ultima_actividad`, `ultima_actividad_descripcion`) VALUES
+(1, 'admin', 'admin', 'admin', 'administrador', 'clave', NULL, '2017-07-06 07:15:43', '2017-07-21 15:45:36', '2017-07-21 15:46:58', 'Cursos'),
+(2, 'maestro', 'maestro', 'maestro', 'maestro', 'clave', NULL, '2017-07-06 07:15:43', '2017-07-06 07:15:43', NULL, NULL),
+(3, 'kath', 'acosta', 'estudiante', 'katherinelabeibi', 'vision', '12343', '2017-07-06 07:16:10', '2017-07-06 07:16:10', NULL, NULL),
+(4, 'adrian', 'galicia', 'estudiante', 'adrianplusplus', 'vision', '123234345', '2017-07-06 07:16:35', '2017-07-21 15:47:12', '2017-07-21 15:47:12', 'Evaluacion'),
+(18, 'adrian', 'galicia', 'estudiante', 'adrian++', 'vision', '101010', '2017-07-09 18:49:00', '2017-07-09 18:49:00', NULL, NULL),
+(19, 'safe', 'net', 'estudiante', 'safenet', 'clave', '999', '2017-07-14 12:19:34', '2017-07-14 12:19:34', NULL, NULL),
+(20, '', '', 'estudiante', '', '', '', '2017-07-17 09:01:48', NULL, NULL, NULL),
+(21, 'katherine', 'acosta', 'estudiante', 'acosta123', 'clave', '12345', '2017-07-17 09:15:59', NULL, NULL, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -284,7 +275,7 @@ ALTER TABLE `cursos`
 -- AUTO_INCREMENT de la tabla `estudiante_respuestas`
 --
 ALTER TABLE `estudiante_respuestas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 --
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
@@ -294,7 +285,7 @@ ALTER TABLE `preguntas`
 -- AUTO_INCREMENT de la tabla `preguntas_de_seguridad`
 --
 ALTER TABLE `preguntas_de_seguridad`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
