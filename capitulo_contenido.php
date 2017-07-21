@@ -40,19 +40,19 @@ if ($capitulo) {
             <?php if (intval($_GET['paso']) > 1) { ?>
                 <a class="btn btn-primary pull-left"
                    href="capitulo_contenido.php?id=<?= $_GET['id'] ?>&curso=<?= $_GET['curso'] ?>&capitulo=<?= $_GET['capitulo'] ?>&paso=<?= intval($_GET['paso']) - 1 ?>">
-                    <i class="glyphicon glyphicon-arrow-left"></i> previous </a>
+                    <i class="glyphicon glyphicon-arrow-left"></i> Previo </a>
             <?php } ?>
             <a class="btn btn-primary pull-right"
                href="capitulo_contenido.php?id=<?= $_GET['id'] ?>&curso=<?= $_GET['curso'] ?>&capitulo=<?= $_GET['capitulo'] ?>&paso=<?= intval($_GET['paso']) + 1 ?>">
-                siguiente  <i class="glyphicon glyphicon-arrow-right"></i> </a>
+                Siguiente  <i class="glyphicon glyphicon-arrow-right"></i> </a>
         </div>
     </div>
 
-    <!--terminamos de ver el contenido, mostrar boton para tomar pruva-->
+    <!--terminamos de ver el contenido, mostrar boton para tomar prueva-->
 <?php } else { ?>
 
     <?php
-    // ver si el usuario ya tiene respuestas para este curso-capitulo (ya tomo la prueva anteriormente
+    // ver si el usuario ya tiene respuestas para este curso-capitulo (ya tomo la prueva anteriormente)
     $respuestas = [];
     $respuestas_query = "SELECT er.id FROM estudiante_respuestas er"
         . " LEFT JOIN preguntas p"
@@ -75,8 +75,11 @@ if ($capitulo) {
         </div>
         <div class="text-center">
 
+            <!-- Hay respuestas, mostrar boton prueva realizada -->
             <?php if ($respuestas->num_rows > 0) { ?>
                 <div class="btn btn-warning btn-lg"> Prueba Realizada</div>
+
+                <!-- no hay respuestas, mostrar boton para comenzar prueva -->
             <?php } else { ?>
                 <a class="btn btn-primary btn-lg " href="evaluacion.php?id=<?= $_GET['id'] ?>">
                     Realizar Evaluacion Ahora</a>

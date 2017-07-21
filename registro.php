@@ -36,6 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $_SESSION['apellido'] = $usuario->apellido;
         $_SESSION['usuario'] = $usuario->usuario;
         $_SESSION['tipo_de_usuario'] = $usuario->tipo_de_usuario;
+        $_SESSION['tiempo_de_entrada'] = time();
+
+        actualizarUltimoLogeo($usuario->id, $_SESSION['tiempo_de_entrada'], $titulo);
 
         // agregar todos los cursos de la tabla de cursos
         // preparar valores a insertar (id de curso, id de estudiante)

@@ -1,0 +1,31 @@
+.container{
+    background-color: #eee;
+}
+
+.navbar-form input, .form-inline input {
+    width: auto;
+}
+
+header {
+    /*height: 250px;*/
+    /*background-image: url("img/logo1.jpg");*/
+    margin-bottom: 0;
+    min-height: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+#nav.affix {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+header .banner{
+    height: 70%;
+    width: 100%;
+}

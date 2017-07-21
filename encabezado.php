@@ -6,55 +6,48 @@
     <meta name="description" content="esta es una pagina web con estilos css3">
     <title><?= isset($titulo) ? $titulo : '' ?></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="estilos/estilogeneral.css"/>
     <?php foreach ($css as $estilo) { ?>
         <link rel="stylesheet" href="<?= $estilo ?>"/>
     <?php } ?>
 
 </head>
 <body>
+
+<?php
+function actualizarUltimoLogeo($idUsuario, $tiempo, $actividad)
+{
+    $tiempo = date('Y-m-d H:i:s',$tiempo);
+    $query = "UPDATE usuarios SET ultimo_logeo = '$tiempo', ultima_actividad = '$tiempo',  ultima_actividad_descripcion = '$actividad' WHERE id = $idUsuario";
+    require('conneccion.php');
+    $mysqli->query($query);
+
+}
+
+function actualizarUltimaActividad($idUsuario, $tiempo, $actividad){
+    $tiempo = date('Y-m-d H:i:s',$tiempo);
+    $query = "UPDATE usuarios SET  ultima_actividad = '$tiempo', ultima_actividad_descripcion = '$actividad' WHERE id = $idUsuario ";
+    require('conneccion.php');
+    $mysqli->query($query,MYSQLI_ASYNC);
+}
+
+?>
+
 <?php
 // permite accessar $_SESSION para saber si el usuario esta logeado
 if (!isset($_SESSION))
     session_start();
+    // usuario esta logeado?,  actualizar el tiempo de su  ultima actividad
+    if(isset($_SESSION['user_id'])){
+        actualizarUltimaActividad($_SESSION['user_id'], time(), $titulo);
+    }
 ?>
 
-<style>
-    .navbar-form input, .form-inline input {
-        width: auto;
-    }
-
-    header {
-        height: 250px;
-        /*background-image: url("img/logo1.jpg");*/
-        margin-bottom: 0;
-        min-height: 50%;
-        background-repeat: no-repeat;
-        background-position: center;
-        -webkit-background-size: cover;
-        background-size: cover;
-    }
-
-    #nav.affix {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 10;
-    }
-
-</style>
-
-
-<!--<header>-->
-<!--    <h1>-->
-<!--        <a href="index.php"><img src="img/logo1.jpg" width="780" height="200" alt="logo1.jpg">-->
-<!--        </a>-->
-<!--    </h1>-->
-<!--</header>-->
 
 <section class="container">
 
     <header class="masthead">
-        <img  src="img/logo1.jpg" alt="banner" style="height: 100%;width: 100%">
+        <img class="banner" src="img/logo1.jpg" alt="banner"/>
     </header>
 
 

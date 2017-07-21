@@ -3,37 +3,64 @@ $titulo = "Evaluacion";
 $css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
+
+
+
 ?>
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // name =  id de la pregunta
-    // value = respuesta
-    $userId = $_SESSION['user_id'];
-    $query_insertar = "INSERT INTO estudiante_respuestas (respuesta, usuarios_id, preguntas_id) VALUES ";
-    $numItems = count($_POST);
-    $i = 0;
-    foreach ($_POST as $name => $value) {
-        $query_insertar .= "( '$value', $userId, $name  ) ";
-        if (++$i !== $numItems) {
-            $query_insertar .= ', ';
+    // verificar que el estudiante tomo menos de 2 horas para hacer el examen
+    $tiempoTomadoParaPrueva = time() - $_SESSION['empezo_prueva'];
+    $unaHora = 60*60;
+    if($tiempoTomadoParaPrueva >= $unaHora){
+        // se paso de tiempo
+        $mensaje = "Tiempo limite excedido, Comienza de nuevo";
+        //
+    }else{
+        // tardo menos de 2 horas, guardar informacion y mandar al inicio
+        // name =  id de la pregunta
+        // value = respuesta
+        $mensaje = "Tiempo fue menor a 2 horas";
+
+        $userId = $_SESSION['user_id'];
+        $query_insertar = "INSERT INTO estudiante_respuestas (respuesta, usuarios_id, preguntas_id) VALUES ";
+        $numItems = count($_POST);
+        $i = 0;
+        foreach ($_POST as $name => $value) {
+            $query_insertar .= "( '$value', $userId, $name  ) ";
+            if (++$i !== $numItems) {
+                $query_insertar .= ', ';
+            }
         }
+
+        // connectarse a la base de datos
+        require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
+
+        $resultado = $mysqli->query($query_insertar);
+
+        if (!$resultado) {
+            echo "No se pudieron guardar sus respuestas <br />";
+            echo "Regrese y vuelva a intentar mas tarde;";
+        } else {
+            echo "Sus respuestas se guardaron correctamente";
+        }
+        header("Location: index.php");
+        exit;
     }
 
-    // connectarse a la base de datos
-    require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
-    $resultado = $mysqli->query($query_insertar);
 
-    if (!$resultado) {
-        echo "No se pudieron guardar sus respuestas <br />";
-        echo "Regrese y vuelva a intentar mas tarde;";
-    } else {
-        echo "Sus respuestas se guardaron correctamente";
+}
+else if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+    //entro al examen
+
+    // si no ha empezado la evaluacion, iniciar tiempo
+    if(! isset($_SESSION['empezo_prueva'])){
+        $_SESSION['empezo_prueva'] = time();
+        // refrescar session
+        actualizarUltimoLogeo($_SESSION['user_id'], $_SESSION['empezo_prueva'], $titulo);
     }
-    header("Location: index.php");
-    exit;
-
 }
 ?>
 
@@ -56,6 +83,10 @@ if ($resultado) {
 
 
 ?>
+    <h2 class="text-center">Tiempo Restante : <span id="tiempoRestante"></span><small>(mm:ss)</small> </h2>
+    <div class="alert alert-warning <?= !isset($mensaje)?'hidden':'' ?>">
+        <p><?= isset($mensaje)?$mensaje:'' ?></p>
+    </div>
     <div class="row">
         <form class="col-sm-12" action="evaluacion.php" method="POST">
             <!-- mostrar todas las preguntas como botones radio-->
@@ -83,11 +114,43 @@ if ($resultado) {
 
 
             <div>
-                <button type="submit" class="btn btn-primary btn-lg pull-right ">
+                <button type="submit" class="btn btn-primary btn-lg pull-right " id="botonEntregarExamen">
                     Entregar <i class="glyphicon glyphicon-check"></i>
                 </button>
             </div>
         </form>
     </div>
 
+
+
 <?php require('pie.php'); ?>
+
+<script>
+    function ponerTiempoRestanteEnPantalla() {
+        var inicioEvaluacion = parseInt(<?= $_SESSION['empezo_prueva'] ?>);
+
+        var ahora = parseInt((new Date).getTime() / 1000);
+
+        var tiempoRestante = 60*60 - ( ahora - inicioEvaluacion);
+
+        if(tiempoRestante <= 0 ){
+            $("#botonEntregarExamen").click();
+        }
+
+        var minutes = Math.floor(tiempoRestante / 60);
+        var seconds = tiempoRestante % 60;
+
+        //Anteponiendo un 0 a los minutos si son menos de 10
+        minutes = minutes < 10 ? '0' + minutes : minutes;
+
+        //Anteponiendo un 0 a los segundos si son menos de 10
+        seconds = seconds < 10 ? '0' + seconds : seconds;
+
+        var result = minutes + ":" + seconds ;  // 161:30
+        $("#tiempoRestante").html(result)
+    }
+    ponerTiempoRestanteEnPantalla();
+    setInterval(ponerTiempoRestanteEnPantalla,1000);
+
+
+</script>
