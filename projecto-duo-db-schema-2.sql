@@ -20,11 +20,17 @@ SET time_zone = "+00:00";
 -- Base de datos: `projecto_duo_db`
 --
 
+DROP DATABASE IF EXISTS `projecto_duo_db`;
+CREATE DATABASE IF NOT EXISTS `projecto_duo_db` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `projecto_duo_db`;
+
 -- --------------------------------------------------------
 
 --
 -- Estructura de tabla para la tabla `capitulos`
 --
+
+
 
 CREATE TABLE `capitulos` (
   `id` int(11) NOT NULL,
