@@ -6,52 +6,16 @@ require('barra_de_navegacion.php');
 ?>
 
 <?php
-// connectarse a la base de datos
 require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
-$agrupados = [];
-$query_respondidas = "select cur.nombre as curso,  c.nombre as modulo, c.numero,  "
-    . " case when p.respuesta = er.respuesta then 'correcto' else 'incorrecto' end as correcto,"
-    . " count(*) as conteo"
-    . " from estudiante_respuestas er "
-    . " left join preguntas p"
-    . " on p.id = er.preguntas_id"
-    . " left join capitulos c"
-    . " on p.capitulos_id = c.id"
-    . " left join cursos cur"
-    . " on c.cursos_id = cur.id"
-    . " where er.usuarios_id = " . $_SESSION['user_id']
-    . " group by capitulos_id, correcto";
 
-$resultado = $mysqli->query($query_respondidas);
-if ($resultado) {
 
-    while ($pregunta = $resultado->fetch_array(MYSQLI_ASSOC)) {
-        if (!isset($agrupados[$pregunta['modulo']])) {
-            $agrupados[$pregunta['modulo']] = [
-                'curso' => $pregunta['curso'],
-                'numero' => $pregunta['numero'],
-                'correctas' => 0,
-                'incorrectas' => 0,
-            ];
-        }
-        if ($pregunta['correcto'] == 'correcto') {
-            $agrupados[$pregunta['modulo']]['correctas'] = $pregunta['conteo'];
-        } else {
-            $agrupados[$pregunta['modulo']]['incorrectas'] = $pregunta['conteo'];
-        }
-    }
-} else {
-    $mensaje = "No has tomado ninguna evaluacion";
-}
-
-// agrupar por capitulo (1 set de preguntas por capitulo)
-
+$agrupados = obtererCalificaciones($_SESSION['user_id'], $mysqli);
 
 ?>
 
 
-    <div class="col-sm-12  <?= intval($resultado->num_rows) > 0 ? '' : 'hidden' ?> ">
-        <h2>Evaluaciones </h2>
+    <div class="col-sm-12  <?= $agrupados? '' : 'hidden' ?> ">
+        <h2 class="h2">Evaluaciones </h2>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -65,41 +29,30 @@ if ($resultado) {
             </thead>
             <tbody>
             <?php foreach ($agrupados as $modulo => $info) { ?>
-                <tr>
+                <tr class="<?= ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) ? 'bg-danger' : '' ?> ">
                     <td><?= $info['curso'] ?> </td>
                     <td><?= $modulo ?> </td>
                     <td><?= $info['correctas'] ?></td>
                     <td><?= $info['incorrectas'] ?></td>
-                    <td><?= $info['correctas'] + $info['incorrectas'] ?></td>
-                    <td><?= ($info['correctas'] / ($info['correctas'] + $info['incorrectas'])) * 100 ?>%</td>
+                    <td><?= $info['total'] ?></td>
+                    <td>
+                        <?php
+                        if ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) {
+                            echo "N/A";
+                        } else {
+                            echo ($info['correctas'] / ($info['total'])) * 100 . '%';
+                        }
+                        ?>
+                    </td>
                 </tr>
             <?php } ?>
 
             </tbody>
         </table>
     </div>
-    <div class="col-sm-12 <?= intval($resultado->num_rows) == 0 ? '' : 'hidden' ?>">
-        <h1>No has tomado ninguna evaluacion</h1>
+    <div class="col-sm-12 <?= !$agrupados? '' : 'hidden' ?>">
+        <h1 class="h1">No has tomado ninguna evaluacion</h1>
     </div>
-    <!--     <section id="noticias">
-            <article id="noticia1"></article>
-            <article id="noticia2"></article>
-            <article id="noticia3"></article>
-            <div class="espacio"></div>
 
-        </section>
-
-        <section id="tienda">
-            <article id="producto1"></article>
-            <article id="producto2"></article>
-            <article id="producto3"></article>
-            <article id="producto4"></article>
-            <div class="espacio"></div>
-
-
-        </section>
-        <section id="marcas">
-
-        </section> -->
 
 <?php require('pie.php'); ?>

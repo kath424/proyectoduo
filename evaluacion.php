@@ -71,7 +71,7 @@ require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a
 // obtener capitulo
 
 $query_preguntas = "SELECT * FROM preguntas "
-    . " WHERE capitulos_id = " . $_GET['id'] . " LIMIT 5";
+    . " WHERE capitulos_id = " . $_GET['id'] ;
 
 
 $resultado = $mysqli->query($query_preguntas);

@@ -46,38 +46,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $estudiante[] = $est;
 
                 // obtener evaluacione del estudiante
-                $query_respondidas = "select cur.nombre as curso,  c.nombre as modulo, c.numero,  "
-                    . " case when p.respuesta = er.respuesta then 'correcto' else 'incorrecto' end as correcto,"
-                    . " count(*) as conteo"
-                    . " from estudiante_respuestas er "
-                    . " left join preguntas p"
-                    . " on p.id = er.preguntas_id"
-                    . " left join capitulos c"
-                    . " on p.capitulos_id = c.id"
-                    . " left join cursos cur"
-                    . " on c.cursos_id = cur.id"
-                    . " where er.usuarios_id = " . $estudiante[0]['id']
-                    . " group by capitulos_id, correcto";
+                $agrupados = obtererCalificaciones($estudiante[0]['id'], $mysqli);
 
-                $resultado = $mysqli->query($query_respondidas);
-                if ($resultado) {
-                    $agrupados = [];
-                    while ($pregunta = $resultado->fetch_array(MYSQLI_ASSOC)) {
-                        if (!isset($agrupados[$pregunta['modulo']])) {
-                            $agrupados[$pregunta['modulo']] = [
-                                'curso' => $pregunta['curso'],
-                                'numero' => $pregunta['numero'],
-                                'correctas' => 0,
-                                'incorrectas' => 0,
-                            ];
-                        }
-                        if ($pregunta['correcto'] == 'correcto') {
-                            $agrupados[$pregunta['modulo']]['correctas'] = $pregunta['conteo'];
-                        } else {
-                            $agrupados[$pregunta['modulo']]['incorrectas'] = $pregunta['conteo'];
-                        }
-                    }
-                } else {
+                if (!$agrupados) {
                     $mensaje = "No has tomado ninguna evaluacion";
                 }
             }
@@ -234,14 +205,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </thead>
             <tbody>
             <?php foreach ($agrupados as $modulo => $info) { ?>
-                <tr>
+                <tr class="<?= ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) ? 'bg-danger' : '' ?> ">
                     <td><?= $info['curso'] ?> </td>
                     <td><?= $modulo ?> </td>
                     <td><?= $info['correctas'] ?></td>
                     <td><?= $info['incorrectas'] ?></td>
-                    <td><?= $info['correctas'] + $info['incorrectas'] ?></td>
-                    <td><?= ($info['correctas'] / ($info['correctas'] + $info['incorrectas'])) * 100 ?>%
-                    </td>
+                    <td><?= $info['total'] ?></td>
+                    <td>
+                        <?php
+                        if ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) {
+                            echo "N/A";
+                        } else {
+                            echo ($info['correctas'] / ($info['total'])) * 100 . '%';
+                        }
+                        ?>
+                    </td>                    </td>
                     <td class="text-center">
                         <form action="cursos.php" method="POST">
                             <!-- campos ocultos para saber  la accion y para quien es la accion -->
