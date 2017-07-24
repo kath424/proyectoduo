@@ -2,6 +2,8 @@
 <html lang="es">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="pagina, html5, css3, maquetacion">
     <meta name="description" content="esta es una pagina web con estilos css3">
     <title><?= isset($titulo) ? $titulo : '' ?></title>
