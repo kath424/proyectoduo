@@ -13,7 +13,7 @@ require('barra_de_navegacion.php');
 ?>
 
 <?php
-// connectarse a la base de datos
+// conectarse a la base de datos
 require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
 // obtener cursos disponibles para este usuario
@@ -174,6 +174,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['tipo_de_usuario'] === 'adm
                     <?php } ?>
                 </table>
             </div>
+            <?php if(isset($_GET['accion']) &&  $_GET['accion'] === 'agregarPreguntas') { ?>
+            <div class="col-sm-12">
+                <h3>Agregar Preguntas</h3>
+                <form action="cursos.php" method="GET">
+
+                </form>
+            </div>
+            <?php } ?>
             <div class="col-sm-12 col-md-6">
                 <h3>Agregar Evaluacion/Capitulo</h3>
                 <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre']?>" method="POST">
