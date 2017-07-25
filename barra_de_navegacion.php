@@ -1,6 +1,6 @@
 <!-- Begin Navbar -->
 <div id="nav">
-    <div class="navbar navbar-default">
+    <div class="navbar navbar-inverse">
         <div class="">
             <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
             <div class="navbar-header">
@@ -18,7 +18,7 @@
                     <li><a href="cursos.php">Cursos</a></li>
                     <li><a href="contactos.php">Contactos</a></li>
                     <?php if (isset($_SESSION['user_id'])) { ?>
-                        <li><a href="#"><?= $_SESSION['usuario'] ?></a></li>
+                        <li><a href="#"><?= $_SESSION['usuario'] ?> (<?= $_SESSION['tipo_de_usuario'] ?>)</a></li>
                         <li><a href="logout.php">Cerrar Sesion</a></li>
                     <?php } else { ?>
                         <li><a href="registro.php">Registro</a></li>

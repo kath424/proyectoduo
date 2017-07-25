@@ -30,15 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $usuario = $resultado->fetch_object();
 
         // logear usario para que llene las preguntas de recuperacion
-        session_start();
         $_SESSION['user_id'] = $usuario->id;
         $_SESSION['nombre'] = $usuario->nombre;
         $_SESSION['apellido'] = $usuario->apellido;
         $_SESSION['usuario'] = $usuario->usuario;
         $_SESSION['tipo_de_usuario'] = $usuario->tipo_de_usuario;
-        $_SESSION['tiempo_de_entrada'] = time();
+        $_SESSION['tiempo_de_entrada'] = new DateTime();
 
-        actualizarUltimoLogeo($usuario->id, $_SESSION['tiempo_de_entrada'], $titulo);
+        actualizarUltimoLogeo($usuario->id, $_SESSION['tiempo_de_entrada'], $titulo, $mysqli);
 
         // agregar todos los cursos de la tabla de cursos
         // preparar valores a insertar (id de curso, id de estudiante)

@@ -17,24 +17,25 @@
 <body>
 
 <?php
-function actualizarUltimoLogeo($idUsuario, $tiempo, $actividad)
+function actualizarUltimoLogeo(string $idUsuario, DateTime $tiempo, string $actividad, mysqli $mysqli)
 {
-    $tiempo = date('Y-m-d H:i:s', $tiempo);
+    $tiempo = $tiempo->format('Y-m-d H:i:s');
     $query = "UPDATE usuarios SET ultimo_logeo = '$tiempo', ultima_actividad = '$tiempo',  ultima_actividad_descripcion = '$actividad' WHERE id = $idUsuario";
-    require('conneccion.php');
     $mysqli->query($query);
 
 }
 
-function actualizarUltimaActividad($idUsuario, $tiempo, $actividad)
+/*
+    TODO: Cambiar ultima actividad para guardar las 10 ultimas acciones.
+*/
+function actualizarUltimaActividad(string $idUsuario, DateTime $tiempo, string $actividad, mysqli $mysqli)
 {
-    $tiempo = date('Y-m-d H:i:s', $tiempo);
+    $tiempo = $tiempo->format('Y-m-d H:i:s');
     $query = "UPDATE usuarios SET  ultima_actividad = '$tiempo', ultima_actividad_descripcion = '$actividad' WHERE id = $idUsuario ";
-    require('conneccion.php');
     $mysqli->query($query, MYSQLI_ASYNC);
 }
 
-function obtererCalificaciones($userId, $mysqli)
+function obtererCalificaciones(string $userId, mysqli $mysqli)
 {
     // connectarse a la base de datos
 
@@ -103,7 +104,8 @@ if (!isset($_SESSION))
     session_start();
 // usuario esta logeado?,  actualizar el tiempo de su  ultima actividad
 if (isset($_SESSION['user_id'])) {
-    actualizarUltimaActividad($_SESSION['user_id'], time(), $titulo);
+    require('conneccion.php');
+    actualizarUltimaActividad($_SESSION['user_id'], new DateTime(), $titulo, $mysqli);
 }
 ?>
 

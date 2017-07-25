@@ -3,15 +3,16 @@ $titulo = "Evaluacion";
 $css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
-
-
-
+/*
+  TODO: Si evaluacion es de practica, no guardar resultado en la base de datos.
+  TODO: Mostra comparativo de respuestas correctas vs. respuestas de usuario.
+ */
 ?>
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // verificar que el estudiante tomo menos de 2 horas para hacer el examen
-    $tiempoTomadoParaPrueva = time() - $_SESSION['empezo_prueva'];
+    $tiempoTomadoParaPrueva = time() - $_SESSION['empezo_prueva']->getTimeStamp();
     $unaHora = 60*60;
     if($tiempoTomadoParaPrueva >= $unaHora){
         // se paso de tiempo
@@ -57,9 +58,9 @@ else if ($_SERVER['REQUEST_METHOD'] == 'GET'){
 
     // si no ha empezado la evaluacion, iniciar tiempo
     if(! isset($_SESSION['empezo_prueva'])){
-        $_SESSION['empezo_prueva'] = time();
+        $_SESSION['empezo_prueva'] = new DateTime();
         // refrescar session
-        actualizarUltimoLogeo($_SESSION['user_id'], $_SESSION['empezo_prueva'], $titulo);
+        actualizarUltimoLogeo($_SESSION['user_id'], $_SESSION['empezo_prueva'], $titulo, $mysqli);
     }
 }
 ?>
@@ -127,7 +128,7 @@ if ($resultado) {
 
 <script>
     function ponerTiempoRestanteEnPantalla() {
-        var inicioEvaluacion = parseInt(<?= $_SESSION['empezo_prueva'] ?>);
+        var inicioEvaluacion = parseInt(<?= $_SESSION['empezo_prueva']->getTimestamp() ?>);
 
         var ahora = parseInt((new Date).getTime() / 1000);
 

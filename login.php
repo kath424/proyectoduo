@@ -28,15 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($usuario->clave === $_POST['clave']) { // verificar si la clave es validad
             // login exitoso , iniciar session y guardar usuario en session
-            session_start();
             $_SESSION['user_id'] = $usuario->id;
             $_SESSION['nombre'] = $usuario->nombre;
             $_SESSION['apellido'] = $usuario->apellido;
             $_SESSION['usuario'] = $usuario->usuario;
             $_SESSION['tipo_de_usuario'] = $usuario->tipo_de_usuario;
-            $_SESSION['tiempo_de_entrada'] = time();
+            $_SESSION['tiempo_de_entrada'] = new DateTime();
 
-            actualizarUltimoLogeo($usuario->id, $_SESSION['tiempo_de_entrada'], $titulo);
+            actualizarUltimoLogeo($usuario->id, $_SESSION['tiempo_de_entrada'], $titulo, $mysqli);
 
             // redijirir a la pagina de inicio
             header("Location: index.php");

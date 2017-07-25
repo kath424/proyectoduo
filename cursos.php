@@ -3,6 +3,13 @@ $titulo = "Cursos";
 $css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
+
+/*
+  TODO: Boton de agregar preguntas a evaluaciones/capitulos.
+  TODO: Boton de agregar imagenes/contenido a capitulos.
+  TODO: Agregar/quitar cursos.
+ */
+
 ?>
 
 <?php
@@ -10,14 +17,20 @@ require('barra_de_navegacion.php');
 require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
 // obtener cursos disponibles para este usuario
-
-$query = "select c.* from usuarios  u"
-    . " right join cursos_usuarios  cu"
-    . " on cu.usuarios_id = u.id"
-    . " right join cursos c"
-    . " on cu.cursos_id = c.id"
-    . " where u.id = {$_SESSION['user_id']}";
-
+if ($_SESSION['tipo_de_usuario'] === 'estudiante') {
+    $query = <<<EOT
+    select c.* from usuarios  u
+        left join cursos_usuarios  cu
+        on cu.usuarios_id = u.id
+        left join cursos c
+        on cu.cursos_id = c.id
+        where u.id = {$_SESSION['user_id']}
+EOT;
+}
+else if ($_SESSION['tipo_de_usuario'] === 'admin')
+{
+    $query = "SELECT * FROM cursos";
+}
 
 $resultado = $mysqli->query($query);
 if ($resultado) {
@@ -26,73 +39,37 @@ if ($resultado) {
     $mensaje = "no se pudieron obtener los cursos";
 }
 
-?>
-
-<?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    switch ($_POST['accion']) {
-        case "obtenerEstudiante":
-            $query_estudiante = "SELECT u.*, c.nombre AS nombre_curso FROM usuarios u"
-                . " LEFT JOIN cursos_usuarios cu"
-                . " ON  u.id = cu.usuarios_id"
-                . " LEFT JOIN cursos c"
-                . " ON cu.cursos_id  = c.id"
-                . " WHERE u.cedula = " . $_POST['cedula'];
-
-            $resultado = $mysqli->query($query_estudiante);
-            if ($resultado) {
-                $estudiante = [];
-                while ($est = $resultado->fetch_array(MYSQLI_ASSOC))
-                    $estudiante[] = $est;
-
-                // obtener evaluacione del estudiante
-                $agrupados = obtererCalificaciones($estudiante[0]['id'], $mysqli);
-
-                if (!$agrupados) {
-                    $mensaje = "No has tomado ninguna evaluacion";
-                }
-            }
+// por seguridad solo un admin puede ejecutar cualquiera de estas acciones
+if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['tipo_de_usuario'] === 'admin'){
+    switch($_POST['accion']){
+        case "agregarCapitulo":
+            $query = "INSERT into capitulos (nombre, cursos_id) VALUES"
+                ."('{$_POST['nombre']}', {$_POST['curso_id']})";
+            $mysqli->query($query);
             break;
+        case "cambiarPuedeRepetir":
+            $puedeRepetir = !$_POST['puedeRepetir'];
+            $puedeRepetir = $puedeRepetir?1:0;
+            $query = "UPDATE capitulos SET "
+                ."puede_repetir = $puedeRepetir "
+            ."where id = {$_POST['capitulo_id']}";
 
-        case "agregarCurso":
-            $obtenerCursoQuery = "SELECT * FROM cursos WHERE nombre = '" . $_POST['curso'] . "'";
-            $resultado = $mysqli->query($obtenerCursoQuery);
-            $curso = $resultado->fetch_array(MYSQLI_ASSOC);
-
-            // agregar curso a estudiante
-            $agregarCursoQuery = "INSERT INTO cursos_usuarios (cursos_id, usuarios_id) VALUES ("
-                . $curso['id'] . " , "
-                . $_POST['estudiante_id']
-                . " );";
-
-            $resutado = $mysqli->query($agregarCursoQuery);
-
+            $mysqli->query($query);
             break;
-
-        case "reiniciarEvaluacion":
-            $respuestasIdsQuery = "SELECT er.id FROM capitulos c "
-                . " LEFT JOIN preguntas p"
-                . " ON c.id = p.capitulos_id"
-                . " LEFT JOIN estudiante_respuestas er"
-                . " ON p.id = er.preguntas_id"
-                . " WHERE c.nombre = " . '"' . $_POST['capitulo'] . '"'
-                . " AND "
-                . "er.usuarios_id = " . $_POST['estudiante_id'];
-            $resultado = $mysqli->query($respuestasIdsQuery);
-            $ids = [];
-            while ($id = $resultado->fetch_array(MYSQLI_ASSOC))
-                $ids[] = $id['id'];
-
-            $reiniciarEvaluacionQuery = "DELETE FROM estudiante_respuestas "
-                . "WHERE id IN ( " . implode(',', $ids) . ")";
-            $resultado = $mysqli->query($reiniciarEvaluacionQuery);
+        case "eliminarCapitulo":
+            $query = "DELETE FROM capitulos "
+                ."WHERE id = {$_POST['capitulo_id']}";
+            $mysqli->query($query);
             break;
-        default:
+        case "agregarPreguntas":
             break;
-
-
+        case "agregarImagenes":
+            break;
     }
 }
+
+
+
 
 ?>
 
@@ -101,8 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div> <?= isset($mensaje) ? $mensaje : '' ?> </div>
     <div class="col-sm-12">
         <h2> Cursos
-            <small class="<?= $_SESSION['tipo_de_usuario'] == 'estudiante' ? '' : 'hidden' ?>">Seleccione uno para ver
-                los capitulos
+            <small class="<?= $_SESSION['tipo_de_usuario'] == 'estudiante' ? '' : 'hidden' ?>">
+                Seleccione uno para ver los capitulos
+            </small>
+            <small class="<?= $_SESSION['tipo_de_usuario'] == 'admin' ? '' : 'hidden' ?>">
+                Seleccione uno para configurar las evaluaciones
             </small>
         </h2>
         <div class="list-group">
@@ -118,130 +98,106 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     </div>
 </div>
-<?php if (isset($_GET['id']) and $_SESSION['tipo_de_usuario'] == 'estudiante') { ?>
+<?php if (isset($_GET['id'])) { ?>
     <div class="row">
-        <div class="col-sm-12">
-            <?php
-            $query_capitulos = "SELECT * FROM capitulos "
-                . " WHERE cursos_id = " . $_GET['id'];
 
-            $resultado = $mysqli->query($query_capitulos);
-            if ($resultado) {
-                $capitulos = $resultado;
-            } else {
-                $mensaje = "No Capitulos encontrados";
-            }
-            ?>
-            <h2> Capitulos
-                <small>Seleccione uno para ver el contenido</small>
-            </h2>
-            <div class="list-group">
-                <?php while ($cap = $capitulos->fetch_array(MYSQLI_ASSOC)) { ?>
-                    <a class="list-group-item"
-                       href="capitulo_contenido.php?id=<?= $cap['id'] ?>&curso=<?= $_GET['nombre'] ?>&capitulo=<?= $cap['nombre'] ?>&paso=1">
-                        <?= $cap['nombre'] ?>
-                    </a>
-                <?php } ?>
-            </div>
-        </div>
-    </div>
-<?php } else if ($_SESSION['tipo_de_usuario'] == 'admin') { ?>
-    <div class="row">
-        <form class="col-sm-12 form-inline " action="cursos.php" method="POST">
-            <!-- accion para saber que hacer en la parte de POST -->
-            <input type="text" class="hidden" name="accion" value="obtenerEstudiante">
+        <?php
+        $query_capitulos = "SELECT * FROM capitulos "
+            . " WHERE cursos_id = " . $_GET['id'];
 
-            <h3> Ingrese numero de cedula para obtener detalles de un estudiante</h3>
-            <div class="form-group">
-                <label for="cedula" class="control-label">Cedula:</label>
-                <input type="text" class="form-control" id="cedula" name="cedula" placeholder="123123"/>
-            </div>
-            <button class="btn btn-primary " type="submit"> Obtener Informacion <i
-                        class="glyphicon glyphicon-search"></i></button>
+        $resultado = $mysqli->query($query_capitulos);
+        if ($resultado->num_rows > 0) {
+            $capitulos = $resultado;
+        } else {
+            $mensaje = "Curso sin evaluaciones";
+        }
+        ?>
 
-        </form>
-    </div>
-<?php if (isset($estudiante)) { ?>
-    <div class="row">
-        <h2 class="text-capitalize text-center"><?= $estudiante[0]['nombre'] . ', ' . $estudiante[0]['apellido'] ?></h2>
-        <div class="col-sm-12 col-md-6">
-            <h3>Cursos</h3>
-            <div class="list-group">
-                <?php foreach ($estudiante as $curso) { ?>
-                    <div class="list-group-item"><?= $curso['nombre_curso'] ?></div>
-                <?php } ?>
-            </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-            <h3> Agregar curso </h3>
-            <form action="cursos.php" method="POST">
-                <!-- accion para saber que hacer en la parte de POST -->
-                <input type="text" class="hidden" name="accion" value="agregarCurso">
-                <input type="text" class="hidden" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>">
-                <div class="form-group">
-                    <label for="curso" class="control-label">Ingrese nombre del curso:</label>
-                    <input id="curso" class="form-control" type="text" name="curso" placeholder="logica">
-                    <button class=" pull-right btn btn-primary" type="submit">Agregar <i
-                                class="glyphicon glyphicon-plus"></i></button>
+        <?php if (isset($capitulos) && $_SESSION['tipo_de_usuario'] === 'estudiante') { ?>
+            <div class="col-sm-12">
+                <h2> Capitulos
+                    <small>Seleccione uno para ver el contenido</small>
+                </h2>
+                <div class="list-group">
+                    <?php while ($cap = $capitulos->fetch_array(MYSQLI_ASSOC)) { ?>
+                        <a class="list-group-item"
+                           href="capitulo_contenido.php?id=<?= $cap['id'] ?>&curso=<?= $_GET['nombre'] ?>&capitulo=<?= $cap['nombre'] ?>&paso=1">
+                            <?= $cap['nombre'] ?>
+                        </a>
+                    <?php } ?>
                 </div>
+            </div>
+        <?php } else if ($_SESSION['tipo_de_usuario'] === 'admin') { ?>
+            <div class="col-sm-12 col-md-6">
+                <h3> Evaluaciones/Capitulos </h3>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>De Practica</th>
+                        <th class="text-center"><i class="glyphicon glyphicon-cog"></i></th>
+                    </tr>
+                    <?php while (isset($capitulos) &&  $cap = $capitulos->fetch_array(MYSQLI_ASSOC)) { ?>
 
-            </form>
-        </div>
-    </div>
-<div class="row">
-    <div class="col-sm-12">
-        <h3>Evaluaciones</h3>
-        <table class="table table-bordered">
-            <thead>
-            <tr>
-                <th>Curso</th>
-                <th>Modulo</th>
-                <th>Correctas</th>
-                <th>Incorrectas</th>
-                <th>#Preguntas</th>
-                <th>Calificacion</th>
-                <th class="text-center"><i class="glyphicon glyphicon-cog"></i></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($agrupados as $modulo => $info) { ?>
-                <tr class="<?= ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) ? 'bg-danger' : '' ?> ">
-                    <td><?= $info['curso'] ?> </td>
-                    <td><?= $modulo ?> </td>
-                    <td><?= $info['correctas'] ?></td>
-                    <td><?= $info['incorrectas'] ?></td>
-                    <td><?= $info['total'] ?></td>
-                    <td>
-                        <?php
-                        if ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) {
-                            echo "N/A";
-                        } else {
-                            echo ($info['correctas'] / ($info['total'])) * 100 . '%';
-                        }
-                        ?>
-                    </td>                    </td>
-                    <td class="text-center">
-                        <form action="cursos.php" method="POST">
-                            <!-- campos ocultos para saber  la accion y para quien es la accion -->
-                            <input type="text" class="hidden" name="capitulo" value="<?= $modulo ?>">
-                            <input type="text" class="hidden" name="accion" value="reiniciarEvaluacion">
-                            <input type="text" class="hidden" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>">
-                            <button class="btn btn-danger" type="submit">Reiniciar <i
-                                        class="glyphicon glyphicon-refresh"></i></button>
-                        </form>
 
-                    </td>
-                </tr>
-            <?php } ?>
+                        <tr>
+                            <td><?= $cap['nombre'] ?></td>
+                            <td>
+                                <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre']?>" method="POST">
+                                    <input class="hidden" name="capitulo_id" value="<?= $cap['id'] ?>"/>
+                                    <input class="hidden" name="accion" value="cambiarPuedeRepetir"/>
+                                    <input class="hidden" name="puedeRepetir" value="<?= $cap['puede_repetir'] ?>"/>
+                                    <button class="btn btn-<?= $cap['puede_repetir'] ? 'primary' : 'default' ?>">
+                                        <?= $cap['puede_repetir'] ? 'SI' : 'NO' ?>
+                                    </button>
 
-            </tbody>
-        </table>
+                                </form>
+                            </td>
+                            <td class="text-center">
+                                <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre']?>" method="POST">
+                                    <input class="hidden" name="capitulo_id" value="<?= $cap['id'] ?>"/>
+                                    <input class="hidden" name="accion" value="eliminarCapitulo"/>
+                                    <button class="btn btn-danger">Eliminar <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </form>
+                                <form action="cursos.php?" method="GET">
+                                    <input class="hidden" name="id" value="<?= $_GET['id'] ?>"/>
+                                    <input class="hidden" name="nombre" value="<?= $_GET['nombre']?>"/>
+                                    <input class="hidden" name="capitulo_id" value="<?= $cap['id'] ?>"/>
+                                    <input class="hidden" name="accion" value="agregarPreguntas"/>
+                                    <button class="btn btn-primary">Preguntas <i class="glyphicon glyphicon-plus"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+
+                    <?php } ?>
+                </table>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <h3>Agregar Evaluacion/Capitulo</h3>
+                <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre']?>" method="POST">
+                    <!-- accion para saber que hacer en la parte de POST -->
+                    <input class="hidden" name="accion" value="agregarCapitulo">
+                    <input class="hidden" name="curso_id" value="<?= $_GET['id'] ?>">
+
+                    <div class="form-group">
+                        <label for="curso" class="control-label">Ingrese nombre del Capitulo:</label>
+                        <input id="curso" class="form-control" name="nombre" placeholder="capitulo3">
+                        <button class=" pull-right btn btn-primary">Agregar <i
+                                    class="glyphicon glyphicon-plus"></i></button>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="clearfix">
+
         <?php } ?>
-        <?php } ?>
-    </div>
-</div>
-</div>
 
+    </div>
+    </div>
+<?php } ?>
 
 <?php require('pie.php') ?>
 
