@@ -53,7 +53,7 @@ if ($capitulo) {
 
     <?php
     // ver si el usuario ya tiene respuestas para este curso-capitulo (ya tomo la prueva anteriormente)
-    $respuestas = [];
+    //$respuestas = [];
     $respuestas_query = "SELECT er.id FROM estudiante_respuestas er"
         . " LEFT JOIN preguntas p"
         . " ON er.preguntas_id = p.id"
@@ -76,7 +76,7 @@ if ($capitulo) {
         <div class="text-center">
 
             <!-- Hay respuestas, mostrar boton prueva realizada -->
-            <?php if ($respuestas->num_rows > 0) { ?>
+            <?php if (isset($respuestas) && $respuestas->num_rows > 0) { ?>
                 <div class="btn btn-warning btn-lg"> Prueba Realizada</div>
 
                 <!-- no hay respuestas, mostrar boton para comenzar prueva -->

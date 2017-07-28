@@ -17,25 +17,42 @@
 <body>
 
 <?php
-function actualizarUltimoLogeo(string $idUsuario, DateTime $tiempo, string $actividad, mysqli $mysqli)
+function actualizarUltimoLogeo($idUsuario, DateTime $tiempo, $actividad, mysqli $mysqli)
 {
-    $tiempo = $tiempo->format('Y-m-d H:i:s');
-    $query = "UPDATE usuarios SET ultimo_logeo = '$tiempo', ultima_actividad = '$tiempo',  ultima_actividad_descripcion = '$actividad' WHERE id = $idUsuario";
+    $tiempo_str = $tiempo->format('Y-m-d H:i:s');
+    $query = "UPDATE usuarios SET ultimo_logeo = '$tiempo_str' WHERE id = $idUsuario";
     $mysqli->query($query);
+    actualizarUltimaActividad($idUsuario, $tiempo, $actividad, $mysqli);
 
 }
 
 /*
-    TODO: Cambiar ultima actividad para guardar las 10 ultimas acciones.
+    TODO: Cambiar ultima actividad para guardar las 10 ultimas acciones.(LISTO)
 */
-function actualizarUltimaActividad(string $idUsuario, DateTime $tiempo, string $actividad, mysqli $mysqli)
+function actualizarUltimaActividad($idUsuario, DateTime $tiempo, $actividad, mysqli $mysqli)
 {
-    $tiempo = $tiempo->format('Y-m-d H:i:s');
-    $query = "UPDATE usuarios SET  ultima_actividad = '$tiempo', ultima_actividad_descripcion = '$actividad' WHERE id = $idUsuario ";
-    $mysqli->query($query, MYSQLI_ASYNC);
+    $qs = [];
+    foreach ($_GET as $variable=>$valor) {
+        $qs[] = "$variable=$valor";
+    }
+    $actividad .= '?'.implode('&',$qs);
+    $query = "INSERT INTO actividades (detalles, usuarios_id) VALUES "
+        . "('$actividad',$idUsuario)";
+    $mysqli->query($query);
+
+    $query = "SELECT id from actividades where usuarios_id = $idUsuario ORDER BY tiempo DESC LIMIT 10";
+    $result = $mysqli->query($query);
+    if ($result->num_rows > 0) {
+        $ids = [];
+        while ($id = $result->fetch_array())
+            $ids[] = $id['id'];
+        $ids = implode(',', $ids);
+        $query = "DELETE FROM actividades WHERE usuarios_id = $idUsuario AND id NOT IN ($ids)";
+        $resultado = $mysqli->query($query);
+    }
 }
 
-function obtererCalificaciones(string $userId, mysqli $mysqli)
+function obtererCalificaciones($userId, mysqli $mysqli)
 {
     // connectarse a la base de datos
 

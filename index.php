@@ -95,6 +95,15 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
                         $mensaje = "No has tomado ninguna evaluacion";
                     }
                 }
+                $query = "SELECT * FROM actividades where usuarios_id = {$estudiante[0]['id']}";
+                $resultado = $mysqli->query($query);
+                $actividades = [];
+                if($resultado->num_rows > 0){
+                    while($act = $resultado->fetch_array(MYSQL_ASSOC)) {
+                        $act['tiempo'] = new DateTime($act['tiempo']);
+                        $actividades[] = $act;
+                    }
+                }
                 break;
 
             case "agregarCurso":
@@ -165,8 +174,22 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
         </form>
     </div>
     <?php if (isset($estudiante)) { ?>
+        <h2 class="text-capitalize text-center"><?= $estudiante[0]['nombre'] . ', ' . $estudiante[0]['apellido'] ?></h2>
+
         <div class="row">
-            <h2 class="text-capitalize text-center"><?= $estudiante[0]['nombre'] . ', ' . $estudiante[0]['apellido'] ?></h2>
+            <div class="col-sm-12 ">
+                <h3>Ultimas 10 activiades</h3>
+                <table class="table table-bordered">
+                    <?php foreach ($actividades as $act) { ?>
+                        <tr>
+                            <td><?= $act['tiempo']->format('d/m/Y g:i:s A') ?></td>
+                            <td ><?= $act['detalles']?></td>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-sm-12 col-md-6">
                 <h3>Cursos</h3>
                 <table class="table table-bordered">
