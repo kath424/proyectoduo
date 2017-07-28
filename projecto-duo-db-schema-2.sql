@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-07-2017 a las 11:35:28
+-- Tiempo de generación: 28-07-2017 a las 16:41:05
 -- Versión del servidor: 10.1.21-MariaDB
 -- Versión de PHP: 5.6.30
 
@@ -29,14 +29,12 @@ USE `projecto_duo_db`;
 --
 
 DROP TABLE IF EXISTS `actividades`;
-CREATE TABLE IF NOT EXISTS `actividades` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `actividades` (
+  `id` int(11) NOT NULL,
   `tiempo` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `detalles` varchar(200) DEFAULT NULL,
-  `usuarios_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_actividades_usuarios1_idx` (`usuarios_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8;
+  `usuarios_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncar tablas antes de insertar `actividades`
@@ -58,16 +56,16 @@ INSERT INTO `actividades` (`id`, `tiempo`, `detalles`, `usuarios_id`) VALUES
 (40, '2017-07-28 09:25:33', 'Cursos?id=3&nombre=Ingles', 1),
 (41, '2017-07-28 09:25:36', 'Cursos?id=3&nombre=Ingles&capitulo_id=6&nombre_capitulo=Verbos Basicos&accion=agregarContenido', 1),
 (42, '2017-07-28 09:25:49', 'Cursos?id=3&nombre=Ingles', 1),
-(79, '2017-07-28 09:29:27', 'Evaluacion?id=6', 3),
-(80, '2017-07-28 09:29:27', 'Pagina Inicial?', 3),
-(81, '2017-07-28 09:29:48', 'Evaluacion?id=6', 3),
-(82, '2017-07-28 09:29:48', 'Evaluacion?id=6', 3),
-(83, '2017-07-28 09:29:51', 'Evaluacion?id=6', 3),
-(84, '2017-07-28 09:31:59', 'Pagina Inicial?', 3),
-(85, '2017-07-28 09:33:36', 'Evaluacion?id=6', 3),
-(86, '2017-07-28 09:33:36', 'Evaluacion?id=6', 3),
-(87, '2017-07-28 09:33:38', 'Evaluacion?id=6', 3),
-(88, '2017-07-28 09:33:38', 'Pagina Inicial?', 3);
+(97, '2017-07-28 14:37:07', 'Capitulo?id=1&curso=logica&capitulo=Logica I&paso=1', 3),
+(98, '2017-07-28 14:37:15', 'Cursos?id=2&nombre=logica', 3),
+(99, '2017-07-28 14:37:18', 'Cursos?id=2&nombre=logica', 3),
+(100, '2017-07-28 14:37:21', 'Cursos?', 3),
+(101, '2017-07-28 14:37:22', 'Cursos?id=2&nombre=Logica', 3),
+(102, '2017-07-28 14:37:23', 'Capitulo?id=1&curso=Logica&capitulo=Logica I&paso=1', 3),
+(103, '2017-07-28 14:38:14', 'Cursos?', 3),
+(104, '2017-07-28 14:38:16', 'Cursos?', 3),
+(105, '2017-07-28 14:38:42', 'Cursos?id=2&nombre=Logica I', 3),
+(106, '2017-07-28 14:38:43', 'Capitulo?id=1&curso=Logica I&capitulo=Logica Basica&paso=1', 3);
 
 -- --------------------------------------------------------
 
@@ -76,16 +74,14 @@ INSERT INTO `actividades` (`id`, `tiempo`, `detalles`, `usuarios_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `capitulos`;
-CREATE TABLE IF NOT EXISTS `capitulos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `capitulos` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(45) DEFAULT NULL,
   `numero` int(11) DEFAULT NULL,
   `cursos_id` int(11) NOT NULL,
   `pasos` int(11) DEFAULT NULL,
-  `puede_repetir` bit(1) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_capitulos_cursos1_idx` (`cursos_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+  `puede_repetir` bit(1) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncar tablas antes de insertar `capitulos`
@@ -111,11 +107,10 @@ INSERT INTO `capitulos` (`id`, `nombre`, `numero`, `cursos_id`, `pasos`, `puede_
 --
 
 DROP TABLE IF EXISTS `cursos`;
-CREATE TABLE IF NOT EXISTS `cursos` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='guarda los cursos\nejemplos:\nmatematica_1\nlogica_1\netc.....';
+CREATE TABLE `cursos` (
+  `id` int(11) NOT NULL,
+  `nombre` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='guarda los cursos\nejemplos:\nmatematica_1\nlogica_1\netc.....';
 
 --
 -- Truncar tablas antes de insertar `cursos`
@@ -127,8 +122,8 @@ TRUNCATE TABLE `cursos`;
 --
 
 INSERT INTO `cursos` (`id`, `nombre`) VALUES
-(1, 'matematicas'),
-(2, 'logica'),
+(1, 'Matematicas'),
+(2, 'Logica I'),
 (3, 'Ingles');
 
 -- --------------------------------------------------------
@@ -138,11 +133,9 @@ INSERT INTO `cursos` (`id`, `nombre`) VALUES
 --
 
 DROP TABLE IF EXISTS `cursos_usuarios`;
-CREATE TABLE IF NOT EXISTS `cursos_usuarios` (
+CREATE TABLE `cursos_usuarios` (
   `cursos_id` int(11) NOT NULL,
-  `usuarios_id` int(11) NOT NULL,
-  KEY `fk_cursos_estudiantes_cursos1_idx` (`cursos_id`),
-  KEY `fk_cursos_estudiantes_usuarios1_idx` (`usuarios_id`)
+  `usuarios_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -170,15 +163,12 @@ INSERT INTO `cursos_usuarios` (`cursos_id`, `usuarios_id`) VALUES
 --
 
 DROP TABLE IF EXISTS `estudiante_respuestas`;
-CREATE TABLE IF NOT EXISTS `estudiante_respuestas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `estudiante_respuestas` (
+  `id` int(11) NOT NULL,
   `respuesta` varchar(100) DEFAULT NULL,
   `usuarios_id` int(11) NOT NULL,
-  `preguntas_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_estudiante-respuestas_usuarios1_idx` (`usuarios_id`),
-  KEY `fk_estudiante-respuestas_ejercicios1_idx` (`preguntas_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  `preguntas_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncar tablas antes de insertar `estudiante_respuestas`
@@ -200,15 +190,13 @@ INSERT INTO `estudiante_respuestas` (`id`, `respuesta`, `usuarios_id`, `pregunta
 --
 
 DROP TABLE IF EXISTS `preguntas`;
-CREATE TABLE IF NOT EXISTS `preguntas` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `preguntas` (
+  `id` int(11) NOT NULL,
   `capitulos_id` int(11) NOT NULL,
   `pregunta` varchar(256) DEFAULT NULL COMMENT 'que es html?',
   `opciones` varchar(256) DEFAULT NULL COMMENT 'un lenguaje,  una comida, un show de television',
-  `respuesta` varchar(45) DEFAULT NULL COMMENT 'un lenguaje',
-  PRIMARY KEY (`id`),
-  KEY `fk_ejercicios_capitulos1_idx` (`capitulos_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+  `respuesta` varchar(45) DEFAULT NULL COMMENT 'un lenguaje'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncar tablas antes de insertar `preguntas`
@@ -226,7 +214,21 @@ INSERT INTO `preguntas` (`id`, `capitulos_id`, `pregunta`, `opciones`, `respuest
 (4, 5, '569-9', '560,556,443,555', '560'),
 (5, 5, '90+203?', '122,345,293', '293'),
 (6, 6, 'How Are You?', 'Como te llamas?,Cual es tu comida favorita?', 'Como te llamas?'),
-(7, 6, 'How Old Are You?', 'que edad tienes?,como te llamas?', 'que edad tienes?');
+(7, 6, 'How Old Are You?', 'que edad tienes?,como te llamas?', 'que edad tienes?'),
+(8, 1, 'Ayudame a salir!', 'atomica,molecular', 'atomica'),
+(9, 1, 'Quieres torta?', 'atomica,molecular', 'atomica'),
+(10, 1, 'Si puedes contratar expertos, entonces que bien!', 'atomica,molecular', 'atomica'),
+(11, 1, 'Ignorar la ley no implica estar exento de cumplirla.', 'atomica,molecular', 'atomica'),
+(12, 1, 'O arreglamos este generador, o pasamos la noche sin electricidad.', 'atomica,molecular', 'atomica'),
+(13, 1, 'No es verdad que el diez sea un numero impar.', 'atomica,molecular', 'molecular'),
+(14, 1, 'Hazme caso. Si no, ¡corre!', 'atomica,molecular', 'molecular'),
+(15, 1, 'No sé si eso es verdad.', 'atomica,molecular', 'molecular'),
+(16, 1, 'Me pregunto si ya será mediodía.', 'atomica,molecular', 'molecular'),
+(17, 1, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular'),
+(18, 2, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular'),
+(19, 2, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular'),
+(20, 2, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular'),
+(21, 2, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular');
 
 -- --------------------------------------------------------
 
@@ -235,14 +237,12 @@ INSERT INTO `preguntas` (`id`, `capitulos_id`, `pregunta`, `opciones`, `respuest
 --
 
 DROP TABLE IF EXISTS `preguntas_de_seguridad`;
-CREATE TABLE IF NOT EXISTS `preguntas_de_seguridad` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `preguntas_de_seguridad` (
+  `id` int(11) NOT NULL,
   `pregunta` varchar(45) DEFAULT NULL COMMENT 'como se llama tu mama?',
   `respuesta` varchar(45) DEFAULT NULL COMMENT 'mamita',
-  `usuarios_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_preguntas_de_seguridad_usuarios1_idx` (`usuarios_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `usuarios_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncar tablas antes de insertar `preguntas_de_seguridad`
@@ -265,8 +265,8 @@ INSERT INTO `preguntas_de_seguridad` (`id`, `pregunta`, `respuesta`, `usuarios_i
 --
 
 DROP TABLE IF EXISTS `usuarios`;
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
   `nombre` varchar(45) DEFAULT NULL,
   `apellido` varchar(45) DEFAULT NULL,
   `tipo_de_usuario` varchar(45) DEFAULT 'estudiante' COMMENT 'puede ser\nadministrador\nestudiante\nusuario\n',
@@ -274,11 +274,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `clave` varchar(45) DEFAULT NULL,
   `cedula` varchar(45) DEFAULT NULL,
   `creado` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `ultimo_logeo` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `cedula_UNIQUE` (`cedula`),
-  UNIQUE KEY `usuario_UNIQUE` (`usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  `ultimo_logeo` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Truncar tablas antes de insertar `usuarios`
@@ -294,6 +291,106 @@ INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `tipo_de_usuario`, `usuario`
 (2, 'maestro', 'maestro', 'maestro', 'maestro', 'clave', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (3, 'katherine', 'acosta', 'estudiante', 'katherinelabeibi', 'clave', '12345', '2017-07-28 09:16:29', '2017-07-28 16:33:36');
 
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `actividades`
+--
+ALTER TABLE `actividades`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_actividades_usuarios1_idx` (`usuarios_id`);
+
+--
+-- Indices de la tabla `capitulos`
+--
+ALTER TABLE `capitulos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_capitulos_cursos1_idx` (`cursos_id`);
+
+--
+-- Indices de la tabla `cursos`
+--
+ALTER TABLE `cursos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `cursos_usuarios`
+--
+ALTER TABLE `cursos_usuarios`
+  ADD KEY `fk_cursos_estudiantes_cursos1_idx` (`cursos_id`),
+  ADD KEY `fk_cursos_estudiantes_usuarios1_idx` (`usuarios_id`);
+
+--
+-- Indices de la tabla `estudiante_respuestas`
+--
+ALTER TABLE `estudiante_respuestas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_estudiante-respuestas_usuarios1_idx` (`usuarios_id`),
+  ADD KEY `fk_estudiante-respuestas_ejercicios1_idx` (`preguntas_id`);
+
+--
+-- Indices de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_ejercicios_capitulos1_idx` (`capitulos_id`);
+
+--
+-- Indices de la tabla `preguntas_de_seguridad`
+--
+ALTER TABLE `preguntas_de_seguridad`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_preguntas_de_seguridad_usuarios1_idx` (`usuarios_id`);
+
+--
+-- Indices de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `cedula_UNIQUE` (`cedula`),
+  ADD UNIQUE KEY `usuario_UNIQUE` (`usuario`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `actividades`
+--
+ALTER TABLE `actividades`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+--
+-- AUTO_INCREMENT de la tabla `capitulos`
+--
+ALTER TABLE `capitulos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT de la tabla `cursos`
+--
+ALTER TABLE `cursos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `estudiante_respuestas`
+--
+ALTER TABLE `estudiante_respuestas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `preguntas`
+--
+ALTER TABLE `preguntas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+--
+-- AUTO_INCREMENT de la tabla `preguntas_de_seguridad`
+--
+ALTER TABLE `preguntas_de_seguridad`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- AUTO_INCREMENT de la tabla `usuarios`
+--
+ALTER TABLE `usuarios`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- Restricciones para tablas volcadas
 --
