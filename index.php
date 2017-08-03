@@ -167,11 +167,13 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
             <div class="form-group">
                 <label for="cedula" class="control-label">Cedula:</label>
                 <input class="form-control" id="cedula" name="cedula" placeholder="123123"/>
+
             </div>
-            <button class="btn btn-primary "> Obtener Informacion <i
+            <button class="btn btn-primary " id="obternerInformacion"> Obtener Informacion <i
                         class="glyphicon glyphicon-search"></i></button>
 
         </form>
+        <div id="livesearch" class="btn-group-vertical"></div>
     </div>
     <?php if (isset($estudiante)) { ?>
         <h2 class="text-capitalize text-center"><?= $estudiante[0]['nombre'] . ', ' . $estudiante[0]['apellido'] ?></h2>
@@ -265,9 +267,9 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
                             <td class="text-center">
                                 <form action="index.php" method="POST">
                                     <!-- campos ocultos para saber  la accion y para quien es la accion -->
-                                    <input type="text" class="hidden" name="capitulo" value="<?= $modulo ?>">
-                                    <input type="text" class="hidden" name="accion" value="reiniciarEvaluacion">
-                                    <input type="text" class="hidden" name="estudiante_id"
+                                    <input class="hidden" name="capitulo" value="<?= $modulo ?>">
+                                    <input class="hidden" name="accion" value="reiniciarEvaluacion">
+                                    <input class="hidden" name="estudiante_id"
                                            value="<?= $estudiante[0]['id'] ?>">
                                     <button class="btn btn-danger">Reiniciar <i
                                                 class="glyphicon glyphicon-refresh"></i></button>
@@ -287,3 +289,34 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
 <?php } ?>
 
 <?php require('pie.php'); ?>
+
+<script>
+    $(function(){
+        $("#cedula").on('keyup', function(){
+            if(this.value.length === 0){
+                $('#livesearch').html('');
+                return;
+            }
+            $.get('ajax/buscar_usuario.php', {campo:'cedula', valor:this.value}, function(data){
+                var resultados = JSON.parse(data);
+                var html = '';
+                if(resultados.length === 0){
+                    html += '<div>No Resultados </div>';
+                }
+                for(var i = 0; i < resultados.length; i++){
+                    html += '<div class="btn btn-link text-left" onclick="seleccionarEstudiante('+resultados[i]+')" >';
+                    html += resultados[i].cedula +': ' + resultados[i].nombre;
+                    html += '</div>';
+                }
+                $('#livesearch').html(html);
+            })
+        });
+    });
+
+    
+    function seleccionarEstudiante(estudiante){
+        $('#cedula').val(estudiante.cedula);
+        $('#obternerInformacion').click();
+    }
+
+</script>
