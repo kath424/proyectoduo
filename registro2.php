@@ -16,42 +16,25 @@ require('encabezado.php');
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $error = false;
+    $errors = [];
+    $preguntas = $_POST['preguntas'];
+    $respuestas = $_POST['respuestas'];
     // guardar las preguntas de seguridad y mandar a pagina de inicio (usuario logeado a este punto)
     $preguntas_values = [];
-    if ((empty($_POST['pregunta1']) && !empty($_POST['respuesta1']))) {
-        $pregunta1_error = " Debe tener pregunta ";
-        $error = true;
-    } else if ((!empty($_POST['pregunta1']) && empty($_POST['respuesta1']))) {
-        $pregunta1_error = " Debe tener respuesta ";
-        $error = true;
-    } else {
-        $preguntas_values[] = "('{$_POST['pregunta1']}', '{$_POST['respuesta1']}' , {$_SESSION['user_id']} )";
+    $i = 0;
+    foreach (array_combine($preguntas, $respuestas) as $preg => $res) {
+        if (empty($preg) && !empty($res)) {
+            $errors[$i] = " Debe tener pregunta ";
+        } else if (!empty($preg) && empty($res)) {
+            $errors[$i] = "Debe tener respuesta";
+        } else {
+            $preguntas_values[] = "('{$preg}', '{$res}' , {$_SESSION['user_id']} )";
+        }
+
+        $i++;
     }
 
-    // pregunta2
-    if ((empty($_POST['pregunta2']) && !empty($_POST['respuesta2']))) {
-        $pregunta2_error = " Debe tener pregunta ";
-        $error = true;
-    } else if ((!empty($_POST['pregunta2']) && empty($_POST['respuesta2']))) {
-        $pregunta2_error = " Debe tener respuesta ";
-        $error = true;
-    } else {
-        $preguntas_values[] = "('{$_POST['pregunta2']}', '{$_POST['respuesta2']}' , {$_SESSION['user_id']} )";
-    }
-
-    // pregunta 3
-    if ((empty($_POST['pregunta3']) && !empty($_POST['respuesta3']))) {
-        $pregunta3_error = " Debe tener pregunta ";
-        $error = true;
-    } else if ((!empty($_POST['pregunta3']) && empty($_POST['respuesta3']))) {
-        $pregunta3_error = " Debe tener respuesta ";
-        $error = true;
-    } else {
-        $preguntas_values[] = "('{$_POST['pregunta3']}', '{$_POST['respuesta3']}' , {$_SESSION['user_id']}  )";
-    }
-
-    if (!$error) {
+    if (count($errors) == 0) {
         $query = "INSERT INTO preguntas_de_seguridad "
             . " (pregunta, respuesta, usuarios_id) VALUES"
             . implode(',', $preguntas_values);
@@ -63,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header('Location: index.php');
             exit;
         } else {
-            echo '<div style="color:red;" > Error trying to save questions </div>';
+            echo '<div style="color:red;" > Error al guardar preguntas </div>';
         }
 
 
@@ -73,46 +56,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ?>
 
-<form action="registro2.php" method="POST">
-    <h3>Estas preguntas se usaran para recuperar usuario o contrasena</h3>
-    <div class="form-group <?= isset($pregunta1_error) ? 'has-error' : '' ?> " >
-        <label for="pregunta1" class="control-label"> Pregunta1</label>
-        <input id="pregunta1" class="form-control" name="pregunta1" value="<?= isset($_POST['pregunta1']) ? $_POST['pregunta1'] : '' ?>">
-    </div>
-    <div class="form-group <?= isset($pregunta1_error) ? 'has-error' : '' ?>">
-        <label for="respuesta1" class="control-label"> Respuesta</label>
-        <input id="respuesta1" class="form-control" name="respuesta1" value="<?= isset($_POST['respuesta1']) ? $_POST['respuesta1'] : '' ?>">
-    </div>
-    <span class="text-danger"><?= isset($pregunta1_error) ? $pregunta1_error : '' ?></span>
+    <form action="registro2.php" method="POST">
+        <h3>Estas preguntas se usaran para recuperar usuario o contrasena</h3>
 
-    <hr/>
+        <?php for ($i = 0; $i < 3; $i++) { ?>
+            <div class="form-group <?= isset($errors[$i]) ? 'has-error' : '' ?> ">
+                <label for="pregunta<?= $i+1 ?>" class="control-label"> Pregunta <?= $i+1 ?>: </label>
+                <input id="pregunta<?= $i+1 ?>" class="form-control" name="preguntas[]"
+                       value="<?= isset($_POST['preguntas'][$i]) ? $_POST['preguntas'][$i] : '' ?>">
+            </div>
+            <div class="form-group <?= isset($errors[$i]) ? 'has-error' : '' ?>">
+                <label for="respuesta<?= $i+1 ?>" class="control-label"> Respuesta <?= $i+1 ?>:</label>
+                <input id="respuesta<?= $i+1 ?>" class="form-control" name="respuestas[]"
+                       value="<?= isset($_POST['respuestas'][$i]) ? $_POST['respuestas'][$i] : '' ?>">
+            </div>
+            <span class="text-danger"><?= isset($errors[$i]) ? $errors[$i] : '' ?></span>
 
-    <div class="form-group <?= isset($pregunta2_error) ? 'has-error' : '' ?>">
-        <label for="pregunta2" class="control-label"> Pregunta2</label>
-        <input id="pregunta2" class="form-control"  name="pregunta2" value="<?= isset($_POST['pregunta2']) ? $_POST['pregunta2'] : '' ?>">
-    </div>
-    <div class="form-group <?= isset($pregunta2_error) ? 'has-error' : '' ?>">
-        <label for="respuesta2" class="control-label"> Respuesta</label>
-        <input id="respuesta2" class="form-control"  name="respuesta2" value="<?= isset($_POST['respuesta2']) ? $_POST['respuesta2'] : '' ?>">
-    </div>
-    <div class="text-danger"><?= isset($pregunta2_error) ? $pregunta2_error : '' ?></div>
+            <hr/>
+        <?php } ?>
 
-    <hr/>
-
-    <div class="form-group <?= isset($pregunta3_error) ? 'has-error' : '' ?>">
-        <label for="pregunta3" class="control-label"> Pregunta3</label>
-        <input id="pregunta3" class="form-control"  name="pregunta3" value="<?= isset($_POST['pregunta3']) ? $_POST['pregunta3'] : '' ?>">
-    </div>
-    <div class="form-group <?= isset($pregunta3_error) ? 'has-error' : '' ?>">
-        <label for="respuesta3" class="control-label"> Respuesta</label>
-        <input id="respuesta3" class="form-control"  name="respuesta3" value="<?= isset($_POST['respuesta3']) ? $_POST['respuesta3'] : '' ?>">
-    </div>
-    <div class="text-danger"><?= isset($pregunta3_error) ? $pregunta3_error : '' ?></div>
-    <div>
-        <button type="submit" class="btn btn-primary btn-lg ">
-            Guardar
-        </button>
-    </div>
-</form>
+        <div>
+            <button class="btn btn-primary btn-lg ">
+                Guardar <i class="glyphicon glyphicon-floppy-disk"></i>
+            </button>
+        </div>
+    </form>
 
 <?php require('pie.php') ?>
