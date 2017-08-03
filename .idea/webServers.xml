@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f616d580-bea0-48b0-9c88-93db88f820cc" name="projectoDuoAws" url="http://52.204.128.94">
+        <fileTransfer host="52.204.128.94" port="22" privateKey="D:\Users\tomochan\Downloads\general.pem" rootFolder="/home/ubuntu/proyectoduo" accessType="SFTP" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
