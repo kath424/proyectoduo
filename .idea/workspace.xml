@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3032dd71-0973-4db9-bd7a-da6a4ebbaf52" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cursos.php" afterPath="$PROJECT_DIR$/cursos.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,22 +50,26 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="297" column="46" lean-forward="false" selection-start-line="297" selection-start-column="46" selection-end-line="297" selection-end-column="46" />
+            <state relative-caret-position="380">
+              <caret line="331" column="47" lean-forward="false" selection-start-line="331" selection-start-column="47" selection-end-line="331" selection-end-column="47" />
               <folding>
                 <element signature="e#726#2223#0#HTML" expanded="false" />
                 <element signature="e#2510#5965#0#PHP" expanded="false" />
-                <element signature="e#12454#12473#0#HTML" expanded="true" />
-                <element signature="e#12578#12597#0#HTML" expanded="true" />
-                <element signature="e#12702#12721#0#HTML" expanded="true" />
-                <marker date="1502087060360" expanded="false" signature="421:2231" ph="..." />
-                <marker date="1502087060360" expanded="true" signature="2665:2976" ph="SELECT u.*, usuarios" />
-                <marker date="1502087060360" expanded="true" signature="3577:3623" ph="SELECT * FRO... actividades" />
-                <marker date="1502087060360" expanded="true" signature="4112:4173" ph="SELECT * FRO... cursos" />
-                <marker date="1502087060360" expanded="true" signature="4390:4567" ph="INSERT INTO cursos_usuarios... " />
-                <marker date="1502087060360" expanded="true" signature="4740:5126" ph="SELECT er.id... capitulos" />
-                <marker date="1502087060360" expanded="true" signature="5402:5502" ph="DELETE FROM " />
-                <marker date="1502087060360" expanded="true" signature="5659:5787" ph="DELETE FROM " />
+                <element signature="e#12455#12474#0#HTML" expanded="true" />
+                <element signature="e#12579#12598#0#HTML" expanded="true" />
+                <element signature="e#12703#12722#0#HTML" expanded="true" />
+                <element signature="e#13396#13415#0#HTML" expanded="true" />
+                <element signature="e#13647#13666#0#HTML" expanded="true" />
+                <element signature="e#13905#13924#0#HTML" expanded="true" />
+                <element signature="e#14156#14175#0#HTML" expanded="true" />
+                <marker date="1502089285754" expanded="false" signature="421:2231" ph="..." />
+                <marker date="1502089285754" expanded="true" signature="2665:2976" ph="SELECT u.*, usuarios" />
+                <marker date="1502089285754" expanded="true" signature="3577:3623" ph="SELECT * FRO... actividades" />
+                <marker date="1502089285754" expanded="true" signature="4112:4173" ph="SELECT * FRO... cursos" />
+                <marker date="1502089285754" expanded="true" signature="4390:4567" ph="INSERT INTO cursos_usuarios... " />
+                <marker date="1502089285754" expanded="true" signature="4740:5126" ph="SELECT er.id... capitulos" />
+                <marker date="1502089285754" expanded="true" signature="5402:5502" ph="DELETE FROM " />
+                <marker date="1502089285754" expanded="true" signature="5659:5787" ph="DELETE FROM " />
               </folding>
             </state>
           </provider>
@@ -212,10 +214,6 @@
       <pane id="ProjectPane">
         <subPane>
           <expand>
-            <path>
-              <item name="proyectoduo" type="b2602c69:ProjectViewProjectNode" />
-              <item name="proyectoduo" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
             <path>
               <item name="proyectoduo" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="bcb0276e:PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
@@ -372,7 +370,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="173081000" />
+    <option name="totallyTimeSpent" value="174884000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -384,10 +382,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1042" height="738" extended-state="6" />
+    <frame x="-9" y="-9" width="1298" height="690" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32608697" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32569557" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3181818" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06337272" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -845,22 +843,26 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="297" column="46" lean-forward="false" selection-start-line="297" selection-start-column="46" selection-end-line="297" selection-end-column="46" />
+        <state relative-caret-position="380">
+          <caret line="331" column="47" lean-forward="false" selection-start-line="331" selection-start-column="47" selection-end-line="331" selection-end-column="47" />
           <folding>
             <element signature="e#726#2223#0#HTML" expanded="false" />
             <element signature="e#2510#5965#0#PHP" expanded="false" />
-            <element signature="e#12454#12473#0#HTML" expanded="true" />
-            <element signature="e#12578#12597#0#HTML" expanded="true" />
-            <element signature="e#12702#12721#0#HTML" expanded="true" />
-            <marker date="1502087060360" expanded="false" signature="421:2231" ph="..." />
-            <marker date="1502087060360" expanded="true" signature="2665:2976" ph="SELECT u.*, usuarios" />
-            <marker date="1502087060360" expanded="true" signature="3577:3623" ph="SELECT * FRO... actividades" />
-            <marker date="1502087060360" expanded="true" signature="4112:4173" ph="SELECT * FRO... cursos" />
-            <marker date="1502087060360" expanded="true" signature="4390:4567" ph="INSERT INTO cursos_usuarios... " />
-            <marker date="1502087060360" expanded="true" signature="4740:5126" ph="SELECT er.id... capitulos" />
-            <marker date="1502087060360" expanded="true" signature="5402:5502" ph="DELETE FROM " />
-            <marker date="1502087060360" expanded="true" signature="5659:5787" ph="DELETE FROM " />
+            <element signature="e#12455#12474#0#HTML" expanded="true" />
+            <element signature="e#12579#12598#0#HTML" expanded="true" />
+            <element signature="e#12703#12722#0#HTML" expanded="true" />
+            <element signature="e#13396#13415#0#HTML" expanded="true" />
+            <element signature="e#13647#13666#0#HTML" expanded="true" />
+            <element signature="e#13905#13924#0#HTML" expanded="true" />
+            <element signature="e#14156#14175#0#HTML" expanded="true" />
+            <marker date="1502089285754" expanded="false" signature="421:2231" ph="..." />
+            <marker date="1502089285754" expanded="true" signature="2665:2976" ph="SELECT u.*, usuarios" />
+            <marker date="1502089285754" expanded="true" signature="3577:3623" ph="SELECT * FRO... actividades" />
+            <marker date="1502089285754" expanded="true" signature="4112:4173" ph="SELECT * FRO... cursos" />
+            <marker date="1502089285754" expanded="true" signature="4390:4567" ph="INSERT INTO cursos_usuarios... " />
+            <marker date="1502089285754" expanded="true" signature="4740:5126" ph="SELECT er.id... capitulos" />
+            <marker date="1502089285754" expanded="true" signature="5402:5502" ph="DELETE FROM " />
+            <marker date="1502089285754" expanded="true" signature="5659:5787" ph="DELETE FROM " />
           </folding>
         </state>
       </provider>

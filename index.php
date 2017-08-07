@@ -60,8 +60,7 @@ if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'estu
         </div>
     </div>
 
-<?php }
-else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'admin') {
+<?php } else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'admin') {
     /********** es un administrador, mostrar campos para buscar informacion acerca de un estudiante ******/
     ?>
 
@@ -273,8 +272,7 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
         </div>
     <?php } // termina - if(isset($estudiante)) ?>
 
-<?php }
-else{ ?>
+<?php } else { ?>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -310,6 +308,32 @@ else{ ?>
             <span class="sr-only">Next</span>
         </a>
     </div>
-<?php }?>
+    <div class="row">
+        <div class="col-sm-3 ">
+            <div class="well">
+                <img src="img/personas/persona1.jpg" alt="mate" class="img-circle" style="width:100%;">
+                <p class="text-center">Director</p>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="well">
+                <img src="img/personas/persona2.jpg" alt="ing" class="img-circle" style="width:100%;">
+                <p class="text-center">Sub Director</p>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="well">
+                <img src="img/personas/persona1.jpg" alt="logica" class="img-circle" style="width:100%;">
+                <p class="text-center">Profesor</p>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="well">
+                <img src="img/personas/persona2.jpg" alt="esp" class="img-circle" style="width:100%;">
+                <p class="text-center">Limpiador</p>
+            </div>
+        </div>
+    </div>
+<?php } ?>
 
 <?php require('pie.php'); ?>
