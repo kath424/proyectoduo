@@ -30,6 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['tipo_de_usuario'] === 'ad
             $query = "INSERT into cursos (nombre) VALUES "
                 . " ('{$_POST['nombre']}')";
             $mysqli->query($query);
+            // agregar curso a todos los estudiantes
+            $curso_id = $mysqli->insert_id;
+            $query_estudiantes = "SELECT id from usuarios where tipo_de_usuario = 'estudiante'";
+            $resultado = $mysqli->query($query_estudiantes);
+            $agregar_clases_query = "INSERT into cursos_usuarios (usuarios_id,cursos_id) VALUES ";
+            $valores = [];
+            while($stu = $resultado->fetch_array(MYSQLI_ASSOC)){
+                $valores[] = "({$stu['id']} , $curso_id)";
+            }
+            $agregar_clases_query .= " ".implode(',',$valores);
+            $mysqli->query($agregar_clases_query);
             break;
         case "agregarCapitulo":
             $query = "INSERT into capitulos (nombre, cursos_id) VALUES"

@@ -11,7 +11,7 @@ require('barra_de_navegacion.php');
 <?php
 require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
-if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
+if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'estudiante') {
     /*********** es un estudiante, mostrar sus evaluaciones tomadas si ha tomado alguna ******/
 
     $agrupados = obtererCalificaciones($_SESSION['user_id'], $mysqli);
@@ -60,7 +60,8 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
         </div>
     </div>
 
-<?php } else if ($_SESSION['tipo_de_usuario'] == 'admin') {
+<?php }
+else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'admin') {
     /********** es un administrador, mostrar campos para buscar informacion acerca de un estudiante ******/
     ?>
 
@@ -92,8 +93,8 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
                 $query = "SELECT * FROM actividades where usuarios_id = {$estudiante[0]['id']}";
                 $resultado = $mysqli->query($query);
                 $actividades = [];
-                if($resultado->num_rows > 0){
-                    while($act = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                if ($resultado->num_rows > 0) {
+                    while ($act = $resultado->fetch_array(MYSQLI_ASSOC)) {
                         $act['tiempo'] = new DateTime($act['tiempo']);
                         $actividades[] = $act;
                     }
@@ -177,7 +178,7 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
                     <?php foreach ($actividades as $act) { ?>
                         <tr>
                             <td><?= $act['tiempo']->format('d/m/Y g:i:s A') ?></td>
-                            <td ><?= $act['detalles']?></td>
+                            <td><?= $act['detalles'] ?></td>
                         </tr>
                     <?php } ?>
                 </table>
@@ -272,6 +273,43 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
         </div>
     <?php } // termina - if(isset($estudiante)) ?>
 
-<?php } ?>
+<?php }
+else{ ?>
+    <div id="myCarousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+
+            <div class="item active">
+                <img src="img/carrusel/imagen1.jpg" style="width:100%;">
+            </div>
+
+            <div class="item">
+                <img src="img/carrusel/imagen2.jpg" style="width:100%;">
+            </div>
+
+            <div class="item">
+                <img src="img/carrusel/imagen3.jpg" style="width:100%;">
+            </div>
+
+        </div>
+
+        <!-- Left and right controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+<?php }?>
 
 <?php require('pie.php'); ?>
