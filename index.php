@@ -4,7 +4,7 @@ $css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
 /*
-  TODO: mostrar las ultimas 10 actividades de un estudiante al administrador.
+  TODO: mostrar las ultimas 10 actividades de un estudiante al administrador(LISTO).
 */
 ?>
 
@@ -46,13 +46,7 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
                         <td><?= $info['incorrectas'] ?></td>
                         <td><?= $info['total'] ?></td>
                         <td>
-                            <?php
-                            if ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) {
-                                echo "N/A";
-                            } else {
-                                echo ($info['correctas'] / ($info['total'])) * 100 . '%';
-                            }
-                            ?>
+                            <?= (($info['correctas'] / ($info['total'])) * 100 . '%') ?>
                         </td>
                     </tr>
                 <?php } ?>
@@ -253,13 +247,7 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
                             <td><?= $info['incorrectas'] ?></td>
                             <td><?= $info['total'] ?></td>
                             <td>
-                                <?php
-                                if ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) {
-                                    echo "N/A";
-                                } else {
-                                    echo ($info['correctas'] / ($info['total'])) * 100 . '%';
-                                }
-                                ?>
+                                <?= (($info['correctas'] / ($info['total'])) * 100 . '%') ?>
                             </td>
                             </td>
                             <td class="text-center">
