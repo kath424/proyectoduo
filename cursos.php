@@ -23,8 +23,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && $_SESSION['tipo_de_usuario'] === 'ad
         case "eliminarCurso":
             $query = "DELETE FROM cursos WHERE id = " . $_POST['curso_id'];
             $mysqli->query($query);
-            if(count($mysqli->error_list ) > 0)
-                echo "ERROR: ".$mysqli->error;
+            if (count($mysqli->error_list) > 0)
+                echo "ERROR: " . $mysqli->error;
             break;
         case "agregarCurso":
             $query = "INSERT into cursos (nombre) VALUES "
@@ -169,7 +169,7 @@ if ($resultado) {
             <h3>Agregar Curso </h3>
             <form action="cursos.php" method="POST">
                 <!-- accion para saber que hacer en la parte de POST -->
-                <input class="hidden" name="accion" value="agregarCurso" />
+                <input class="hidden" name="accion" value="agregarCurso"/>
 
                 <div class="form-group">
                     <label for="curso" class="control-label">Ingrese nombre del Curso:</label>
@@ -205,10 +205,18 @@ if ($resultado) {
                 </h2>
                 <div class="list-group">
                     <?php while ($cap = $capitulos->fetch_array(MYSQLI_ASSOC)) { ?>
-                        <a class="list-group-item"
-                           href="capitulo_contenido.php?id=<?= $cap['id'] ?>&curso=<?= $_GET['nombre'] ?>&capitulo=<?= $cap['nombre'] ?>&paso=1">
-                            <?= $cap['nombre'] ?>
-                        </a>
+                        <?php if ($cap['puede_repetir']) { // es de practica ?>
+                            <a class="list-group-item"
+                               href="practica.php?id=<?= $cap['id'] ?>">
+                                <?= $cap['nombre'] ?> (Practica) <small>Click para empezar</small>
+                            </a>
+
+                        <?php } else { ?>
+                            <a class="list-group-item"
+                               href="capitulo_contenido.php?id=<?= $cap['id'] ?>&curso=<?= $_GET['nombre'] ?>&capitulo=<?= $cap['nombre'] ?>&paso=1">
+                                <?= $cap['nombre'] ?>
+                            </a>
+                        <?php } ?>
                     <?php } ?>
                 </div>
             </div>

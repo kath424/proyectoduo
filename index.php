@@ -93,7 +93,7 @@ if ($_SESSION['tipo_de_usuario'] == 'estudiante') {
                 $resultado = $mysqli->query($query);
                 $actividades = [];
                 if($resultado->num_rows > 0){
-                    while($act = $resultado->fetch_array(MYSQL_ASSOC)) {
+                    while($act = $resultado->fetch_array(MYSQLI_ASSOC)) {
                         $act['tiempo'] = new DateTime($act['tiempo']);
                         $actividades[] = $act;
                     }
