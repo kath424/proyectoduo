@@ -29,7 +29,7 @@ function actualizarUltimoLogeo($idUsuario, DateTime $tiempo, $actividad, mysqli 
 
 function actualizarUltimaActividad($idUsuario, DateTime $tiempo, $actividad, mysqli $mysqli)
 {
-    
+
     $query = "INSERT INTO actividades (detalles, usuarios_id) VALUES "
         . "('$actividad',$idUsuario)";
     $mysqli->query($query);

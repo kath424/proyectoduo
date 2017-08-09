@@ -60,8 +60,7 @@ if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'estu
         </div>
     </div>
 
-<?php }
-else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'admin') {
+<?php } else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'admin') {
     /********** es un administrador, mostrar campos para buscar informacion acerca de un estudiante ******/
     ?>
 
@@ -78,7 +77,7 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
                     . " WHERE u.cedula = " . $_POST['cedula'];
 
                 $resultado = $mysqli->query($query_estudiante);
-                if ($resultado) {
+                if ($resultado->num_rows > 0) {
                     $estudiante = [];
                     while ($est = $resultado->fetch_array(MYSQLI_ASSOC))
                         $estudiante[] = $est;
@@ -89,30 +88,19 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
                     if (!$agrupados) {
                         $mensaje = "No has tomado ninguna evaluacion";
                     }
-                }
-                $query = "SELECT * FROM actividades where usuarios_id = {$estudiante[0]['id']}";
-                $resultado = $mysqli->query($query);
-                $actividades = [];
-                if ($resultado->num_rows > 0) {
-                    while ($act = $resultado->fetch_array(MYSQLI_ASSOC)) {
-                        $act['tiempo'] = new DateTime($act['tiempo']);
-                        $actividades[] = $act;
+                    $query = "SELECT * FROM actividades where usuarios_id = {$estudiante[0]['id']}";
+                    $resultado = $mysqli->query($query);
+                    $actividades = [];
+                    if ($resultado->num_rows > 0) {
+                        while ($act = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                            $act['tiempo'] = new DateTime($act['tiempo']);
+                            $actividades[] = $act;
+                        }
                     }
+                } else {
+                    $cedulaIncorrecta = "Cedula incorrecta. Intente de nuevo";
+
                 }
-                break;
-
-            case "agregarCurso":
-                $obtenerCursoQuery = "SELECT * FROM cursos WHERE nombre = '" . $_POST['curso'] . "'";
-                $resultado = $mysqli->query($obtenerCursoQuery);
-                $curso = $resultado->fetch_array(MYSQLI_ASSOC);
-
-                // agregar curso a estudiante
-                $agregarCursoQuery = "INSERT INTO cursos_usuarios (cursos_id, usuarios_id) VALUES ("
-                    . $curso['id'] . " , "
-                    . $_POST['estudiante_id']
-                    . " );";
-
-                $resutado = $mysqli->query($agregarCursoQuery);
 
                 break;
 
@@ -135,14 +123,6 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
                 $resultado = $mysqli->query($reiniciarEvaluacionQuery);
                 break;
 
-            case "quitarClase":
-                $query = "DELETE FROM cursos_usuarios 
-                  WHERE usuarios_id = {$_POST['estudiante_id']} 
-                  AND cursos_id = {$_POST['curso_id']}
-                ";
-                $resultado = $mysqli->query($query);
-                break;
-
             default:
                 break;
 
@@ -154,23 +134,30 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
 
 
     <div class="row">
-        <form class="col-sm-12 form-inline text-center" action="index.php" method="POST">
+        <form class="col-sm-12  " action="index.php" method="POST">
             <!-- accion para saber que hacer en la parte de POST -->
             <input class="hidden" name="accion" value="obtenerEstudiante">
 
-            <h3> Ingrese numero de cedula para obtener detalles de un estudiante</h3>
-            <div class="form-group">
+            <h3 class="text-center"> Ingrese numero de cedula para obtener detalles de un estudiante</h3>
+            <div class="form-group col-sm-4 col-sm-offset-4 <?= isset($cedulaIncorrecta)?'has-error':''?> ">
                 <label for="cedula" class="control-label">Cedula:</label>
                 <input class="form-control" id="cedula" name="cedula" placeholder="123123"/>
+
+                <?php if (isset($cedulaIncorrecta)) { ?>
+                    <div class="text-danger" >
+                        <?= $cedulaIncorrecta ?>
+                    </div>
+                <?php } ?>
+                <button class="btn btn-primary pull-right"> Obtener Informacion <i
+                            class="glyphicon glyphicon-search"></i></button>
             </div>
-            <button class="btn btn-primary "> Obtener Informacion <i
-                        class="glyphicon glyphicon-search"></i></button>
 
         </form>
+
     </div>
     <?php if (isset($estudiante)) { ?>
         <h2 class="text-capitalize text-center"><?= $estudiante[0]['nombre'] . ', ' . $estudiante[0]['apellido'] ?></h2>
-
+        <!-- muestra 10 ultimas actividades-->
         <div class="row">
             <div class="col-sm-12 ">
                 <h3>Ultimas 10 activiades</h3>
@@ -184,46 +171,8 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
                 </table>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-6">
-                <h3>Cursos</h3>
-                <table class="table table-bordered">
-                    <?php foreach ($estudiante as $curso) { ?>
-                        <tr>
-                            <td><?= $curso['nombre_curso'] ?></td>
-                            <td class="text-center">
-                                <form action="index.php" method="POST">
-                                    <!-- campos ocultos para saber  la accion y para quien es la accion -->
-                                    <input class="hidden" name="curso_id" value="<?= $curso['curso_id'] ?>">
-                                    <input class="hidden" name="accion" value="quitarClase">
-                                    <input class="hidden" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>">
-                                    <button class="btn btn-danger">Quitar <i
-                                                class="glyphicon glyphicon-trash"></i></button>
-                                </form>
 
-
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </table>
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <h3> Agregar curso </h3>
-                <form action="index.php" method="POST">
-                    <!-- accion para saber que hacer en la parte de POST -->
-                    <input class="hidden" name="accion" value="agregarCurso">
-                    <input class="hidden" name="estudiante_id" value="<?= $estudiante[0]['id'] ?>">
-
-                    <div class="form-group">
-                        <label for="curso" class="control-label">Ingrese nombre del curso:</label>
-                        <input id="curso" class="form-control" name="curso" placeholder="logica">
-                        <button class=" pull-right btn btn-primary">Agregar <i
-                                    class="glyphicon glyphicon-plus"></i></button>
-                    </div>
-
-                </form>
-            </div>
-        </div>
+        <!-- muestra evaluaciones-->
         <div class="row">
             <div class="col-sm-12">
                 <h3>Evaluaciones</h3>
@@ -273,8 +222,7 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
         </div>
     <?php } // termina - if(isset($estudiante)) ?>
 
-<?php }
-else { ?>
+<?php } else { ?>
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
@@ -313,7 +261,9 @@ else { ?>
     </div>
     <!-- 16:9 aspect ratio -->
     <div class="embed-responsive embed-responsive-16by9">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/DYE1rkjvSbI?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
+        <iframe width="560" height="315"
+                src="https://www.youtube.com/embed/DYE1rkjvSbI?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1"
+                frameborder="0" allowfullscreen></iframe>
     </div>
     <div class="row">
         <div class="col-sm-3">
@@ -357,3 +307,8 @@ else { ?>
 <?php } ?>
 
 <?php require('pie.php'); ?>
+<script>
+    $(function(){
+        window.scrollTo(0,document.body.scrollHeight);
+    })
+</script>

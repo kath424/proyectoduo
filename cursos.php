@@ -395,4 +395,8 @@ if ($resultado) {
 <?php } ?>
 
 <?php require('pie.php') ?>
-
+<script>
+    $(function(){
+        window.scrollTo(0,document.body.scrollHeight);
+    })
+</script>
