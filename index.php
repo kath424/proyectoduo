@@ -60,7 +60,8 @@ if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'estu
         </div>
     </div>
 
-<?php } else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'admin') {
+<?php }
+else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'admin') {
     /********** es un administrador, mostrar campos para buscar informacion acerca de un estudiante ******/
     ?>
 
@@ -272,7 +273,8 @@ if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'estu
         </div>
     <?php } // termina - if(isset($estudiante)) ?>
 
-<?php } else { ?>
+<?php }
+else { ?>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -309,28 +311,41 @@ if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'estu
         </a>
     </div>
     <div class="row">
-        <div class="col-sm-3 ">
+        <div class="col-sm-3">
             <div class="well">
-                <img src="img/personas/persona1.jpg" alt="mate" class="img-circle" style="width:100%;">
-                <p class="text-center">Director</p>
+                <img src="img/personas/albert.jpg" alt="albert einstein" class="img-circle" style="width:100%">
+                <p class="text-">Nunca consideres el estudio como una obligación,
+                    sino como una oportunidad para penetrar en el bello
+                    y maravilloso mundo del saber.</p>
+                <p class="text-right"><strong>-Albert Einstein</strong></p>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="well">
-                <img src="img/personas/persona2.jpg" alt="ing" class="img-circle" style="width:100%;">
-                <p class="text-center">Sub Director</p>
+                <img src="img/personas/aristoteles.jpg" alt="aristoteles" class="img-circle" style="width:100%">
+                <p class="">La inteligencia consiste no sólo en el conocimiento,
+                    sino también en la destreza de aplicar los conocimientos en la práctica.
+                </p>
+                <p class="text-right"><strong>-Aristoteles</strong></p>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="well">
-                <img src="img/personas/persona1.jpg" alt="logica" class="img-circle" style="width:100%;">
-                <p class="text-center">Profesor</p>
+                <img src="img/personas/newton.jpg" alt="issac newton" class="img-circle" style="width:100%">
+                <p class="">Si he hecho descubrimientos invaluables ha sido más por
+                    tener paciencia que cualquier otro talento.
+                </p>
+                <p class="text-right"><strong>-Issac Newton</strong></p>
             </div>
         </div>
         <div class="col-sm-3">
             <div class="well">
-                <img src="img/personas/persona2.jpg" alt="esp" class="img-circle" style="width:100%;">
-                <p class="text-center">Limpiador</p>
+                <img src="img/personas/pitagoras.jpg" alt="pitagoras" class="img-circle" style="width:100%">
+                <p class="">Prefiero el bastón de la experiencia que el carro rápido de
+                    la fortuna. El filósofo viaja a pie.
+                </p>
+                <p class="text-right"><strong>-Pitagoras</strong></p>
+                <p></p>
             </div>
         </div>
     </div>
