@@ -10,7 +10,8 @@ if (isset($_SESSION['user_id'])) {
 
 // incluir encabezado con titulo y estilos
 $titulo = "Inicio Session";
-$css = ['estilos/estilologin.css', 'estilos/estilopie.css'];
+$ocultarBanner = true;
+$css = ['estilos/estilopie.css', 'estilos/estilologin.css'];
 require('encabezado.php');
 
 
@@ -51,26 +52,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 
-
 ?>
+<div>
+<!--    <div class="panel-heading">-->
+<!--        <div class="panel-title text-center">-->
+<!--            <h1 class="title">Project-DUO</h1>-->
+<!--            <hr/>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <form class="form-signin" action="login.php" method="POST">
-        <h2 class="form-signin-heading">Inicia Sesion Aqui:</h2>
-        <label for="usuario" class="sr-only" >Usuario:</label>
-        <input type="text" name="usuario" id="usuario" class="form-control" placeholder="Usuario" required autofocus>
-        <label for="clave" class="sr-only" >Contraseña:</label>
-        <input type="password" name="clave" id="clave" class="form-control" placeholder="Clave" required>
-        <!-- hay un mensaje?  imprimirlo en la pantalla-->
-        <?php  if (isset($mensaje)) { ?>
-            <div class="alert alert-danger" role="alert">
-                <strong><?= $mensaje ?></strong>
+    <div class="main-login main-center">
+        <form class="form-horizontal" action="login.php" method="POST">
+            <h2 class="form-signin-heading">Inicia Sesion Aqui:</h2>
+            <div class="form-group">
+                <label for="usuario" class="sr-only">Usuario:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                    <input name="usuario" id="usuario" class="form-control" placeholder="Usuario" required autofocus>
+                </div>
             </div>
-        <?php } ?>
-        <div class="">
-            <label> No tienes una cuenta?<a href="registro.php">Entra Aquí!</a> </label>
-            <label> <a href="recuperar_usuario.php">Olvide mi Contraseña/Usuario!</a> </label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-    </form>
 
+            <div class="form-group">
+                <label for="clave" class="sr-only">Contraseña:</label>
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                    <input type="password" name="clave" id="clave" class="form-control" placeholder="Clave" required>
+                </div>
+            </div>
+            <!-- hay un mensaje?  imprimirlo en la pantalla-->
+            <?php if (isset($mensaje)) { ?>
+                <div class="alert alert-danger" role="alert">
+                    <strong><?= $mensaje ?></strong>
+                </div>
+            <?php } ?>
+            <div class="">
+                <label> No tienes una cuenta?<a href="registro.php">Entra Aquí!</a> </label>
+                <label> <a href="recuperar_usuario.php">Olvide mi Contraseña/Usuario!</a> </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block">Entrar</button>
+        </form>
+
+    </div>
+</div>
 <?php require('pie.php'); ?>

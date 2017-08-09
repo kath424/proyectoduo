@@ -8,6 +8,7 @@
     <meta name="description" content="esta es una pagina web con estilos css3">
     <title><?= isset($titulo) ? $titulo : '' ?></title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
     <link rel="stylesheet" href="estilos/estilogeneral.css"/>
     <?php foreach ($css as $estilo) { ?>
         <link rel="stylesheet" href="<?= $estilo ?>"/>
@@ -28,11 +29,7 @@ function actualizarUltimoLogeo($idUsuario, DateTime $tiempo, $actividad, mysqli 
 
 function actualizarUltimaActividad($idUsuario, DateTime $tiempo, $actividad, mysqli $mysqli)
 {
-    $qs = [];
-    foreach ($_GET as $variable=>$valor) {
-        $qs[] = "$variable=$valor";
-    }
-    $actividad .= '?'.implode('&',$qs);
+    
     $query = "INSERT INTO actividades (detalles, usuarios_id) VALUES "
         . "('$actividad',$idUsuario)";
     $mysqli->query($query);
@@ -126,7 +123,7 @@ if (isset($_SESSION['user_id'])) {
 
 <section class="container">
 
-    <header class="masthead">
+    <header class="masthead <?= isset($ocultarBanner)?'hidden':'' ?>">
        <a href="index.php"> <img class="banner" src="img/logo1.jpg" alt="banner"/></a>
     </header>
 

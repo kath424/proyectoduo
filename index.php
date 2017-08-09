@@ -154,7 +154,7 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
 
 
     <div class="row">
-        <form class="col-sm-12 form-inline " action="index.php" method="POST">
+        <form class="col-sm-12 form-inline text-center" action="index.php" method="POST">
             <!-- accion para saber que hacer en la parte de POST -->
             <input class="hidden" name="accion" value="obtenerEstudiante">
 
@@ -275,10 +275,7 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
 
 <?php }
 else { ?>
-    <!-- 16:9 aspect ratio -->
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/DYE1rkjvSbI?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
-    </div>
+
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -313,6 +310,10 @@ else { ?>
             <span class="glyphicon glyphicon-chevron-right"></span>
             <span class="sr-only">Next</span>
         </a>
+    </div>
+    <!-- 16:9 aspect ratio -->
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/DYE1rkjvSbI?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
     </div>
     <div class="row">
         <div class="col-sm-3">

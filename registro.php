@@ -10,7 +10,8 @@ if (isset($_SESSION['user_id'])) {
 
 // incluir encabezado con titulo y estilos
 $titulo = "Registro";
-$css = ['estilos/estilologin.css', 'estilos/estilopie.css'];
+$ocultarBanner = true;
+$css = ['estilos/estilopie.css', 'estilos/estilologin.css'];
 require('encabezado.php');
 
 
@@ -41,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // agregar todos los cursos de la tabla de cursos
         // preparar valores a insertar (id de curso, id de estudiante)
-        $query = "SELECT id from cursos";
+        $query = "SELECT id FROM cursos";
         $cursos = $mysqli->query($query);
         $cursos_stu = [];
         while ($curso = $cursos->fetch_array())
@@ -49,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $cursos_stu = implode(',', $cursos_stu);
         // agregar cursos
-        $query = "INSERT INTO cursos_usuarios (cursos_id, usuarios_id) VALUES ".$cursos_stu;
+        $query = "INSERT INTO cursos_usuarios (cursos_id, usuarios_id) VALUES " . $cursos_stu;
         $resultado = $mysqli->query($query);
 
         // mostrar preguntas de seguridad para recuperacion de cuenta
@@ -69,38 +70,75 @@ if (isset($mensaje)) {// hay un mensaje?  imprimirlo en la pantalla
     echo "<div> $mensaje </div>";
 }
 ?>
-    <form class="form-signin" action="registro.php" method="post" class="registro">
-        <h2 class="form-signin-heading">Registro Aqui:</h2>
-        <label for="nombre" class="sr-only">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" class="form-control" placeholder="Katherine" />
+    <div class="">
+<!--        <div class="panel-heading">-->
+<!--            <div class="panel-title text-center">-->
+<!--                <h1 class="title">Project-DUO</h1>-->
+<!--                <hr/>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="main-login main-center">
+            <form class="form-horizontal" action="registro.php" method="post" class="registro">
+                <h2 class="form-signin-heading">Registro Aqui:</h2>
+                <div class="form-group">
+                    <label for="nombre" class="sr-only">Nombre:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                        <input name="nombre" id="nombre" class="form-control" placeholder="ingresa nombre"/>
 
-        <label for="apellido" class="sr-only">Apellido:</label>
-        <input type="text" name="apellido" id="apellido" class="form-control" placeholder="Acosta" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="apellido" class="sr-only">Apellido:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                        <input name="apellido" id="apellido" class="form-control" placeholder="ingresa apellido"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cedula" class="sr-only">Cedula:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-hashtag fa" aria-hidden="true"></i></span>
+                        <input name="cedula" id="cedula" class="form-control" placeholder="ingresa numero de cedula"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="usuario" class="sr-only">Nombre Usuario:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                        <input name="usuario" id="usuario" class="form-control"
+                               placeholder="ingresa nombre de usuario"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="clave" class="sr-only">Contra:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                        <input type="password" name="clave" id="clave" class="form-control"
+                               placeholder="ingresa clave"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reclave" class="sr-only">Repetir Contra:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
+                        <input type="password" name="reclave" id="reclave" class="form-control"
+                               placeholder="confirma clave"/>
+                    </div>
+                </div>
+                <!-- hay un mensaje?  imprimirlo en la pantalla-->
+                <?php if (isset($mensaje)) { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <strong><?= $mensaje ?></strong>
+                    </div>
+                <?php } ?>
 
-        <label for="cedula" class="sr-only">Cedula:</label>
-        <input type="text" name="cedula" id="cedula" class="form-control" placeholder="12523" />
+                <div>
+                    <label>Ya tienes una cuenta?<a href="login.php">Entra Aquí!</a> </label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block">Entrar</button>
 
-        <label for="usuario" class="sr-only">Nombre Usuario:</label>
-        <input type="text" name="usuario" id="usuario" class="form-control" placeholder="acosta123" />
-
-        <label for="clave"  class="sr-only">Contra:</label>
-        <input type="password" style="margin-bottom: 0" name="clave" id="clave" class="form-control" placeholder="******" />
-
-        <label for="reclave" class="sr-only">Repetir Contra:</label>
-        <input type="password" name="reclave" id="reclave" class="form-control" placeholder="******" />
-
-        <!-- hay un mensaje?  imprimirlo en la pantalla-->
-        <?php  if (isset($mensaje)) { ?>
-            <div class="alert alert-danger" role="alert">
-                <strong><?= $mensaje ?></strong>
-            </div>
-        <?php } ?>
-
-        <div>
-            <label>Ya tienes una cuenta?<a href="login.php">Entra Aquí!</a> </label>
+            </form>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-
-    </form>
-
+    </div>
 <?php require('pie.php'); ?>
