@@ -26,9 +26,6 @@ function actualizarUltimoLogeo($idUsuario, DateTime $tiempo, $actividad, mysqli 
 
 }
 
-/*
-    TODO: Cambiar ultima actividad para guardar las 10 ultimas acciones.(LISTO)
-*/
 function actualizarUltimaActividad($idUsuario, DateTime $tiempo, $actividad, mysqli $mysqli)
 {
     $qs = [];
@@ -48,7 +45,7 @@ function actualizarUltimaActividad($idUsuario, DateTime $tiempo, $actividad, mys
             $ids[] = $id['id'];
         $ids = implode(',', $ids);
         $query = "DELETE FROM actividades WHERE usuarios_id = $idUsuario AND id NOT IN ($ids)";
-        $resultado = $mysqli->query($query);
+        $mysqli->query($query);
     }
 }
 
@@ -130,7 +127,7 @@ if (isset($_SESSION['user_id'])) {
 <section class="container">
 
     <header class="masthead">
-        <img class="banner" src="img/logo1.jpg" alt="banner"/>
+       <a href="index.php"> <img class="banner" src="img/logo1.jpg" alt="banner"/></a>
     </header>
 
 

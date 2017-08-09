@@ -4,13 +4,14 @@ $css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
 
-/*
-  TODO: Boton de agregar preguntas a evaluaciones/capitulos( LISTO ).
-  TODO: Boton de agregar imagenes/contenido a capitulos (LISTO).
-  TODO: Agregar/quitar cursos. (LISTO)
-  TODO: modificar base de datos llave foranea para que haga 'cascade' y borre todo lo relacionado (LISTO)
- */
+?>
 
+<?php
+    // verificar que el usuario esta logeado
+    if(!isset($_SESSION['user_id'])){
+        header('Location: login.php');
+        exit;
+    }
 ?>
 
 <?php
