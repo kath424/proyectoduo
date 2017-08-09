@@ -16,7 +16,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="index.php">Inicio</a></li>
                     <li><a href="cursos.php">Cursos</a></li>
-                    <li><a href="contactos.php">Contactos</a></li>
+                    <li><a href="ayuda.php">Ayuda</a></li>
                     <?php if (isset($_SESSION['user_id'])) { ?>
                         <li><a href="#"><?= $_SESSION['usuario'] ?> (<?= $_SESSION['tipo_de_usuario'] ?>)</a></li>
                         <li><a href="logout.php">Cerrar Sesion</a></li>
