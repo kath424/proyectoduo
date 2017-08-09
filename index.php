@@ -275,6 +275,10 @@ else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 
 
 <?php }
 else { ?>
+    <!-- 16:9 aspect ratio -->
+    <div class="embed-responsive embed-responsive-16by9">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/DYE1rkjvSbI?rel=0&amp;controls=0&amp;showinfo=0&amp;autoplay=1" frameborder="0" allowfullscreen></iframe>
+    </div>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
