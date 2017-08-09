@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3032dd71-0973-4db9-bd7a-da6a4ebbaf52" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cursos.php" afterPath="$PROJECT_DIR$/cursos.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/encabezado.php" afterPath="$PROJECT_DIR$/encabezado.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
-    </list>
+    <list default="true" id="3032dd71-0973-4db9-bd7a-da6a4ebbaf52" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,8 +85,8 @@
       <file leaf-file-name="cursos.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cursos.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="253" column="0" lean-forward="false" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
+            <state relative-caret-position="-1089">
+              <caret line="243" column="70" lean-forward="false" selection-start-line="243" selection-start-column="70" selection-end-line="243" selection-end-column="70" />
               <folding>
                 <marker date="1502256163136" expanded="true" signature="665:695" ph="DELETE FROM " />
                 <marker date="1502256163136" expanded="true" signature="922:1001" ph="INSERT into cursos... " />
@@ -227,7 +223,7 @@
   </component>
   <component name="PhpWebServerValidation" path_to_validation_script="C:\xampp\htdocs\proyectoduo" selected_validation_type="LOCAL" web_path_to_validation_script="http://127.0.0.1/proyectoduo" />
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" interpreter_name="PHP" />
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="62" />
     <option name="width" value="929" />
     <option name="height" value="1080" />
@@ -276,6 +272,11 @@
             <path>
               <item name="proyectoduo" type="b2602c69:ProjectViewProjectNode" />
               <item name="proyectoduo" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="proyectoduo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="proyectoduo" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="estilos" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="proyectoduo" type="b2602c69:ProjectViewProjectNode" />
@@ -433,7 +434,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="193793000" />
+    <option name="totallyTimeSpent" value="194422000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -445,10 +446,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1050" extended-state="7" />
-    <editor active="true" />
+    <frame x="-9" y="-9" width="1938" height="1050" extended-state="6" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3254565" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3254565" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3181818" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329582" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.06337272" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -941,8 +941,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cursos.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="253" column="0" lean-forward="false" selection-start-line="253" selection-start-column="0" selection-end-line="253" selection-end-column="0" />
+        <state relative-caret-position="-1089">
+          <caret line="243" column="70" lean-forward="false" selection-start-line="243" selection-start-column="70" selection-end-line="243" selection-end-column="70" />
           <folding>
             <marker date="1502256163136" expanded="true" signature="665:695" ph="DELETE FROM " />
             <marker date="1502256163136" expanded="true" signature="922:1001" ph="INSERT into cursos... " />
