@@ -70,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
                     <input name="usuario" id="usuario" class="form-control" placeholder="Usuario" required autofocus>
                 </div>
+
             </div>
 
             <div class="form-group">
