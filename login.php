@@ -53,46 +53,48 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 ?>
-<div>
-<!--    <div class="panel-heading">-->
-<!--        <div class="panel-title text-center">-->
-<!--            <h1 class="title">Project-DUO</h1>-->
-<!--            <hr/>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div>
+        <!--    <div class="panel-heading">-->
+        <!--        <div class="panel-title text-center">-->
+        <!--            <h1 class="title">Project-DUO</h1>-->
+        <!--            <hr/>-->
+        <!--        </div>-->
+        <!--    </div>-->
 
-    <div class="main-login main-center">
-        <form class="form-horizontal" action="login.php" method="POST">
-            <h2 class="form-signin-heading">Inicia Sesion Aqui:</h2>
-            <div class="form-group">
-                <label for="usuario" class="sr-only">Usuario:</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                    <input name="usuario" id="usuario" class="form-control" placeholder="Usuario" required autofocus>
+        <div class="main-login main-center">
+            <form class="form-horizontal" action="login.php" method="POST">
+                <h2 class="form-signin-heading">Inicia Sesion Aqui:</h2>
+                <div class="form-group">
+                    <label for="usuario" class="sr-only">Usuario:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
+                        <input name="usuario" id="usuario" class="form-control" placeholder="Usuario" required
+                               autofocus>
+                    </div>
+
                 </div>
 
-            </div>
-
-            <div class="form-group">
-                <label for="clave" class="sr-only">Contraseña:</label>
-                <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-lock fa" aria-hidden="true"></i></span>
-                    <input type="password" name="clave" id="clave" class="form-control" placeholder="Clave" required>
+                <div class="form-group">
+                    <label for="clave" class="sr-only">Contraseña:</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-lock fa"></i></span>
+                        <input type="password" name="clave" id="clave" class="form-control" placeholder="Clave"
+                               required>
+                    </div>
                 </div>
-            </div>
-            <!-- hay un mensaje?  imprimirlo en la pantalla-->
-            <?php if (isset($mensaje)) { ?>
-                <div class="alert alert-danger" role="alert">
-                    <strong><?= $mensaje ?></strong>
+                <!-- hay un mensaje?  imprimirlo en la pantalla-->
+                <?php if (isset($mensaje)) { ?>
+                    <div class="alert alert-danger" role="alert">
+                        <strong><?= $mensaje ?></strong>
+                    </div>
+                <?php } ?>
+                <div class="">
+                    <label> No tienes una cuenta?<a href="registro.php">Entra Aquí!</a> </label>
+                    <label> <a href="recuperar_usuario.php">Olvide mi Contraseña/Usuario!</a> </label>
                 </div>
-            <?php } ?>
-            <div class="">
-                <label> No tienes una cuenta?<a href="registro.php">Entra Aquí!</a> </label>
-                <label> <a href="recuperar_usuario.php">Olvide mi Contraseña/Usuario!</a> </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block">Entrar</button>
-        </form>
+                <button class="btn btn-lg btn-primary btn-block">Entrar</button>
+            </form>
 
+        </div>
     </div>
-</div>
 <?php require('pie.php'); ?>

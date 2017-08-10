@@ -22,82 +22,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require('conneccion.php');
 
     // verificar que la informacion de la forma sea correcta
-    function informacionEsIncorrecta(){
+    function informacionEsIncorrecta()
+    {
 
         $errores = [];
 
+        // verificar que ningun campo este vacio
+        $campos = ['nombre', 'apellido', 'usuario', 'cedula', 'clave', 'reclave'];
+        foreach ($campos as $campo) {
+            if (empty($_POST[$campo]))
+                $errores[$campo] = $campo . ' no puede estar vacio';
+        }
+
         /* verificar que nombre, apellido sea solo letras */
-        if(!ctype_alpha($_POST['nombre']))
+        if (!ctype_alpha($_POST['nombre']))
             $errores['nombre'] = 'Nombre solo debe contener letras';
-        if(!ctype_alpha(($_POST['apellido'])))
+        if (!ctype_alpha(($_POST['apellido'])))
             $errores['apellido'] = 'Apellido solo debe contener letras';
 
         /* verificar que cedula sean solo numeros */
-        if(!ctype_alpha($_POST['cedula']))
+        if (!ctype_digit($_POST['cedula']))
             $errores['cedula'] = 'Cedula solo puede contener numeros';
 
         /* verificar que las claves coincidan */
-        if($_POST['clave'] !== $_POST['reclave'])
+        if ($_POST['clave'] !== $_POST['reclave'])
             $errores['reclave'] = 'Claves deben coincidir';
 
-        if(count($errores) > 0)
+
+        if (count($errores) > 0)
             return $errores;
         else
             return false;
     }
 
-    function guardarUsuario(mysqli $mysqli){
-        $query = "INSERT into usuarios(nombre, apellido, cedula, usuario, clave) VALUES ('{$_POST['nombre']}','{$_POST['apellido']}', '{$_POST['cedula']}', '{$_POST['usuario']}',  '{$_POST['clave']}' )";
-        $resultado = $mysqli->query($query);
-
-        if ($resultado) {// fue exitoso
-            // login
-            $query = "SELECT * FROM   usuarios  WHERE usuario =  '{$_POST['usuario']}'";
-            $resultado = $mysqli->query($query);
-            $usuario = $resultado->fetch_object();
-
-            // logear usario para que llene las preguntas de recuperacion
-            $_SESSION['user_id'] = $usuario->id;
-            $_SESSION['nombre'] = $usuario->nombre;
-            $_SESSION['apellido'] = $usuario->apellido;
-            $_SESSION['usuario'] = $usuario->usuario;
-            $_SESSION['tipo_de_usuario'] = $usuario->tipo_de_usuario;
-            $_SESSION['tiempo_de_entrada'] = new DateTime();
-
-            actualizarUltimoLogeo($usuario->id, $_SESSION['tiempo_de_entrada'], $titulo, $mysqli);
-
-            // agregar todos los cursos de la tabla de cursos
-            // preparar valores a insertar (id de curso, id de estudiante)
-            $query = "SELECT id FROM cursos";
-            $cursos = $mysqli->query($query);
-            $cursos_stu = [];
-            while ($curso = $cursos->fetch_array())
-                $cursos_stu[] = "( {$curso['id']} , $usuario->id )";
-
-            $cursos_stu = implode(',', $cursos_stu);
-            // agregar cursos
-            $query = "INSERT INTO cursos_usuarios (cursos_id, usuarios_id) VALUES " . $cursos_stu;
-            $resultado = $mysqli->query($query);
-
-            // mostrar preguntas de seguridad para recuperacion de cuenta
-            header('Location: registro2.php');
-            exit;
-        }
-        else {
-            $mensaje = "Error al agregar usuario";
-        }
-    }
 
     // si la informacion es correcta llamar funcion para guardar usuario
     $errores = informacionEsIncorrecta();
-    if(!$errores){
-        guardarUsuario($mysqli);
+    if (!$errores) { // si no hay errores
+        // pasar informacion a la siguiente pagina
+        $campos = ['nombre', 'apellido', 'usuario', 'cedula', 'clave', 'reclave'];
+        $qs = [];
+        foreach($campos as $campo){
+            $qs[] = $campo.'='.$_POST[$campo];
+        }
+        // mostrar preguntas de seguridad para recuperacion de cuenta
+        header('Location: registro2.php?'.implode('&',$qs));
+        exit;
+
     }
 
 }
 
 ?>
-
 
 
 <?php
@@ -117,63 +93,81 @@ if (isset($mensaje)) {// hay un mensaje?  imprimirlo en la pantalla
         <div class="main-login main-center">
             <form class="form-horizontal" action="registro.php" method="post" class="registro">
                 <h2 class="form-signin-heading">Registro Aqui:</h2>
-                <div class="form-group <?= isset($errores['nombre'])?'has-error':'' ?>" >
+                <div class="form-group <?= isset($errores['nombre']) ? 'has-error' : '' ?>">
                     <label for="nombre" class="sr-only">Nombre:</label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-user fa" ></i></span>
-                        <input name="nombre" id="nombre" class="form-control" placeholder="ingresa nombre" value="<?= issetor($_POST['nombre']) ?>"/>
+                        <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
+                        <input name="nombre" id="nombre" class="form-control" placeholder="ingresa nombre"
+                               value="<?= issetor($_POST['nombre']) ?>"/>
+                        <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['nombre']) ? '' : 'hidden' ?>"></span>
                     </div>
-                    <span  class="help-block">
-                        <?= isset($errores['nombre'])?$errores['nombre']:'' ?>
+                    <span class="help-block">
+                        <?= issetor($errores['nombre']) ?>
                     </span>
                 </div>
 
-                <div class="form-group  <?= isset($errores['apellido'])?'has-error':'' ?>">
+                <div class="form-group  <?= isset($errores['apellido']) ? 'has-error' : '' ?>">
                     <label for="apellido" class="sr-only">Apellido:</label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-user fa" ></i></span>
-                        <input name="apellido" id="apellido" class="form-control" placeholder="ingresa apellido" value="<?= issetor($_POST['apellido']) ?>"/>
+                        <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
+                        <input name="apellido" id="apellido" class="form-control" placeholder="ingresa apellido"
+                               value="<?= issetor($_POST['apellido']) ?>"/>
+                        <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['apellido']) ? '' : 'hidden' ?>"></span>
                     </div>
-                    <span  class="help-block">
-                        <?= isset($errores['apellido'])?$errores['apellido']:'' ?>
+                    <span class="help-block">
+                        <?= issetor($errores['apellido']) ?>
                     </span>
                 </div>
 
-                <div class="form-group  <?= isset($errores['cedula'])?'has-error':'' ?>">
+                <div class="form-group  <?= isset($errores['cedula']) ? 'has-error' : '' ?>">
                     <label for="cedula" class="sr-only">Cedula:</label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-hashtag fa" ></i></span>
-                        <input name="cedula" id="cedula" class="form-control" placeholder="ingresa numero de cedula" value="<?= issetor($_POST['cedula']) ?>"/>
+                        <span class="input-group-addon"><i class="fa fa-hashtag fa"></i></span>
+                        <input name="cedula" id="cedula" class="form-control" placeholder="ingresa numero de cedula"
+                               value="<?= issetor($_POST['cedula']) ?>"/>
+                        <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['cedula']) ? '' : 'hidden' ?>"></span>
                     </div>
-                    <span  class="help-block">
-                        <?= isset($errores['cedula'])?$errores['cedula']:'' ?>
+                    <span class="help-block">
+                        <?= issetor($errores['cedula']) ?>
                     </span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group <?= isset($errores['usuario']) ? 'has-error' : '' ?>">
                     <label for="usuario" class="sr-only">Nombre Usuario:</label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-user fa" ></i></span>
-                        <input name="usuario" id="usuario" class="form-control" placeholder="ingresa nombre de usuario" value="<?= issetor($_POST['usuario']) ?>"/>
+                        <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
+                        <input name="usuario" id="usuario" class="form-control" placeholder="ingresa nombre de usuario"
+                               value="<?= issetor($_POST['usuario']) ?>"/>
+                        <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['usuario']) ? '' : 'hidden' ?>"></span>
                     </div>
+                    <span class="help-block">
+                        <?= issetor($errores['usuario']) ?>
+                    </span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group <?= isset($errores['clave']) ? 'has-error' : '' ?>">
                     <label for="clave" class="sr-only">Contra:</label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock fa" ></i></span>
-                        <input type="password" name="clave" id="clave" class="form-control" placeholder="ingresa clave" value="<?= issetor($_POST['clave']) ?>"/>
+                        <span class="input-group-addon"><i class="fa fa-lock fa"></i></span>
+                        <input type="password" name="clave" id="clave" class="form-control" placeholder="ingresa clave"
+                               value="<?= issetor($_POST['clave']) ?>"/>
+                        <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['clave']) ? '' : 'hidden' ?>"></span>
                     </div>
+                    <span class="help-block">
+                        <?= issetor($errores['clave']) ?>
+                    </span>
                 </div>
 
-                <div class="form-group  <?= isset($errores['reclave'])?'has-error':'' ?>">
+                <div class="form-group  <?= isset($errores['reclave']) ? 'has-error' : '' ?>">
                     <label for="reclave" class="sr-only">Repetir Contra:</label>
                     <div class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-lock fa" ></i></span>
-                        <input type="password" name="reclave" id="reclave" class="form-control" placeholder="confirma clave" value="<?= issetor($_POST['reclave']) ?>"/>
+                        <span class="input-group-addon"><i class="fa fa-lock fa"></i></span>
+                        <input type="password" name="reclave" id="reclave" class="form-control"
+                               placeholder="confirma clave" value="<?= issetor($_POST['reclave']) ?>"/>
+                        <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['reclave']) ? '' : 'hidden' ?>"></span>
                     </div>
-                    <span  class="help-block">
-                        <?= isset($errores['reclave'])?$errores['reclave']:'' ?>
+                    <span class="help-block">
+                        <?= issetor($errores['reclave']) ?>
                     </span>
                 </div>
 
@@ -187,7 +181,7 @@ if (isset($mensaje)) {// hay un mensaje?  imprimirlo en la pantalla
                 <div>
                     <label>Ya tienes una cuenta?<a href="login.php">Entra Aquí!</a> </label>
                 </div>
-                <button class="btn btn-lg btn-primary btn-block">Entrar</button>
+                <button class="btn btn-lg btn-primary btn-block">Registro</button>
 
             </form>
         </div>
