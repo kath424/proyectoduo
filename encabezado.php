@@ -18,6 +18,7 @@
 <body>
 
 <?php
+
 function actualizarUltimoLogeo($idUsuario, DateTime $tiempo, $actividad, mysqli $mysqli)
 {
     $tiempo_str = $tiempo->format('Y-m-d H:i:s');
@@ -106,6 +107,9 @@ EOT;
 
 }
 
+function issetor(&$variable, $defecto = false){
+    return isset($variable)?$variable:$defecto;
+}
 
 ?>
 
