@@ -14,18 +14,19 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.php">Inicio</a></li>
-                    <li><a href="cursos.php">Cursos</a></li>
-                    <li><a href="ayuda.php">Ayuda</a></li>
+                    <li><a href="index.php"><i class="glyphicon glyphicon-home"></i> Inicio</a></li>
+                    <li><a href="cursos.php"><i class="glyphicon glyphicon-list"></i> Cursos</a></li>
+                    <li><a href="ayuda.php"><i class="glyphicon glyphicon-question-sign"></i> Ayuda</a></li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <?php if (isset($_SESSION['user_id'])) { ?>
-                        <li><a href="#"><?= $_SESSION['usuario'] ?> (<?= $_SESSION['tipo_de_usuario'] ?>)</a></li>
-                        <li><a href="logout.php">Cerrar Sesion</a></li>
-                    <?php } else { ?>
-                        <li><a href="registro.php">Registro</a></li>
-                        <li><a href="login.php">Iniciar Sesion</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-user"></i> <?= $_SESSION['usuario'] ?>
+                                (<?= $_SESSION['tipo_de_usuario'] ?>)</a></li>
+                        <li><a href="logout.php"><i class="glyphicon glyphicon-log-out"></i> Cerrar Sesion</a></li>
+                    <?php } else { ?>>
+                        <li><a href="registro.php"><i class="glyphicon glyphicon-log-in"></i> Registro</a></li>
+                        <li><a href="login.php"><i class="glyphicon glyphicon-log-in"></i> Iniciar Sesion</a></li>
                     <?php } ?>
                 </ul>
             </div>
