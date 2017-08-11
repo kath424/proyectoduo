@@ -62,11 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $i = 0;
     foreach (array_combine($preguntas, $respuestas) as $preg => $res) {
         if (empty($preg) && !empty($res)) {
-            $errors[$i] = " Debe tener pregunta ";
+            $errors[$i] = "Debe tener pregunta ";
         } else if (!empty($preg) && empty($res)) {
             $errors[$i] = "Debe tener respuesta";
         } else {
-            $preguntas_values[] = "('{$preg}', '{$res}' , {$_SESSION['user_id']} )";
+            if(!empty($preg) && !empty($res))
+                $preguntas_values[] = "('{$preg}', '{$res}' , {$_SESSION['user_id']} )";
         }
 
         $i++;
