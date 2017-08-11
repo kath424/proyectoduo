@@ -6,8 +6,8 @@
                 color:#BC0213;
             }
         </style>
-        <footer class="footer text-center container ">
-            <div class="">
+        <footer class="footer container" >
+            <div class="text-center ">
                 <p class="text-muted">Hecho con <i class="glyphicon glyphicon-heart red"></i> por Katherine Acosta &copy; </p>
             </div>
         </footer>

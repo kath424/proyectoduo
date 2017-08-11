@@ -13,13 +13,15 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.php"><i class="glyphicon glyphicon-home"></i> Inicio</a></li>
-                    <li><a href="cursos.php"><i class="glyphicon glyphicon-list"></i> Cursos</a></li>
-                    <li><a href="ayuda.php"><i class="glyphicon glyphicon-question-sign"></i> Ayuda</a></li>
                     <?php if (es('admin')) { ?>
                         <li><a href="usuarios.php"><i class="glyphicon glyphicon-menu-hamburger"></i> Usuarios</a></li>
+                    <?php }
+                    else
+                    { ?>
+                        <li><a href="index.php"><i class="glyphicon glyphicon-home"></i> Inicio</a></li>
+                        <li><a href="cursos.php"><i class="glyphicon glyphicon-list"></i> Cursos</a></li>
+                        <li><a href="ayuda.php"><i class="glyphicon glyphicon-question-sign"></i> Ayuda</a></li>
                     <?php } ?>
-
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <?php if (isset($_SESSION['user_id'])) { ?>

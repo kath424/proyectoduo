@@ -200,7 +200,7 @@ if (isset($_SESSION['user_id'])) {
 ?>
 
 
-<section class="container">
+<section class="container clearfix">
 
     <header class="masthead <?= isset($ocultarBanner)?'hidden':'' ?>">
        <a href="index.php"> <img class="banner" src="img/logo1.jpg" alt="banner"/></a>

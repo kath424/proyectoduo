@@ -15,7 +15,7 @@ redirigirSiNoEstaLogeado();
 require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
 // por seguridad solo un admin puede ejecutar cualquiera de estas acciones
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('admin'))
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('profesor'))
 {
     switch ($_POST['accion'])
     {
@@ -107,7 +107,7 @@ if (es('estudiante'))
         where u.id = {$_SESSION['user_id']}
 EOT;
 }
-else if (es('admin'))
+else if (es('profesor'))
 {
     $query = "SELECT * FROM cursos";
 }
@@ -149,7 +149,7 @@ else
 
         </div>
     <?php }
-    else if (es('admin'))
+    else if (es('profesor'))
     { ?>
         <div class="col-sm-12 col-md-6">
             <h2>Cursos
@@ -245,7 +245,7 @@ else
                 </div>
             </div>
         <?php }
-        else if (es('admin'))
+        else if (es('profesor'))
         { ?>
             <div class="col-sm-12 col-md-6">
                 <h3> Evaluaciones/Capitulos </h3>

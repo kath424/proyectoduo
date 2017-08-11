@@ -61,9 +61,9 @@ if (isset($_SESSION['tipo_de_usuario']) && es('estudiante'))
     </div>
 
 <?php }
-else if (isset($_SESSION['tipo_de_usuario']) && es('admin'))
+else if (isset($_SESSION['user_id']) && es('profesor'))
 {
-    /********** es un administrador, mostrar campos para buscar informacion acerca de un estudiante ******/
+    /********** es un profesor, mostrar campos para buscar informacion acerca de un estudiante ******/
     ?>
 
     <?php
@@ -233,6 +233,12 @@ else if (isset($_SESSION['tipo_de_usuario']) && es('admin'))
 <?php } // termina - if(isset($estudiante))
     ?>
 
+<?php }
+else if (isset($_SESSION['user_id']) && es('admin'))
+{ ?>
+<div class="col-sm-12">
+    <p class="h1 text-center">Bienvenido Administrador </p>
+</div>
 <?php }
 else
 { ?>
