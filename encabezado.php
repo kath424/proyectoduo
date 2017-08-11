@@ -111,6 +111,18 @@ function issetor(&$variable, $defecto = false){
     return isset($variable)?$variable:$defecto;
 }
 
+function redirigirSiNoEstaLogeado($locacion = 'login.php'){
+    // verificar que el usuario esta logeado
+    if(!isset($_SESSION['user_id'])){
+        header("Location: $locacion");
+        exit;
+    }
+}
+
+function es($tipoDeUsuario){
+    return isset($_SESSION['tipo_de_usuario'] ) && $_SESSION['tipo_de_usuario'] === $tipoDeUsuario;
+}
+
 ?>
 
 <?php
