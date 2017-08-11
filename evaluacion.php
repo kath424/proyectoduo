@@ -14,15 +14,19 @@ SELECT * FROM capitulos
      WHERE id = {$_GET['id']}
 EOT;
 $curso = $mysqli->query($query)->fetch_assoc();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] == 'POST')
+{
     // verificar que el estudiante tomo menos de 2 horas para hacer el examen
     $tiempoTomadoParaPrueva = time() - $_SESSION['empezo_prueva']->getTimeStamp();
     $unaHora = 60 * 60;
-    if ($tiempoTomadoParaPrueva >= $unaHora) {
+    if ($tiempoTomadoParaPrueva >= $unaHora)
+    {
         // se paso de tiempo
         $mensaje = "Tiempo limite excedido, Comienza de nuevo";
         //
-    } else {
+    }
+    else
+    {
 
         // tardo menos de 2 horas, guardar informacion y mandar al inicio
         // name =  id de la pregunta
@@ -33,11 +37,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $query_insertar = "INSERT INTO estudiante_respuestas (respuesta, usuarios_id, preguntas_id) VALUES ";
         $numItems = count($_POST);
         $i = 0;
-        foreach ($_POST as $name => $value) {
+        foreach ($_POST as $name => $value)
+        {
             $query_insertar .= "( '$value', $userId, $name  ) ";
-            if (++$i !== $numItems) {
+            if (++$i !== $numItems)
                 $query_insertar .= ', ';
-            }
         }
 
         // connectarse a la base de datos
@@ -46,11 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mysqli->begin_transaction();
         $resultado = $mysqli->query($query_insertar);
 
-        if (!$resultado) {
+        if (!$resultado)
+        {
             echo "No se pudieron guardar sus respuestas <br />";
             echo "Regrese y vuelva a intentar mas tarde;";
-        } else {
-            #echo "Sus respuestas se guardaron correctamente";
         }
 
 
@@ -62,11 +65,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
 
-} else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+}
+else if ($_SERVER['REQUEST_METHOD'] == 'GET')
+{
     //entro al examen
 
     // si no ha empezado la evaluacion, iniciar tiempo
-    if (!isset($_SESSION['empezo_prueva'])) {
+    if (!isset($_SESSION['empezo_prueva']))
+    {
         $_SESSION['empezo_prueva'] = new DateTime();
         // refrescar session
         actualizarUltimoLogeo($_SESSION['user_id'], $_SESSION['empezo_prueva'], $titulo, $mysqli);
@@ -85,16 +91,15 @@ $query_preguntas = "SELECT * FROM preguntas "
 
 
 $resultado = $mysqli->query($query_preguntas);
-if ($resultado) {
+if ($resultado)
     $preguntas = $resultado;
-} else {
+else
     $mensaje = "Curso no encontrado";
-}
 
 
 ?>
 
-<div class="row <?= !isset($mostrarResultado)  ? '' : 'hidden' ?>">
+<div class="row <?= !isset($mostrarResultado) ? '' : 'hidden' ?>">
     <h2 class="text-center">Tiempo Restante : <span id="tiempoRestante"></span>
         <small>(mm:ss)</small>
     </h2>
@@ -105,12 +110,14 @@ if ($resultado) {
         <!-- mostrar todas las preguntas como botones radio-->
         <?php
         $preguntaNum = 1;
-        while ($pregunta = $preguntas->fetch_array(MYSQLI_ASSOC)) { ?>
+        while ($pregunta = $preguntas->fetch_array(MYSQLI_ASSOC))
+        { ?>
             <div class="form-group">
                 <h4><?= "$preguntaNum.-" . $pregunta['pregunta'] ?></h4>
                 <?php
                 $opciones = explode(',', $pregunta['opciones']);
-                for ($i = 0; $i < count($opciones); $i++) { ?>
+                for ($i = 0; $i < count($opciones); $i++)
+                { ?>
                     <label for="pregunta<?= $pregunta['id'] . 'opcion' . $i ?>">
                         <input type="radio"
                                name="<?= $pregunta['id'] ?>"
@@ -157,13 +164,7 @@ if ($resultado) {
                 <td><?= $info['incorrectas'] ?></td>
                 <td><?= $info['total'] ?></td>
                 <td>
-                    <?php
-                    if ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) {
-                        echo "N/A";
-                    } else {
-                        echo ($info['correctas'] / ($info['total'])) * 100 . '%';
-                    }
-                    ?>
+                    <?= ( ($info['correctas'] / ($info['total'])) * 100 . '%')  ?>
                 </td>
             </tr>
         <?php } ?>
@@ -183,9 +184,9 @@ if ($resultado) {
 
         var tiempoRestante = 60 * 60 - ( ahora - inicioEvaluacion);
 
-        if (tiempoRestante <= 0) {
+        if (tiempoRestante <= 0)
             $("#botonEntregarExamen").click();
-        }
+
 
         var minutes = Math.floor(tiempoRestante / 60);
         var seconds = tiempoRestante % 60;

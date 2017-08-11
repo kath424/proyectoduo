@@ -1,10 +1,9 @@
-<!-- Begin Navbar -->
 <div id="nav">
     <div class="navbar navbar-inverse">
         <div class="">
             <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
             <div class="navbar-header">
-                <a href="#" class="navbar-brand">Projecto DUO</a>
+                <a href="#" class="navbar-brand">Project - DUO</a>
                 <button class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -27,7 +26,9 @@
                         <li><a href="#"><i class="glyphicon glyphicon-user"></i> <?= $_SESSION['usuario'] ?>
                                 (<?= $_SESSION['tipo_de_usuario'] ?>)</a></li>
                         <li><a href="logout.php"><i class="glyphicon glyphicon-log-out"></i> Cerrar Sesion</a></li>
-                    <?php } else { ?>>
+                    <?php }
+                    else
+                    { ?>>
                         <li><a href="registro.php"><i class="glyphicon glyphicon-log-in"></i> Registro</a></li>
                         <li><a href="login.php"><i class="glyphicon glyphicon-log-in"></i> Iniciar Sesion</a></li>
                     <?php } ?>

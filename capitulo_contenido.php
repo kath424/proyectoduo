@@ -18,11 +18,10 @@ $query_capitulo = "SELECT * FROM capitulos "
 
 
 $capitulo = $mysqli->query($query_capitulo);
-if ($capitulo) {
+if ($capitulo)
     $capitulo = $capitulo->fetch_array(MYSQLI_ASSOC);
-} else {
+else
     $mensaje = "Curso no encontrado";
-}
 
 
 ?>
@@ -46,12 +45,14 @@ if ($capitulo) {
             <?php } ?>
             <a class="btn btn-primary pull-right"
                href="capitulo_contenido.php?id=<?= $_GET['id'] ?>&curso=<?= $_GET['curso'] ?>&capitulo=<?= $_GET['capitulo'] ?>&paso=<?= intval($_GET['paso']) + 1 ?>">
-                Siguiente  <i class="glyphicon glyphicon-arrow-right"></i> </a>
+                Siguiente <i class="glyphicon glyphicon-arrow-right"></i> </a>
         </div>
     </div>
 
     <!--terminamos de ver el contenido, mostrar boton para tomar prueva-->
-<?php } else { ?>
+<?php }
+else
+{ ?>
 
     <?php
     // ver si el usuario ya tiene respuestas para este curso-capitulo (ya tomo la prueva anteriormente)
@@ -65,7 +66,8 @@ if ($capitulo) {
         . " capitulos_id = " . $_GET['id'];
 
     $resultado = $mysqli->query($respuestas_query);
-    if ($resultado) {
+    if ($resultado)
+    {
         $respuestas = $resultado;
     }
 

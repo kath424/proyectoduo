@@ -10,7 +10,8 @@ require('barra_de_navegacion.php');
 <?php
 require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
-if (isset($_SESSION['tipo_de_usuario']) && es( 'estudiante')) {
+if (isset($_SESSION['tipo_de_usuario']) && es('estudiante'))
+{
     /*********** es un estudiante, mostrar sus evaluaciones tomadas si ha tomado alguna ******/
 
     $agrupados = obtererCalificaciones($_SESSION['user_id'], $mysqli);
@@ -59,14 +60,18 @@ if (isset($_SESSION['tipo_de_usuario']) && es( 'estudiante')) {
         </div>
     </div>
 
-<?php } else if (isset($_SESSION['tipo_de_usuario']) && es('admin')) {
+<?php }
+else if (isset($_SESSION['tipo_de_usuario']) && es('admin'))
+{
     /********** es un administrador, mostrar campos para buscar informacion acerca de un estudiante ******/
     ?>
 
     <?php
     /**** funciones para administrar estudiantes *****/
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        switch ($_POST['accion']) {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+        switch ($_POST['accion'])
+        {
             case "obtenerEstudiante":
                 $query_estudiante = "SELECT u.*, c.nombre AS nombre_curso, c.id AS curso_id FROM usuarios u"
                     . " LEFT JOIN cursos_usuarios cu"
@@ -76,7 +81,8 @@ if (isset($_SESSION['tipo_de_usuario']) && es( 'estudiante')) {
                     . " WHERE u.cedula = " . $_POST['cedula'];
 
                 $resultado = $mysqli->query($query_estudiante);
-                if ($resultado->num_rows > 0) {
+                if ($resultado->num_rows > 0)
+                {
                     $estudiante = [];
                     while ($est = $resultado->fetch_array(MYSQLI_ASSOC))
                         $estudiante[] = $est;
@@ -84,19 +90,24 @@ if (isset($_SESSION['tipo_de_usuario']) && es( 'estudiante')) {
                     // obtener evaluacione del estudiante
                     $agrupados = obtererCalificaciones($estudiante[0]['id'], $mysqli);
 
-                    if (!$agrupados) {
+                    if (!$agrupados)
+                    {
                         $mensaje = "No has tomado ninguna evaluacion";
                     }
                     $query = "SELECT * FROM actividades where usuarios_id = {$estudiante[0]['id']}";
                     $resultado = $mysqli->query($query);
                     $actividades = [];
-                    if ($resultado->num_rows > 0) {
-                        while ($act = $resultado->fetch_array(MYSQLI_ASSOC)) {
+                    if ($resultado->num_rows > 0)
+                    {
+                        while ($act = $resultado->fetch_array(MYSQLI_ASSOC))
+                        {
                             $act['tiempo'] = new DateTime($act['tiempo']);
                             $actividades[] = $act;
                         }
                     }
-                } else {
+                }
+                else
+                {
                     $cedulaIncorrecta = "Cedula incorrecta. Intente de nuevo";
 
                 }
@@ -138,12 +149,12 @@ if (isset($_SESSION['tipo_de_usuario']) && es( 'estudiante')) {
             <input class="hidden" name="accion" value="obtenerEstudiante">
 
             <h3 class="text-center"> Ingrese numero de cedula para obtener detalles de un estudiante</h3>
-            <div class="form-group col-sm-4 col-sm-offset-4 <?= isset($cedulaIncorrecta)?'has-error':''?> ">
+            <div class="form-group col-sm-4 col-sm-offset-4 <?= isset($cedulaIncorrecta) ? 'has-error' : '' ?> ">
                 <label for="cedula" class="control-label">Cedula:</label>
                 <input class="form-control" id="cedula" name="cedula" placeholder="123123"/>
 
                 <?php if (isset($cedulaIncorrecta)) { ?>
-                    <div class="text-danger" >
+                    <div class="text-danger">
                         <?= $cedulaIncorrecta ?>
                     </div>
                 <?php } ?>
@@ -155,73 +166,76 @@ if (isset($_SESSION['tipo_de_usuario']) && es( 'estudiante')) {
 
     </div>
     <?php if (isset($estudiante)) { ?>
-        <h2 class="text-capitalize text-center"><?= $estudiante[0]['nombre'] . ', ' . $estudiante[0]['apellido'] ?></h2>
-        <!-- muestra 10 ultimas actividades-->
-        <div class="row">
-            <div class="col-sm-12 ">
-                <h3>Ultimas 10 activiades</h3>
-                <table class="table table-bordered">
-                    <?php foreach ($actividades as $act) { ?>
-                        <tr>
-                            <td><?= $act['tiempo']->format('d/m/Y g:i:s A') ?></td>
-                            <td><?= $act['detalles'] ?></td>
-                        </tr>
-                    <?php } ?>
-                </table>
-            </div>
-        </div>
-
-        <!-- muestra evaluaciones-->
-        <div class="row">
-            <div class="col-sm-12">
-                <h3>Evaluaciones</h3>
-                <table class="table table-bordered">
-                    <thead>
+    <h2 class="text-capitalize text-center"><?= $estudiante[0]['nombre'] . ', ' . $estudiante[0]['apellido'] ?></h2>
+    <!-- muestra 10 ultimas actividades-->
+    <div class="row">
+        <div class="col-sm-12 ">
+            <h3>Ultimas 10 activiades</h3>
+            <table class="table table-bordered">
+                <?php foreach ($actividades as $act) { ?>
                     <tr>
-                        <th>Curso</th>
-                        <th>Modulo</th>
-                        <th>Correctas</th>
-                        <th>Incorrectas</th>
-                        <th>#Preguntas</th>
-                        <th>Calificacion</th>
-                        <th class="text-center"><i class="glyphicon glyphicon-cog"></i></th>
+                        <td><?= $act['tiempo']->format('d/m/Y g:i:s A') ?></td>
+                        <td><?= $act['detalles'] ?></td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($agrupados as $modulo => $info) { ?>
-                        <tr class="<?= ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) ? 'bg-danger' : '' ?> ">
-                            <td><?= $info['curso'] ?> </td>
-                            <td><?= $modulo ?> </td>
-                            <td><?= $info['correctas'] ?></td>
-                            <td><?= $info['incorrectas'] ?></td>
-                            <td><?= $info['total'] ?></td>
-                            <td>
-                                <?= (($info['correctas'] / ($info['total'])) * 100 . '%') ?>
-                            </td>
-                            </td>
-                            <td class="text-center">
-                                <form action="index.php" method="POST">
-                                    <!-- campos ocultos para saber  la accion y para quien es la accion -->
-                                    <input type="text" class="hidden" name="capitulo" value="<?= $modulo ?>">
-                                    <input type="text" class="hidden" name="accion" value="reiniciarEvaluacion">
-                                    <input type="text" class="hidden" name="estudiante_id"
-                                           value="<?= $estudiante[0]['id'] ?>">
-                                    <button class="btn btn-danger">Reiniciar <i
-                                                class="glyphicon glyphicon-refresh"></i></button>
-                                </form>
-
-                            </td>
-                        </tr>
-                    <?php } ?>
-
-                    </tbody>
-                </table>
-            </div>
-
+                <?php } ?>
+            </table>
         </div>
-    <?php } // termina - if(isset($estudiante)) ?>
+    </div>
 
-<?php } else { ?>
+    <!-- muestra evaluaciones-->
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Evaluaciones</h3>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Curso</th>
+                    <th>Modulo</th>
+                    <th>Correctas</th>
+                    <th>Incorrectas</th>
+                    <th>#Preguntas</th>
+                    <th>Calificacion</th>
+                    <th class="text-center"><i class="glyphicon glyphicon-cog"></i></th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($agrupados as $modulo => $info) { ?>
+                    <tr class="<?= ($info['total'] !== ($info['correctas'] + $info['incorrectas'])) ? 'bg-danger' : '' ?> ">
+                        <td><?= $info['curso'] ?> </td>
+                        <td><?= $modulo ?> </td>
+                        <td><?= $info['correctas'] ?></td>
+                        <td><?= $info['incorrectas'] ?></td>
+                        <td><?= $info['total'] ?></td>
+                        <td>
+                            <?= (($info['correctas'] / ($info['total'])) * 100 . '%') ?>
+                        </td>
+                        </td>
+                        <td class="text-center">
+                            <form action="index.php" method="POST">
+                                <!-- campos ocultos para saber  la accion y para quien es la accion -->
+                                <input type="text" class="hidden" name="capitulo" value="<?= $modulo ?>">
+                                <input type="text" class="hidden" name="accion" value="reiniciarEvaluacion">
+                                <input type="text" class="hidden" name="estudiante_id"
+                                       value="<?= $estudiante[0]['id'] ?>">
+                                <button class="btn btn-danger">Reiniciar <i
+                                            class="glyphicon glyphicon-refresh"></i></button>
+                            </form>
+
+                        </td>
+                    </tr>
+                <?php } ?>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+<?php } // termina - if(isset($estudiante))
+    ?>
+
+<?php }
+else
+{ ?>
 
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
