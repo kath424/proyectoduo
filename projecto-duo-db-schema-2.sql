@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2017 at 07:53 AM
+-- Generation Time: Aug 11, 2017 at 06:31 AM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -38,33 +38,46 @@ CREATE TABLE IF NOT EXISTS `actividades` (
   `usuarios_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_actividades_usuarios1_idx` (`usuarios_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=389 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=193 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `actividades`
 --
 
 INSERT INTO `actividades` (`id`, `tiempo`, `detalles`, `usuarios_id`) VALUES
-(253, '2017-08-09 04:16:36', 'Inicio Session?', 3),
-(254, '2017-08-09 04:16:36', 'Pagina Inicial?', 3),
-(255, '2017-08-09 04:18:17', 'Pagina Inicial?', 3),
-(372, '2017-08-09 05:35:59', 'Cursos', 1),
-(373, '2017-08-09 05:36:00', 'Cursos', 1),
-(374, '2017-08-09 05:36:01', 'Cursos', 1),
-(375, '2017-08-09 05:36:14', 'Cursos', 1),
-(376, '2017-08-09 05:39:03', 'Cursos', 1),
-(377, '2017-08-09 05:39:11', 'Cursos', 1),
-(378, '2017-08-09 05:39:22', 'Cursos', 1),
-(379, '2017-08-09 05:39:46', 'Cursos', 1),
-(380, '2017-08-09 05:40:02', 'Cursos', 1),
-(381, '2017-08-09 05:40:09', 'Cursos', 1),
-(382, '2017-08-09 05:41:24', 'Inicio Session', 3),
-(383, '2017-08-09 05:41:24', 'Pagina Inicial', 3),
-(384, '2017-08-09 05:41:28', 'Cursos', 3),
-(385, '2017-08-09 05:41:30', 'Cursos', 3),
-(386, '2017-08-09 05:41:36', 'Cursos', 3),
-(387, '2017-08-09 05:44:41', 'Pagina Inicial', 3),
-(388, '2017-08-09 05:48:21', 'Pagina Inicial', 3);
+(97, '2017-07-28 14:37:07', 'Capitulo?id=1&curso=logica&capitulo=Logica I&paso=1', 3),
+(98, '2017-07-28 14:37:15', 'Cursos?id=2&nombre=logica', 3),
+(99, '2017-07-28 14:37:18', 'Cursos?id=2&nombre=logica', 3),
+(100, '2017-07-28 14:37:21', 'Cursos?', 3),
+(101, '2017-07-28 14:37:22', 'Cursos?id=2&nombre=Logica', 3),
+(102, '2017-07-28 14:37:23', 'Capitulo?id=1&curso=Logica&capitulo=Logica I&paso=1', 3),
+(103, '2017-07-28 14:38:14', 'Cursos?', 3),
+(104, '2017-07-28 14:38:16', 'Cursos?', 3),
+(105, '2017-07-28 14:38:42', 'Cursos?id=2&nombre=Logica I', 3),
+(106, '2017-07-28 14:38:43', 'Capitulo?id=1&curso=Logica I&capitulo=Logica Basica&paso=1', 3),
+(111, '2017-08-10 03:43:59', '', 4),
+(112, '2017-08-10 03:44:00', 'Preguntas de Seguridad', 4),
+(113, '2017-08-10 03:44:20', 'Pagina Inicial', 4),
+(125, '2017-08-11 02:55:27', '', 6),
+(126, '2017-08-11 02:58:40', 'Pagina Inicial', 6),
+(127, '2017-08-11 03:02:01', 'Pagina Inicial', 6),
+(128, '2017-08-11 03:02:04', 'Cursos', 6),
+(129, '2017-08-11 03:02:09', 'Cursos', 6),
+(130, '2017-08-11 03:02:10', 'Cursos', 6),
+(131, '2017-08-11 03:02:13', 'Cursos', 6),
+(132, '2017-08-11 03:02:15', 'Cursos', 6),
+(133, '2017-08-11 03:02:15', 'Cursos', 6),
+(134, '2017-08-11 03:02:17', 'Cursos', 6),
+(183, '2017-08-11 03:34:13', 'Cursos', 1),
+(184, '2017-08-11 03:34:37', 'Cursos', 1),
+(185, '2017-08-11 03:34:38', 'Cursos', 1),
+(186, '2017-08-11 03:34:40', 'Cursos', 1),
+(187, '2017-08-11 03:34:41', 'Cursos', 1),
+(188, '2017-08-11 03:34:42', 'Cursos', 1),
+(189, '2017-08-11 03:34:43', 'Cursos', 1),
+(190, '2017-08-11 03:34:44', 'Cursos', 1),
+(191, '2017-08-11 03:34:44', 'Cursos', 1),
+(192, '2017-08-11 03:34:45', 'Cursos', 1);
 
 -- --------------------------------------------------------
 
@@ -79,23 +92,22 @@ CREATE TABLE IF NOT EXISTS `capitulos` (
   `numero` int(11) DEFAULT NULL,
   `cursos_id` int(11) NOT NULL,
   `pasos` int(11) DEFAULT NULL,
-  `puede_repetir` bit(1) DEFAULT NULL,
+  `puede_repetir` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_capitulos_cursos1_idx` (`cursos_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `capitulos`
 --
 
 INSERT INTO `capitulos` (`id`, `nombre`, `numero`, `cursos_id`, `pasos`, `puede_repetir`) VALUES
-(1, 'Logica Basica', 1, 2, 7, NULL),
-(2, 'Logica Intermedia', 2, 2, NULL, NULL),
-(3, 'Logica Avanzada', 3, 2, NULL, NULL),
-(4, 'Logica Super Avanzada', 4, 2, NULL, NULL),
-(5, 'Matematica Basica', NULL, 1, 4, NULL),
-(7, 'practica_logica', NULL, 2, NULL, b'1111111111111111111111111111111'),
-(8, 'capitulo1', NULL, 10, NULL, b'1111111111111111111111111111111');
+(1, 'Logica Basica', 1, 2, 7, 0),
+(2, 'Logica Intermedia', 2, 2, NULL, 0),
+(3, 'Logica Avanzada', 3, 2, NULL, 0),
+(4, 'Logica Super Avanzada', 4, 2, NULL, 0),
+(5, 'Matematica Basica', NULL, 1, 4, 1),
+(6, 'Verbos Basicos', NULL, 3, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -108,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `cursos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='guarda los cursos\nejemplos:\nmatematica_1\nlogica_1\netc.....';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='guarda los cursos\nejemplos:\nmatematica_1\nlogica_1\netc.....';
 
 --
 -- Dumping data for table `cursos`
@@ -117,8 +129,7 @@ CREATE TABLE IF NOT EXISTS `cursos` (
 INSERT INTO `cursos` (`id`, `nombre`) VALUES
 (1, 'Matematicas'),
 (2, 'Logica I'),
-(9, 'Desarrollo Web'),
-(10, 'Ingles');
+(3, 'Ingles');
 
 -- --------------------------------------------------------
 
@@ -145,11 +156,13 @@ INSERT INTO `cursos_usuarios` (`cursos_id`, `usuarios_id`) VALUES
 (2, 2),
 (1, 3),
 (2, 3),
-(9, 4),
-(9, 5),
-(10, 3),
-(10, 4),
-(10, 5);
+(3, 3),
+(1, 4),
+(2, 4),
+(3, 4),
+(1, 6),
+(2, 6),
+(3, 6);
 
 -- --------------------------------------------------------
 
@@ -166,7 +179,15 @@ CREATE TABLE IF NOT EXISTS `estudiante_respuestas` (
   PRIMARY KEY (`id`),
   KEY `fk_estudiante-respuestas_usuarios1_idx` (`usuarios_id`),
   KEY `fk_estudiante-respuestas_ejercicios1_idx` (`preguntas_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `estudiante_respuestas`
+--
+
+INSERT INTO `estudiante_respuestas` (`id`, `respuesta`, `usuarios_id`, `preguntas_id`) VALUES
+(1, 'Cual es tu comida favorita?', 3, 6),
+(2, 'como te llamas?', 3, 7);
 
 -- --------------------------------------------------------
 
@@ -183,7 +204,7 @@ CREATE TABLE IF NOT EXISTS `preguntas` (
   `respuesta` varchar(45) DEFAULT NULL COMMENT 'un lenguaje',
   PRIMARY KEY (`id`),
   KEY `fk_ejercicios_capitulos1_idx` (`capitulos_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `preguntas`
@@ -195,6 +216,8 @@ INSERT INTO `preguntas` (`id`, `capitulos_id`, `pregunta`, `opciones`, `respuest
 (3, 5, '45%5?', '3,4,5,9', '9'),
 (4, 5, '569-9', '560,556,443,555', '560'),
 (5, 5, '90+203?', '122,345,293', '293'),
+(6, 6, 'How Are You?', 'Como te llamas?,Cual es tu comida favorita?', 'Como te llamas?'),
+(7, 6, 'How Old Are You?', 'que edad tienes?,como te llamas?', 'que edad tienes?'),
 (8, 1, 'Ayudame a salir!', 'atomica,molecular', 'atomica'),
 (9, 1, 'Quieres torta?', 'atomica,molecular', 'atomica'),
 (10, 1, 'Si puedes contratar expertos, entonces que bien!', 'atomica,molecular', 'atomica'),
@@ -208,9 +231,7 @@ INSERT INTO `preguntas` (`id`, `capitulos_id`, `pregunta`, `opciones`, `respuest
 (18, 2, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular'),
 (19, 2, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular'),
 (20, 2, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular'),
-(21, 2, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular'),
-(22, 7, 'uno', 'uno,dos', 'uno'),
-(23, 7, 'dos', 'uno,dos', 'dos');
+(21, 2, 'El presidente intenta actuar, pero el juez se lo impide.', 'atomica,molecular', 'molecular');
 
 -- --------------------------------------------------------
 
@@ -226,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `preguntas_de_seguridad` (
   `usuarios_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_preguntas_de_seguridad_usuarios1_idx` (`usuarios_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `preguntas_de_seguridad`
@@ -235,7 +256,10 @@ CREATE TABLE IF NOT EXISTS `preguntas_de_seguridad` (
 INSERT INTO `preguntas_de_seguridad` (`id`, `pregunta`, `respuesta`, `usuarios_id`) VALUES
 (1, 'en que pais naci?', 'venezuela', 3),
 (2, 'lenguaje de programacion favorito?', 'php', 3),
-(3, 'de donde es adrian(ciudad)?', 'tijuana', 3);
+(3, 'de donde es adrian(ciudad)?', 'tijuana', 3),
+(5, 'preg1', 'res1', 6),
+(6, 'preg2', 'res2', 6),
+(7, 'preg3', 'res3', 6);
 
 -- --------------------------------------------------------
 
@@ -257,18 +281,18 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `cedula_UNIQUE` (`cedula`),
   UNIQUE KEY `usuario_UNIQUE` (`usuario`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `tipo_de_usuario`, `usuario`, `clave`, `cedula`, `creado`, `ultimo_logeo`) VALUES
-(1, 'admin', 'admin', 'admin', 'administrador', 'clave', NULL, '0000-00-00 00:00:00', '2017-08-09 12:05:39'),
+(1, 'admin', 'admin', 'admin', 'administrador', 'clave', NULL, '0000-00-00 00:00:00', '2017-08-11 10:02:30'),
 (2, 'maestro', 'maestro', 'maestro', 'maestro', 'clave', NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 'katherine', 'acosta', 'estudiante', 'katherinelabeibi', 'clave', '12345', '2017-07-28 09:16:29', '2017-08-09 12:41:24'),
-(4, 'adrian', 'g', 'estudiante', 'adrianplusplus', 'clave', '13333', '2017-07-28 09:16:29', '2017-08-07 11:53:52'),
-(5, 'k', 'k', 'estudiante', 'kk123', 'clave', '14444', '2017-07-28 09:16:29', '2017-08-07 11:53:52');
+(3, 'katherine', 'acosta', 'estudiante', 'katherinelabeibi', 'clave', '12345', '2017-07-28 09:16:29', '2017-07-28 16:33:36'),
+(4, 'asdasd', 'asdasd', 'estudiante', 'asd', 'asd', 'asdasd', '2017-08-10 03:43:59', '2017-08-10 10:43:59'),
+(6, 'adrian', 'galicia', 'estudiante', 'adrianplusplus', 'vision', '0000', '2017-08-11 02:55:27', '2017-08-11 09:55:27');
 
 --
 -- Constraints for dumped tables
@@ -278,81 +302,39 @@ INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `tipo_de_usuario`, `usuario`
 -- Constraints for table `actividades`
 --
 ALTER TABLE `actividades`
-  ADD CONSTRAINT `fk_actividades_usuarios1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_actividades_usuarios1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `capitulos`
 --
 ALTER TABLE `capitulos`
-  ADD CONSTRAINT `fk_capitulos_cursos1` FOREIGN KEY (`cursos_id`) REFERENCES `cursos` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_capitulos_cursos1` FOREIGN KEY (`cursos_id`) REFERENCES `cursos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `cursos_usuarios`
 --
 ALTER TABLE `cursos_usuarios`
   ADD CONSTRAINT `fk_cursos_estudiantes_cursos1` FOREIGN KEY (`cursos_id`) REFERENCES `cursos` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_cursos_estudiantes_usuarios1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_cursos_estudiantes_usuarios1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `estudiante_respuestas`
 --
 ALTER TABLE `estudiante_respuestas`
   ADD CONSTRAINT `fk_estudiante-respuestas_ejercicios1` FOREIGN KEY (`preguntas_id`) REFERENCES `preguntas` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_estudiante-respuestas_usuarios1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_estudiante-respuestas_usuarios1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `preguntas`
 --
 ALTER TABLE `preguntas`
-  ADD CONSTRAINT `fk_ejercicios_capitulos1` FOREIGN KEY (`capitulos_id`) REFERENCES `capitulos` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_ejercicios_capitulos1` FOREIGN KEY (`capitulos_id`) REFERENCES `capitulos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `preguntas_de_seguridad`
 --
 ALTER TABLE `preguntas_de_seguridad`
-  ADD CONSTRAINT `fk_preguntas_de_seguridad_usuarios1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-
---
--- Metadata
---
-USE `phpmyadmin`;
-
---
--- Metadata for table actividades
---
-
---
--- Metadata for table capitulos
---
-
---
--- Metadata for table cursos
---
-
---
--- Metadata for table cursos_usuarios
---
-
---
--- Metadata for table estudiante_respuestas
---
-
---
--- Metadata for table preguntas
---
-
---
--- Metadata for table preguntas_de_seguridad
---
-
---
--- Metadata for table usuarios
---
-
---
--- Metadata for database projecto_duo_db
---
+  ADD CONSTRAINT `fk_preguntas_de_seguridad_usuarios1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

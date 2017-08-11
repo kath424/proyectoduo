@@ -100,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input class="hidden" name="<?= $llave ?>" value="<?= $valor ?>"/>
         <?php } ?>
 
-        <h3>Estas preguntas se usaran para recuperar usuario o contrasena</h3>
+        <h3>Estas preguntas se usaran para recuperar usuario o clave</h3>
 
         <?php for ($i = 0; $i < 3; $i++) { ?>
             <div class="form-group <?= isset($errors[$i]) ? 'has-error' : '' ?> ">

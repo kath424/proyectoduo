@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="3032dd71-0973-4db9-bd7a-da6a4ebbaf52" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/registro.php" afterPath="$PROJECT_DIR$/registro.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/cursos.php" afterPath="$PROJECT_DIR$/cursos.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/registro2.php" afterPath="$PROJECT_DIR$/registro2.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -49,33 +50,26 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="registro.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/registro.php">
+      <file leaf-file-name="cursos.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/cursos.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="16" column="56" lean-forward="false" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
+            <state relative-caret-position="90">
+              <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
               <folding>
-                <element signature="n#informacionEsIncorrecta#0;n#!!top" expanded="false" />
-                <marker date="1502419100824" expanded="true" signature="1519:1665" ph="..." />
-                <marker date="1502419100824" expanded="true" signature="8350:8379" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="registro2.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/registro2.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="447">
-              <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
-              <folding>
-                <element signature="n#guardarUsuario#0;n#!!top" expanded="false" />
-                <marker date="1502419492251" expanded="true" signature="245:383" ph="INSERT into usuarios... " />
-                <marker date="1502419492251" expanded="true" signature="499:552" ph="SELECT * FRO... usuarios" />
-                <marker date="1502419492251" expanded="true" signature="1340:1361" ph="SELECT id FR... cursos" />
-                <marker date="1502419492251" expanded="true" signature="1639:1699" ph="INSERT INTO cursos_usuarios... " />
-                <marker date="1502419492251" expanded="true" signature="2753:2847" ph="INSERT INTO preguntas_de_seguridad... " />
-                <marker date="1502419492251" expanded="true" signature="3231:3241" ph="..." />
+                <element signature="n#table#0;n#div#1;n#div#1;n#!!top" expanded="false" />
+                <element signature="e#8039#18955#0#PHP" expanded="false" />
+                <marker date="1502421919717" expanded="true" signature="665:695" ph="DELETE FROM " />
+                <marker date="1502421919717" expanded="true" signature="922:1001" ph="INSERT into cursos... " />
+                <marker date="1502421919717" expanded="true" signature="1171:1231" ph="SELECT id fr... usuarios" />
+                <marker date="1502421919717" expanded="true" signature="1332:1390" ph="INSERT into cursos_usuarios... " />
+                <marker date="1502421919717" expanded="true" signature="1747:1860" ph="INSERT into capitulos... " />
+                <marker date="1502421919717" expanded="true" signature="2085:2189" ph="UPDATE capit... " />
+                <marker date="1502421919717" expanded="true" signature="2326:2380" ph="DELETE FROM " />
+                <marker date="1502421919717" expanded="true" signature="2516:2587" ph="INSERT INTO preguntas... " />
+                <marker date="1502421919717" expanded="true" signature="3565:3653" ph="UPDATE capit... " />
+                <marker date="1502421919717" expanded="true" signature="3870:4048" ph="select c.* f... usuarios" />
+                <marker date="1502421919717" expanded="true" signature="4145:4165" ph="SELECT * FRO... cursos" />
+                <marker date="1502421919717" expanded="true" signature="7727:7787" ph="SELECT * FRO... capitulos" />
               </folding>
             </state>
           </provider>
@@ -152,8 +146,6 @@
         <option value="$PROJECT_DIR$/ayuda.php" />
         <option value="$PROJECT_DIR$/barra_de_navegacion.php" />
         <option value="$PROJECT_DIR$/estilos/estilologin.css" />
-        <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/cursos.php" />
         <option value="$PROJECT_DIR$/encabezado.php" />
         <option value="$PROJECT_DIR$/estilos/estilogeneral.css" />
         <option value="$PROJECT_DIR$/login.php" />
@@ -161,6 +153,8 @@
         <option value="$PROJECT_DIR$/../../php/php.ini" />
         <option value="$PROJECT_DIR$/registro.php" />
         <option value="$PROJECT_DIR$/registro2.php" />
+        <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/cursos.php" />
       </list>
     </option>
   </component>
@@ -177,7 +171,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="PhpDebugGeneral" listening_started="true" notify_if_session_was_finished_without_being_paused="false" />
+  <component name="PhpDebugGeneral" notify_if_session_was_finished_without_being_paused="false" />
   <component name="PhpServers">
     <servers>
       <server host="localhost" id="e70c81b6-773d-42ca-ad97-62e31d8f99b2" name="main" use_path_mappings="true">
@@ -398,7 +392,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="207054000" />
+    <option name="totallyTimeSpent" value="209811000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -410,7 +404,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18336888" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3181818" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -421,7 +416,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280543" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.32969433" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37785017" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37785017" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3181818" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3280543" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -487,18 +482,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/cursos.php</url>
-          <line>86</line>
+          <line>87</line>
           <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/cursos.php</url>
-          <line>63</line>
-          <option name="timeStamp" value="79" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="php">
-          <url>file://$PROJECT_DIR$/cursos.php</url>
-          <line>273</line>
-          <option name="timeStamp" value="81" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/registro2.php</url>
@@ -509,7 +494,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="103" />
+      <option name="time" value="124" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -790,22 +775,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4242">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cursos.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
-          <caret line="300" column="39" lean-forward="false" selection-start-line="300" selection-start-column="39" selection-end-line="300" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/encabezado.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
@@ -844,6 +813,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/registro2.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="78">
+          <caret line="102" column="68" lean-forward="false" selection-start-line="102" selection-start-column="68" selection-end-line="102" selection-end-column="68" />
+          <folding>
+            <element signature="n#guardarUsuario#0;n#!!top" expanded="false" />
+            <marker date="1502420511605" expanded="true" signature="245:383" ph="INSERT into usuarios... " />
+            <marker date="1502420511605" expanded="true" signature="499:552" ph="SELECT * FRO... usuarios" />
+            <marker date="1502420511605" expanded="true" signature="1340:1361" ph="SELECT id FR... cursos" />
+            <marker date="1502420511605" expanded="true" signature="1639:1699" ph="INSERT INTO cursos_usuarios... " />
+            <marker date="1502420511605" expanded="true" signature="2753:2847" ph="INSERT INTO preguntas_de_seguridad... " />
+            <marker date="1502420511605" expanded="true" signature="3231:3241" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/registro.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="236">
@@ -856,18 +841,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/registro2.php">
+    <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="85" selection-end-column="0" />
+        <state relative-caret-position="423">
+          <caret line="309" column="0" lean-forward="true" selection-start-line="309" selection-start-column="0" selection-end-line="309" selection-end-column="0" />
           <folding>
-            <element signature="n#guardarUsuario#0;n#!!top" expanded="false" />
-            <marker date="1502419492251" expanded="true" signature="245:383" ph="INSERT into usuarios... " />
-            <marker date="1502419492251" expanded="true" signature="499:552" ph="SELECT * FRO... usuarios" />
-            <marker date="1502419492251" expanded="true" signature="1340:1361" ph="SELECT id FR... cursos" />
-            <marker date="1502419492251" expanded="true" signature="1639:1699" ph="INSERT INTO cursos_usuarios... " />
-            <marker date="1502419492251" expanded="true" signature="2753:2847" ph="INSERT INTO preguntas_de_seguridad... " />
-            <marker date="1502419492251" expanded="true" signature="3231:3241" ph="..." />
+            <marker date="1502420627351" expanded="true" signature="2665:2976" ph="SELECT u.*, usuarios" />
+            <marker date="1502420627351" expanded="true" signature="3577:3623" ph="SELECT * FRO... actividades" />
+            <marker date="1502420627351" expanded="true" signature="4276:4662" ph="SELECT er.id... capitulos" />
+            <marker date="1502420627351" expanded="true" signature="4938:5038" ph="DELETE FROM " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cursos.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="53" column="0" lean-forward="true" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+          <folding>
+            <element signature="n#table#0;n#div#1;n#div#1;n#!!top" expanded="false" />
+            <element signature="e#8039#18955#0#PHP" expanded="false" />
+            <marker date="1502421919717" expanded="true" signature="665:695" ph="DELETE FROM " />
+            <marker date="1502421919717" expanded="true" signature="922:1001" ph="INSERT into cursos... " />
+            <marker date="1502421919717" expanded="true" signature="1171:1231" ph="SELECT id fr... usuarios" />
+            <marker date="1502421919717" expanded="true" signature="1332:1390" ph="INSERT into cursos_usuarios... " />
+            <marker date="1502421919717" expanded="true" signature="1747:1860" ph="INSERT into capitulos... " />
+            <marker date="1502421919717" expanded="true" signature="2085:2189" ph="UPDATE capit... " />
+            <marker date="1502421919717" expanded="true" signature="2326:2380" ph="DELETE FROM " />
+            <marker date="1502421919717" expanded="true" signature="2516:2587" ph="INSERT INTO preguntas... " />
+            <marker date="1502421919717" expanded="true" signature="3565:3653" ph="UPDATE capit... " />
+            <marker date="1502421919717" expanded="true" signature="3870:4048" ph="select c.* f... usuarios" />
+            <marker date="1502421919717" expanded="true" signature="4145:4165" ph="SELECT * FRO... cursos" />
+            <marker date="1502421919717" expanded="true" signature="7727:7787" ph="SELECT * FRO... capitulos" />
           </folding>
         </state>
       </provider>
