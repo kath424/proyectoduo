@@ -7,52 +7,10 @@ require('encabezado.php');
 
 <?php
 
-function guardarUsuario(mysqli $mysqli, $nombre, $apellido, $cedula, $usuario, $clave)
-{
-    $query = "INSERT into usuarios(nombre, apellido, cedula, usuario, clave) VALUES
-          ('$nombre','$apellido', '$cedula', '$usuario',  '$clave' )";
-    $resultado = $mysqli->query($query);
-
-    if ($resultado) {// fue exitoso
-        // login
-        $query = "SELECT * FROM   usuarios  WHERE usuario =  '$usuario'";
-        $resultado = $mysqli->query($query);
-        $usuario = $resultado->fetch_object();
-
-        if (!isset($_SESSION))
-            session_start();
-        // logear usario para que llene las preguntas de recuperacion
-        $_SESSION['user_id'] = $usuario->id;
-        $_SESSION['nombre'] = $usuario->nombre;
-        $_SESSION['apellido'] = $usuario->apellido;
-        $_SESSION['usuario'] = $usuario->usuario;
-        $_SESSION['tipo_de_usuario'] = $usuario->tipo_de_usuario;
-        $_SESSION['tiempo_de_entrada'] = new DateTime();
-
-        actualizarUltimoLogeo($usuario->id, $_SESSION['tiempo_de_entrada'], $titulo, $mysqli);
-
-        // agregar todos los cursos de la tabla de cursos
-        // preparar valores a insertar (id de curso, id de estudiante)
-        $query = "SELECT id FROM cursos";
-        $cursos = $mysqli->query($query);
-        $cursos_stu = [];
-        while ($curso = $cursos->fetch_array())
-            $cursos_stu[] = "( {$curso['id']} , $usuario->id )";
-
-        $cursos_stu = implode(',', $cursos_stu);
-        // agregar cursos
-        $query = "INSERT INTO cursos_usuarios (cursos_id, usuarios_id) VALUES " . $cursos_stu;
-        $mysqli->query($query);
-
-    } else {
-        $mensaje = "Error al agregar usuario";
-    }
-}
-
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require('conneccion.php');
-    guardarUsuario($mysqli, $_POST['nombre'], $_POST['apellido'], $_POST['cedula'], $_POST['usuario'], $_POST['clave']);
+    guardarEstudiante($mysqli, $_POST['nombre'], $_POST['apellido'], $_POST['cedula'], $_POST['usuario'], $_POST['clave'],  $titulo);
 
     $errors = [];
     $preguntas = $_POST['preguntas'];
