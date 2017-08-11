@@ -306,8 +306,3 @@ if (isset($_SESSION['tipo_de_usuario']) && es( 'estudiante')) {
 <?php } ?>
 
 <?php require('pie.php'); ?>
-<script>
-    $(function(){
-        window.scrollTo(0,document.body.scrollHeight);
-    })
-</script>

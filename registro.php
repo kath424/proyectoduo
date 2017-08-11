@@ -14,6 +14,39 @@ $ocultarBanner = true;
 $css = ['estilos/estilopie.css', 'estilos/estilologin.css'];
 require('encabezado.php');
 
+// verificar que la informacion de la forma sea correcta
+function informacionEsIncorrecta()
+{
+
+    $errores = [];
+
+    // verificar que ningun campo este vacio
+    $campos = ['nombre', 'apellido', 'usuario', 'cedula', 'clave', 'reclave'];
+    foreach ($campos as $campo) {
+        if (empty($_POST[$campo]))
+            $errores[$campo] = $campo . ' no puede estar vacio';
+    }
+
+    /* verificar que nombre, apellido sea solo letras */
+    if (!ctype_alpha($_POST['nombre']))
+        $errores['nombre'] = 'Nombre solo debe contener letras';
+    if (!ctype_alpha(($_POST['apellido'])))
+        $errores['apellido'] = 'Apellido solo debe contener letras';
+
+    /* verificar que cedula sean solo numeros */
+    if (!ctype_digit($_POST['cedula']))
+        $errores['cedula'] = 'Cedula solo puede contener numeros';
+
+    /* verificar que las claves coincidan */
+    if ($_POST['clave'] !== $_POST['reclave'])
+        $errores['reclave'] = 'Claves deben coincidir';
+
+
+    if (count($errores) > 0)
+        return $errores;
+    else
+        return false;
+}
 
 // si el usuario mando la forma de registracion
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -21,52 +54,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // hace disponible el objecto $mysqli  ya conectado a la base de datos
     require('conneccion.php');
 
-    // verificar que la informacion de la forma sea correcta
-    function informacionEsIncorrecta()
-    {
-
-        $errores = [];
-
-        // verificar que ningun campo este vacio
-        $campos = ['nombre', 'apellido', 'usuario', 'cedula', 'clave', 'reclave'];
-        foreach ($campos as $campo) {
-            if (empty($_POST[$campo]))
-                $errores[$campo] = $campo . ' no puede estar vacio';
-        }
-
-        /* verificar que nombre, apellido sea solo letras */
-        if (!ctype_alpha($_POST['nombre']))
-            $errores['nombre'] = 'Nombre solo debe contener letras';
-        if (!ctype_alpha(($_POST['apellido'])))
-            $errores['apellido'] = 'Apellido solo debe contener letras';
-
-        /* verificar que cedula sean solo numeros */
-        if (!ctype_digit($_POST['cedula']))
-            $errores['cedula'] = 'Cedula solo puede contener numeros';
-
-        /* verificar que las claves coincidan */
-        if ($_POST['clave'] !== $_POST['reclave'])
-            $errores['reclave'] = 'Claves deben coincidir';
-
-
-        if (count($errores) > 0)
-            return $errores;
-        else
-            return false;
-    }
-
-
     // si la informacion es correcta llamar funcion para guardar usuario
     $errores = informacionEsIncorrecta();
     if (!$errores) { // si no hay errores
         // pasar informacion a la siguiente pagina
         $campos = ['nombre', 'apellido', 'usuario', 'cedula', 'clave', 'reclave'];
         $qs = [];
-        foreach($campos as $campo){
-            $qs[] = $campo.'='.$_POST[$campo];
+        foreach ($campos as $campo) {
+            $qs[] = $campo . '=' . $_POST[$campo];
         }
         // mostrar preguntas de seguridad para recuperacion de cuenta
-        header('Location: registro2.php?'.implode('&',$qs));
+        header('Location: registro2.php?' . implode('&', $qs));
         exit;
 
     }

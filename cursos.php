@@ -48,8 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('admin'))
             $mysqli->query($query);
             break;
         case "cambiarPuedeRepetir":
-            $puedeRepetir = !$_POST['puedeRepetir'];
-            $puedeRepetir = $puedeRepetir ? 1 : 0;
+            $puedeRepetir = (bool)$_POST['puedeRepetir'];
+            $puedeRepetir = (!$puedeRepetir)?1:0;
+
             $query = "UPDATE capitulos SET "
                 . "puede_repetir = $puedeRepetir "
                 . "where id = {$_POST['capitulo_id']}";
@@ -162,8 +163,6 @@ else
                     <th class="text-center"><i class="glyphicon glyphicon-cog"></i></th>
                 </tr>
                 <?php while (isset($cursos) && $curso = $cursos->fetch_array(MYSQLI_ASSOC)) { ?>
-
-
                     <tr>
                         <td><?= $curso['nombre'] ?></td>
                         <td class="text-center">
@@ -257,8 +256,6 @@ else
                         <th class="text-center"><i class="glyphicon glyphicon-cog"></i></th>
                     </tr>
                     <?php while (isset($capitulos) && $cap = $capitulos->fetch_array(MYSQLI_ASSOC)) { ?>
-
-
                         <tr>
                             <td><?= $cap['nombre'] ?></td>
                             <td>
