@@ -3,15 +3,14 @@ $titulo = "Pagina Inicial";
 $css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
-/*
-  TODO: mostrar las ultimas 10 actividades de un estudiante al administrador(LISTO).
-*/
+
+
 ?>
 
 <?php
 require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
-if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'estudiante') {
+if (isset($_SESSION['tipo_de_usuario']) && es( 'estudiante')) {
     /*********** es un estudiante, mostrar sus evaluaciones tomadas si ha tomado alguna ******/
 
     $agrupados = obtererCalificaciones($_SESSION['user_id'], $mysqli);
@@ -60,7 +59,7 @@ if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'estu
         </div>
     </div>
 
-<?php } else if (isset($_SESSION['tipo_de_usuario']) && $_SESSION['tipo_de_usuario'] == 'admin') {
+<?php } else if (isset($_SESSION['tipo_de_usuario']) && es('admin')) {
     /********** es un administrador, mostrar campos para buscar informacion acerca de un estudiante ******/
     ?>
 

@@ -3,6 +3,8 @@ $titulo = "Capitulo";
 $css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
+
+redirigirSiNoEstaLogeado();
 ?>
 
 <?php

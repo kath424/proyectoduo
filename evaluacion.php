@@ -3,10 +3,8 @@ $titulo = "Evaluacion";
 $css = ['estilos/estilopie.css'];
 require('encabezado.php');
 require('barra_de_navegacion.php');
-/*
-  TODO: Si evaluacion es de practica, no guardar resultado en la base de datos.(LISTO)
-  TODO: Mostra comparativo de respuestas correctas vs. respuestas de usuario.(FUTURO)
- */
+
+redirigirSiNoEstaLogeado();
 ?>
 
 <?php
