@@ -44,7 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($resultado->num_rows > 0) {
                     // usuario existe, obtener preguntas
                     $usuario_fila = $resultado->fetch_array();
-                    $resultado = $mysqli->query("SELECT * FROM preguntas_de_seguridad WHERE usuarios_id = " . $usuario_fila['id']);
+                    $query = "SELECT ps.*, rs.id as 'respuestas_id' FROM respuestas_de_seguridad rs "
+                        ." LEFT JOIN preguntas_de_seguridad ps"
+                        ." ON rs.preguntas_id = ps.id"
+                        . " WHERE usuarios_id = " . $usuario_fila['id'];
+                    $resultado = $mysqli->query($query);
                     if ($resultado->num_rows > 0) {
                         $preguntas = $resultado;
                     } else {
@@ -58,7 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             break;
         case "validar respuesta":
-            $respuestaCorrecta = $_POST['pregunta'];
+            require('conneccion.php');
+            $respuestaCorrectaId = $_POST['pregunta'];
+            $resultado = $mysqli->query("SELECT * FROM respuestas_de_seguridad WHERE id = ". $respuestaCorrectaId);
+            $respuestaCorrecta = $resultado->fetch_assoc()['respuesta'];
             $respuestaUsuario = $_POST['respuesta'];
             if ($respuestaCorrecta === $respuestaUsuario) {
                 $respuestaCorrecta = true;
@@ -97,10 +104,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ?>
 
-
-    <div class="col-sm-12">
-        <?= isset($mensaje) ? $mensaje : ''; ?>
-    </div>
 
     <!--        mostrar errores -->
     <div class="col-sm-12">
@@ -142,17 +145,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <!--    ingreso un usuario o cedula valida y contiene preguntas de seguridad, mostrar forma para que el usuario responda una pregunta-->
 <?php if (isset($usuario_fila) && isset($preguntas)) { ?>
     <h3 class="text-capitalize col-sm-12">Eres
-        : <?= isset($usuario_fila) ? $usuario_fila['nombre'] . ', ' . $usuario_fila['apellido'] : '' ?></h3>
+        : <?= isset($usuario_fila) ? ( $usuario_fila['nombre'] . ', ' . $usuario_fila['apellido'] ) : '' ?></h3>
     <form action="recuperar_usuario.php?Accion=validar respuesta" method="POST">
         <input class="hidden" name="user_id" value="<?= isset($usuario_fila) ? $usuario_fila['id'] : '' ?>"/>
 
         <div class="form-group col-sm-12 col-lg-6">
             <label for="pregunta">Selecciona una preguta:</label>
-            <select id="pregunta" class="form-control" name="pregunta" placeholder="Seleccione pregunta">
+            <select id="pregunta" class="form-control" name="pregunta" placeholder="Seleccione pregunta" autofocus>
+                <option value=""></option>
                 <?php
                 if (isset($preguntas)) {
                     while ($pregunta = $preguntas->fetch_array()) {
-                        echo "<option value=\"{$pregunta['respuesta']}\">{$pregunta['pregunta']}</option>";
+                        echo "<option value=\"{$pregunta['respuestas_id']}\">{$pregunta['pregunta']}</option>";
                     }
                 }
                 ?>

@@ -10,6 +10,7 @@ require('encabezado.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     require('conneccion.php');
+    $mysqli->begin_transaction();
     guardarEstudiante($mysqli, $_POST['nombre'], $_POST['apellido'], $_POST['cedula'], $_POST['usuario'], $_POST['clave'],  $titulo);
 
     $errors = [];
@@ -32,24 +33,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (count($errors) == 0) {
-        $query = "INSERT INTO preguntas_de_seguridad "
-            . " (pregunta, respuesta, usuarios_id) VALUES"
+        $query = "INSERT INTO respuestas_de_seguridad "
+            . " (preguntas_id, respuesta, usuarios_id) VALUES "
             . implode(',', $preguntas_values);
         // connectarse a la base de datos
         // hace disponible el objecto $mysqli  ya conectado a la base de datos
-        require('conneccion.php');
         $resultado = $mysqli->query($query);
         if ($resultado) {
+            $mysqli->commit();
             header('Location: index.php');
             exit;
         } else {
             echo '<div style="color:red;" > Error al guardar preguntas </div>';
+            $_SESSION = []; // limpiar variables.
         }
 
 
     }
 
 }
+
+require('conneccion.php');
+// obtener lista de preguntas de seguridad
+$query = "SELECT * FROM preguntas_de_seguridad";
+$resultado = $mysqli->query($query);
+if($resultado->num_rows > 0)
+    $preguntas = $resultado->fetch_all(MYSQLI_ASSOC);
 
 ?>
 
@@ -63,13 +72,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <?php for ($i = 0; $i < 3; $i++) { ?>
             <div class="form-group <?= isset($errors[$i]) ? 'has-error' : '' ?> ">
                 <label for="pregunta<?= $i+1 ?>" class="control-label"> Pregunta <?= $i+1 ?>: </label>
-                <input id="pregunta<?= $i+1 ?>" class="form-control" name="preguntas[]"
-                       value="<?= isset($_POST['preguntas'][$i]) ? $_POST['preguntas'][$i] : '' ?>" required>
+                <select id="pregunta" class="form-control" name="preguntas[]" placeholder="Seleccione pregunta">
+                    <option value="">Seleccione pregunta</option>
+                    <?php
+                    if (isset($preguntas)) {
+                        foreach ($preguntas as $pregunta) {
+                            echo "<option value=\"{$pregunta['id']}\">{$pregunta['pregunta']}</option>";
+                        }
+                    }
+                    ?>
+                </select>
             </div>
             <div class="form-group <?= isset($errors[$i]) ? 'has-error' : '' ?>">
                 <label for="respuesta<?= $i+1 ?>" class="control-label"> Respuesta <?= $i+1 ?>:</label>
                 <input id="respuesta<?= $i+1 ?>" class="form-control" name="respuestas[]"
-                       value="<?= isset($_POST['respuestas'][$i]) ? $_POST['respuestas'][$i] : '' ?>" required>
+                       value="<?= isset($_POST['respuestas'][$i]) ? $_POST['respuestas'][$i] : '' ?>" >
             </div>
             <span class="text-danger"><?= isset($errors[$i]) ? $errors[$i] : '' ?></span>
 
