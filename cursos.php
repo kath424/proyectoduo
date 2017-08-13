@@ -15,10 +15,8 @@ redirigirSiNoEstaLogeado();
 require('conneccion.php'); // hace disponible el objecto $mysqli  ya conectado a la base de datos
 
 // por seguridad solo un admin puede ejecutar cualquiera de estas acciones
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('profesor'))
-{
-    switch ($_POST['accion'])
-    {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('profesor')) {
+    switch ($_POST['accion']) {
         case "eliminarCurso":
             $query = "DELETE FROM cursos WHERE id = " . $_POST['curso_id'];
             $mysqli->query($query);
@@ -35,8 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('profesor'))
             $resultado = $mysqli->query($query_estudiantes);
             $agregar_clases_query = "INSERT INTO cursos_usuarios (usuarios_id,cursos_id) VALUES ";
             $valores = [];
-            while ($stu = $resultado->fetch_array(MYSQLI_ASSOC))
-            {
+            while ($stu = $resultado->fetch_array(MYSQLI_ASSOC)) {
                 $valores[] = "({$stu['id']} , $curso_id)";
             }
             $agregar_clases_query .= " " . implode(',', $valores);
@@ -49,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('profesor'))
             break;
         case "cambiarPuedeRepetir":
             $puedeRepetir = (bool)$_POST['puedeRepetir'];
-            $puedeRepetir = (!$puedeRepetir)?1:0;
+            $puedeRepetir = (!$puedeRepetir) ? 1 : 0;
 
             $query = "UPDATE capitulos SET "
                 . "puede_repetir = $puedeRepetir "
@@ -65,8 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('profesor'))
         case "agregarPreguntas":
             $query = "INSERT INTO preguntas (capitulos_id,pregunta,opciones,respuesta) VALUES ";
             $values = [];
-            for ($i = 0; $i < count($_POST['pregunta']); $i++)
-            {
+            for ($i = 0; $i < count($_POST['pregunta']); $i++) {
                 $values[] = "( {$_POST['capitulo_id']},'{$_POST['pregunta'][$i]}','{$_POST['opciones'][$i]}' ,'{$_POST['respuesta'][$i]}' )";
             }
             $query .= implode(',', $values);
@@ -82,8 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('profesor'))
 
 
             $archivo = $_FILES['archivos'];
-            for ($i = 0; $i < count($archivo['name']); $i++)
-            {
+            for ($i = 0; $i < count($archivo['name']); $i++) {
                 move_uploaded_file($archivo['tmp_name'][$i], $carpetaDeContenido . $archivo['name'][$i]);
             }
             //actualizar numero de pasos en base de datos
@@ -96,8 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && es('profesor'))
 
 
 // obtener cursos disponibles para este usuario
-if (es('estudiante'))
-{
+if (es('estudiante')) {
     $query = <<<EOT
     select c.* from usuarios  u
         left join cursos_usuarios  cu
@@ -106,19 +100,14 @@ if (es('estudiante'))
         on cu.cursos_id = c.id
         where u.id = {$_SESSION['user_id']}
 EOT;
-}
-else if (es('profesor'))
-{
+} else if (es('profesor')) {
     $query = "SELECT * FROM cursos";
 }
 
 $resultado = $mysqli->query($query);
-if ($resultado->num_rows > 0)
-{
+if ($resultado->num_rows > 0) {
     $cursos = $resultado;
-}
-else
-{
+} else {
     $mensaje = "no se pudieron obtener los cursos";
 }
 
@@ -148,9 +137,7 @@ else
             </div>
 
         </div>
-    <?php }
-    else if (es('profesor'))
-    { ?>
+    <?php } else if (es('profesor')) { ?>
         <div class="col-sm-12 col-md-6">
             <h2>Cursos
                 <small>
@@ -166,7 +153,8 @@ else
                     <tr>
                         <td><?= $curso['nombre'] ?></td>
                         <td class="text-center">
-                            <form action="cursos.php" method="POST">
+                            <form action="cursos.php" method="POST"
+                                  onsubmit="return confirm('Advertencia!!!. \nSe borrara todo lo relacionado con este curso asi como evaluaciones y contendio. \nDesea continuar?');">
                                 <input class="hidden" name="curso_id" value="<?= $curso['id'] ?>"/>
                                 <input class="hidden" name="accion" value="eliminarCurso"/>
                                 <button class="btn btn-danger">Eliminar <i class="glyphicon glyphicon-trash"></i>
@@ -193,7 +181,7 @@ else
 
                 <div class="form-group">
                     <label for="curso" class="control-label">Ingrese nombre del Curso:</label>
-                    <input id="curso" class="form-control" name="nombre" placeholder="Ingles I">
+                    <input id="curso" class="form-control" name="nombre" placeholder="Ingles I" required>
                     <button class=" pull-right btn btn-primary">Agregar <i
                                 class="glyphicon glyphicon-plus"></i></button>
                 </div>
@@ -211,17 +199,14 @@ else
             . " WHERE cursos_id = " . $_GET['id'];
 
         $resultado = $mysqli->query($query_capitulos);
-        if ($resultado->num_rows > 0)
-        {
+        if ($resultado->num_rows > 0) {
             $capitulos = $resultado;
-        }
-        else
-        {
+        } else {
             $mensaje = "Curso sin evaluaciones";
         }
         ?>
 
-        <?php if (isset($capitulos) && es('estudiante') ) { ?>
+        <?php if (isset($capitulos) && es('estudiante')) { ?>
             <div class="col-sm-12">
                 <h2> Capitulos
                     <small>Seleccione uno para ver el contenido</small>
@@ -244,9 +229,7 @@ else
                     <?php } ?>
                 </div>
             </div>
-        <?php }
-        else if (es('profesor'))
-        { ?>
+        <?php } else if (es('profesor')) { ?>
             <div class="col-sm-12 col-md-6">
                 <h3> Evaluaciones/Capitulos </h3>
                 <table class="table table-bordered">
@@ -272,7 +255,8 @@ else
                             </td>
                             <td class="text-center">
                                 <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>"
-                                      method="POST">
+                                      method="POST"
+                                      onsubmit="return confirm('Advertencia!!!. \nSe borrara todo lo relacionado con este capitulo asi como evaluaciones que hayan sido completadas. \nDesea continuar?');">
                                     <input class="hidden" name="capitulo_id" value="<?= $cap['id'] ?>"/>
                                     <input class="hidden" name="accion" value="eliminarCapitulo"/>
                                     <button class="btn btn-danger">Eliminar <i class="glyphicon glyphicon-trash"></i>
@@ -302,86 +286,6 @@ else
                     <?php } ?>
                 </table>
             </div>
-
-            <?php if (isset($_GET['accion']) && $_GET['accion'] === 'agregarPreguntas') { ?>
-            <div class="col-sm-12">
-                <h3>Agregar Preguntas</h3>
-                <form action="cursos.php" method="GET">
-                    <?php foreach ($_GET as $llave => $valor) { ?>
-                        <input class="hidden" name="<?= $llave ?>" value="<?= $valor ?>"/>
-                    <?php } ?>
-                    <div class="form-group form-inline">
-                        <label for="numPreguntas">Numero De Preguntas</label>
-                        <input id="numPreguntas" type="number" class="form-control" name="numPreguntas"
-                               value="<?= isset($_GET['numPreguntas']) ? $_GET['numPreguntas'] : '' ?>" max="10"
-                               min="1">
-                        <button class="btn btn-primary">Crear Preguntas</button>
-                    </div>
-                </form>
-                <?php if (isset($_GET['numPreguntas'])) { ?>
-                    <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>" method="POST">
-                        <?php foreach ($_GET as $llave => $valor) { ?>
-                            <input class="hidden" name="<?= $llave ?>" value="<?= $valor ?>"/>
-                        <?php } ?>
-                        <input class="hidden" name="accion" value="agregarPreguntas"/>
-                        <?php for ($i = 0; $i < intval($_GET['numPreguntas']); $i++) { ?>
-                            <div class="form-group <?= isset($pregunta3_error) ? 'has-error' : '' ?>">
-                                <label for="pregunta<?= $i ?>" class="control-label"> Pregunta <?= $i + 1 ?></label>
-                                <input id="pregunta<?= $i ?>" class="form-control" name="pregunta[]"
-                                       placeholder="como te llamas?">
-                            </div>
-                            <div class="form-group <?= isset($pregunta3_error) ? 'has-error' : '' ?>">
-                                <label for="opciones<?= $i ?>" class="control-label"> Opciones <?= $i + 1 ?>
-                                    <small>separadas con coma</small>
-                                </label>
-                                <input id="opciones<?= $i ?>" class="form-control" name="opciones[]"
-                                       placeholder="adrian, katherine">
-                            </div>
-                            <div class="form-group <?= isset($pregunta3_error) ? 'has-error' : '' ?>">
-                                <label for="respuesta<?= $i ?>" class="control-label">
-                                    Respuesta <?= $i + 1 ?></label>
-                                <input id="respuesta<?= $i ?>" class="form-control" name="respuesta[]"
-                                       placeholder="adrian">
-                            </div>
-                        <?php } ?>
-                        <div>
-                            <button class="btn btn-primary btn-lg">
-                                Guardar
-                            </button>
-                            <a class="btn btn-warning btn-lg"
-                               href="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>">
-                                Cancelar
-                            </a>
-                        </div>
-                    </form>
-                <?php } ?>
-            </div>
-        <?php } ?>
-
-            <?php if (isset($_GET['accion']) && $_GET['accion'] === 'agregarContenido') { ?>
-            <div class="col-sm-12">
-                <h2>Agregar Imagenes</h2>
-                <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>" method="POST"
-                      enctype="multipart/form-data">
-                    <?php foreach ($_GET as $llave => $valor) { ?>
-                        <input class="hidden" name="<?= $llave ?>" value="<?= $valor ?>"/>
-                    <?php } ?>
-                    <div class="form-group">
-                        <label for="archivos">Seleccione Imagenes para este contenido.</label>
-                        <input id="archivos" name="archivos[]" class="form-control" type="file" multiple/>
-                    </div>
-                    <div>
-                        <button class="btn btn-primary btn-lg">
-                            Agregar
-                        </button>
-                        <a class="btn btn-warning btn-lg"
-                           href="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>">
-                            Cancelar
-                        </a>
-                    </div>
-                </form>
-            </div>
-        <?php } ?>
             <div class="col-sm-12 col-md-6">
                 <h3>Agregar Evaluacion/Capitulo</h3>
                 <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>" method="POST">
@@ -391,7 +295,7 @@ else
 
                     <div class="form-group">
                         <label for="curso" class="control-label">Ingrese nombre del Capitulo:</label>
-                        <input id="curso" class="form-control" name="nombre" placeholder="capitulo3">
+                        <input id="curso" class="form-control" name="nombre" placeholder="capitulo3" required>
                         <button class=" pull-right btn btn-primary">Agregar <i
                                     class="glyphicon glyphicon-plus"></i></button>
                     </div>
@@ -400,6 +304,87 @@ else
             </div>
 
             <div class="clearfix"></div>
+            <?php if (isset($_GET['accion']) && $_GET['accion'] === 'agregarPreguntas') { ?>
+                <div class="col-sm-12">
+                    <h3>Agregar Preguntas</h3>
+                    <form action="cursos.php" method="GET">
+                        <?php foreach ($_GET as $llave => $valor) { ?>
+                            <input class="hidden" name="<?= $llave ?>" value="<?= $valor ?>"/>
+                        <?php } ?>
+                        <div class="form-group form-inline">
+                            <label for="numPreguntas">Numero De Preguntas</label>
+                            <input id="numPreguntas" type="number" class="form-control" name="numPreguntas"
+                                   value="<?= isset($_GET['numPreguntas']) ? $_GET['numPreguntas'] : '' ?>" max="10"
+                                   min="1" required>
+                            <button class="btn btn-primary">Crear Preguntas</button>
+                        </div>
+                    </form>
+                    <?php if (isset($_GET['numPreguntas'])) { ?>
+                        <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>" method="POST"
+                              onsubmit="return confirm('Esta seguro que desea agregar estas preguntas?');">
+                            <?php foreach ($_GET as $llave => $valor) { ?>
+                                <input class="hidden" name="<?= $llave ?>" value="<?= $valor ?>"/>
+                            <?php } ?>
+                            <input class="hidden" name="accion" value="agregarPreguntas"/>
+                            <?php for ($i = 0; $i < intval($_GET['numPreguntas']); $i++) { ?>
+                                <div class="form-group <?= isset($pregunta3_error) ? 'has-error' : '' ?>">
+                                    <label for="pregunta<?= $i ?>" class="control-label"> Pregunta <?= $i + 1 ?></label>
+                                    <input id="pregunta<?= $i ?>" class="form-control" name="pregunta[]"
+                                           placeholder="como te llamas?" required>
+                                </div>
+                                <div class="form-group <?= isset($pregunta3_error) ? 'has-error' : '' ?>">
+                                    <label for="opciones<?= $i ?>" class="control-label"> Opciones <?= $i + 1 ?>
+                                        <small>separadas con coma</small>
+                                    </label>
+                                    <input id="opciones<?= $i ?>" class="form-control" name="opciones[]"
+                                           placeholder="adrian, katherine" required>
+                                </div>
+                                <div class="form-group <?= isset($pregunta3_error) ? 'has-error' : '' ?>">
+                                    <label for="respuesta<?= $i ?>" class="control-label">
+                                        Respuesta <?= $i + 1 ?></label>
+                                    <input id="respuesta<?= $i ?>" class="form-control" name="respuesta[]"
+                                           placeholder="adrian" required>
+                                </div>
+                            <?php } ?>
+                            <div>
+                                <button class="btn btn-primary btn-lg">
+                                    Guardar
+                                </button>
+                                <a class="btn btn-warning btn-lg"
+                                   href="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>">
+                                    Cancelar
+                                </a>
+                            </div>
+                        </form>
+                    <?php } ?>
+                </div>
+            <?php } ?>
+
+            <?php if (isset($_GET['accion']) && $_GET['accion'] === 'agregarContenido') { ?>
+                <div class="col-sm-12">
+                    <h2>Agregar Imagenes</h2>
+                    <form action="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>" method="POST"
+                          enctype="multipart/form-data">
+                        <?php foreach ($_GET as $llave => $valor) { ?>
+                            <input class="hidden" name="<?= $llave ?>" value="<?= $valor ?>"/>
+                        <?php } ?>
+                        <div class="form-group">
+                            <label for="archivos">Seleccione Imagenes para este contenido.</label>
+                            <input id="archivos" name="archivos[]" class="form-control" type="file" multiple/>
+                        </div>
+                        <div>
+                            <button class="btn btn-primary btn-lg">
+                                Agregar
+                            </button>
+                            <a class="btn btn-warning btn-lg"
+                               href="cursos.php?id=<?= $_GET['id'] ?>&nombre=<?= $_GET['nombre'] ?>">
+                                Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            <?php } ?>
+
 
         <?php } ?>
 

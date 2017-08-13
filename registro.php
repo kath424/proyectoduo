@@ -89,14 +89,14 @@ if (isset($mensaje)) {// hay un mensaje?  imprimirlo en la pantalla
         <!--            </div>-->
         <!--        </div>-->
         <div class="main-login main-center">
-            <form class="form-horizontal" action="registro.php" method="post" class="registro">
+            <form class="form-horizontal" action="registro.php" method="post" class="registro" onsubmit="return confirm('Esta seguro que la informacion ingresada es correcta?');">
                 <h2 class="form-signin-heading">Registro Aqui:</h2>
                 <div class="form-group <?= isset($errores['nombre']) ? 'has-error' : '' ?>">
                     <label for="nombre" class="sr-only">Nombre:</label>
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
                         <input name="nombre" id="nombre" class="form-control" placeholder="ingresa nombre"
-                               value="<?= issetor($_POST['nombre']) ?>"/>
+                               value="<?= issetor($_POST['nombre']) ?>" required autofocus/>
                         <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['nombre']) ? '' : 'hidden' ?>"></span>
                     </div>
                     <span class="help-block">
@@ -109,7 +109,7 @@ if (isset($mensaje)) {// hay un mensaje?  imprimirlo en la pantalla
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
                         <input name="apellido" id="apellido" class="form-control" placeholder="ingresa apellido"
-                               value="<?= issetor($_POST['apellido']) ?>"/>
+                               value="<?= issetor($_POST['apellido']) ?>" required/>
                         <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['apellido']) ? '' : 'hidden' ?>"></span>
                     </div>
                     <span class="help-block">
@@ -122,7 +122,7 @@ if (isset($mensaje)) {// hay un mensaje?  imprimirlo en la pantalla
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-hashtag fa"></i></span>
                         <input name="cedula" id="cedula" class="form-control" placeholder="ingresa numero de cedula"
-                               value="<?= issetor($_POST['cedula']) ?>"/>
+                               value="<?= issetor($_POST['cedula']) ?>" required/>
                         <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['cedula']) ? '' : 'hidden' ?>"></span>
                     </div>
                     <span class="help-block">
@@ -135,7 +135,7 @@ if (isset($mensaje)) {// hay un mensaje?  imprimirlo en la pantalla
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
                         <input name="usuario" id="usuario" class="form-control" placeholder="ingresa nombre de usuario"
-                               value="<?= issetor($_POST['usuario']) ?>"/>
+                               value="<?= issetor($_POST['usuario']) ?>" required/>
                         <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['usuario']) ? '' : 'hidden' ?>"></span>
                     </div>
                     <span class="help-block">
@@ -148,7 +148,7 @@ if (isset($mensaje)) {// hay un mensaje?  imprimirlo en la pantalla
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa"></i></span>
                         <input type="password" name="clave" id="clave" class="form-control" placeholder="ingresa clave"
-                               value="<?= issetor($_POST['clave']) ?>"/>
+                               value="<?= issetor($_POST['clave']) ?>" required/>
                         <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['clave']) ? '' : 'hidden' ?>"></span>
                     </div>
                     <span class="help-block">

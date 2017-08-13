@@ -276,7 +276,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `tipo_de_usuario`, `usuario`, `clave`, `cedula`, `creado`, `ultimo_logeo`) VALUES
 (1, 'admin', 'admin', 'admin', 'administrador', 'clave', NULL, '0000-00-00 00:00:00', '2017-08-11 15:32:26'),
-(2, 'maestro', 'maestro', 'profesor', 'profesor', 'clave', NULL, '0000-00-00 00:00:00', '2017-08-11 15:25:18'),
+(2, 'profesor', 'profesor', 'profesor', 'profesor', 'clave', NULL, '0000-00-00 00:00:00', '2017-08-11 15:25:18'),
 (3, 'katherine', 'acosta', 'estudiante', 'katherinelabeibi', 'clave', '12345', '2017-07-28 09:16:29', '2017-08-11 15:27:51'),
 (7, 'adrian', 'gol', 'estudiante', 'adrianplusplus', 'vision', '0000', '2017-08-11 08:31:12', '2017-08-11 15:31:32');
 

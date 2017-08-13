@@ -78,7 +78,7 @@ else
                     <td><?= $usuario['usuario'] ?></td>
                     <td><?= $usuario['cedula'] ?></td>
                     <td class="text-center">
-                            <form action="usuarios.php" method="POST">
+                            <form action="usuarios.php" method="POST" onsubmit="return confirm('Esta seguro que desea eliminar este usuario?\nEsta operacion no puede ser revertida.');">
                                 <input class="hidden" name="accion" value="borrarUsuario"/>
                                 <input class="hidden" name="user_id" value="<?= $usuario['id'] ?>"/>
                                 <button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Borrar</button>
@@ -100,7 +100,7 @@ else
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
                     <input name="nombre" id="nombre" class="form-control" placeholder="ingresa nombre"
-                           value="<?= issetor($_POST['nombre']) ?>"/>
+                           value="<?= issetor($_POST['nombre']) ?>" required autofocus/>
                     <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['nombre']) ? '' : 'hidden' ?>"></span>
                 </div>
                 <span class="help-block">
@@ -113,7 +113,7 @@ else
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
                     <input name="apellido" id="apellido" class="form-control" placeholder="ingresa apellido"
-                           value="<?= issetor($_POST['apellido']) ?>"/>
+                           value="<?= issetor($_POST['apellido']) ?>" required/>
                     <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['apellido']) ? '' : 'hidden' ?>"></span>
                 </div>
                 <span class="help-block">
@@ -126,7 +126,7 @@ else
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
                     <input name="usuario" id="usuario" class="form-control" placeholder="ingresa nombre de usuario"
-                           value="<?= issetor($_POST['usuario']) ?>"/>
+                           value="<?= issetor($_POST['usuario']) ?>" required/>
                     <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['usuario']) ? '' : 'hidden' ?>"></span>
                 </div>
                 <span class="help-block">
@@ -139,7 +139,7 @@ else
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-lock fa"></i></span>
                     <input type="password" name="clave" id="clave" class="form-control" placeholder="ingresa clave"
-                           value="<?= issetor($_POST['clave']) ?>"/>
+                           value="<?= issetor($_POST['clave']) ?>" required/>
                     <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['clave']) ? '' : 'hidden' ?>"></span>
                 </div>
                 <span class="help-block">
@@ -152,7 +152,7 @@ else
                 <div class="input-group">
                     <span class="input-group-addon"><i class="fa fa-lock fa"></i></span>
                     <input type="password" name="reclave" id="reclave" class="form-control"
-                           placeholder="confirma clave" value="<?= issetor($_POST['reclave']) ?>"/>
+                           placeholder="confirma clave" value="<?= issetor($_POST['reclave']) ?>" required/>
                     <span class="glyphicon glyphicon-remove form-control-feedback  <?= isset($errores['reclave']) ? '' : 'hidden' ?>"></span>
                 </div>
                 <span class="help-block">

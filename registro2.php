@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 ?>
 
-    <form action="registro2.php" method="POST">
+    <form action="registro2.php" method="POST" onsubmit="return confirm('Esta seguro que la informacion ingresada es correcta?');">
         <?php foreach ($_GET as $llave => $valor) { ?>
             <input class="hidden" name="<?= $llave ?>" value="<?= $valor ?>"/>
         <?php } ?>
@@ -64,12 +64,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="form-group <?= isset($errors[$i]) ? 'has-error' : '' ?> ">
                 <label for="pregunta<?= $i+1 ?>" class="control-label"> Pregunta <?= $i+1 ?>: </label>
                 <input id="pregunta<?= $i+1 ?>" class="form-control" name="preguntas[]"
-                       value="<?= isset($_POST['preguntas'][$i]) ? $_POST['preguntas'][$i] : '' ?>">
+                       value="<?= isset($_POST['preguntas'][$i]) ? $_POST['preguntas'][$i] : '' ?>" required>
             </div>
             <div class="form-group <?= isset($errors[$i]) ? 'has-error' : '' ?>">
                 <label for="respuesta<?= $i+1 ?>" class="control-label"> Respuesta <?= $i+1 ?>:</label>
                 <input id="respuesta<?= $i+1 ?>" class="form-control" name="respuestas[]"
-                       value="<?= isset($_POST['respuestas'][$i]) ? $_POST['respuestas'][$i] : '' ?>">
+                       value="<?= isset($_POST['respuestas'][$i]) ? $_POST['respuestas'][$i] : '' ?>" required>
             </div>
             <span class="text-danger"><?= isset($errors[$i]) ? $errors[$i] : '' ?></span>
 

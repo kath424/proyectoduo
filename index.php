@@ -151,7 +151,7 @@ else if (isset($_SESSION['user_id']) && es('profesor'))
             <h3 class="text-center"> Ingrese numero de cedula para obtener detalles de un estudiante</h3>
             <div class="form-group col-sm-4 col-sm-offset-4 <?= isset($cedulaIncorrecta) ? 'has-error' : '' ?> ">
                 <label for="cedula" class="control-label">Cedula:</label>
-                <input class="form-control" id="cedula" name="cedula" placeholder="123123"/>
+                <input class="form-control" id="cedula" name="cedula" placeholder="123123" required />
 
                 <?php if (isset($cedulaIncorrecta)) { ?>
                     <div class="text-danger">

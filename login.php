@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
                         <input name="usuario" id="usuario" class="form-control" placeholder="Usuario" required
-                               autofocus>
+                               autofocus />
                     </div>
 
                 </div>
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <div class="input-group">
                         <span class="input-group-addon"><i class="fa fa-lock fa"></i></span>
                         <input type="password" name="clave" id="clave" class="form-control" placeholder="Clave"
-                               required>
+                               required />
                     </div>
                 </div>
                 <!-- hay un mensaje?  imprimirlo en la pantalla-->
