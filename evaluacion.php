@@ -19,14 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     // verificar que el estudiante tomo menos de 2 horas para hacer el examen
     $tiempoTomadoParaPrueva = time() - $_SESSION['empezo_prueva']->getTimeStamp();
     $unaHora = 60 * 60;
-    if ($tiempoTomadoParaPrueva >= $unaHora)
-    {
-        // se paso de tiempo
-        $mensaje = "Tiempo limite excedido, Comienza de nuevo";
-        //
-    }
-    else
-    {
 
         // tardo menos de 2 horas, guardar informacion y mandar al inicio
         // name =  id de la pregunta
@@ -62,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         unset($_SESSION['empezo_prueva']);
         exit;
 
-    }
+
 
 
 }
@@ -177,6 +169,7 @@ else
 <?php require('pie.php'); ?>
 
 <script>
+    var interval;
     function ponerTiempoRestanteEnPantalla() {
         var inicioEvaluacion = parseInt(<?= $_SESSION['empezo_prueva']->getTimestamp() ?>);
 
@@ -184,9 +177,11 @@ else
 
         var tiempoRestante = 60 * 60 - ( ahora - inicioEvaluacion);
 
-        if (tiempoRestante <= 0)
+        if (tiempoRestante <= 0) {
+            clearInterval(interval);
             $("#botonEntregarExamen").click();
-
+            return;
+        }
 
         var minutes = Math.floor(tiempoRestante / 60);
         var seconds = tiempoRestante % 60;
@@ -202,7 +197,7 @@ else
     }
 
     ponerTiempoRestanteEnPantalla();
-    setInterval(ponerTiempoRestanteEnPantalla, 1000);
+    interval = setInterval(ponerTiempoRestanteEnPantalla, 1000);
 
 
 </script>
