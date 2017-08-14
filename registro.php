@@ -89,7 +89,7 @@ if (isset($mensaje)) {// hay un mensaje?  imprimirlo en la pantalla
         <!--            </div>-->
         <!--        </div>-->
         <div class="main-login main-center">
-            <form class="form-horizontal" action="registro.php" method="post" class="registro" onsubmit="return confirm('Esta seguro que la informacion ingresada es correcta?');">
+            <form class="form-horizontal" action="registro2.php" method="post" class="registro" onsubmit="return confirm('Esta seguro que la informacion ingresada es correcta?');">
                 <h2 class="form-signin-heading">Registro Aqui:</h2>
                 <div class="form-group <?= isset($errores['nombre']) ? 'has-error' : '' ?>">
                     <label for="nombre" class="sr-only">Nombre:</label>
